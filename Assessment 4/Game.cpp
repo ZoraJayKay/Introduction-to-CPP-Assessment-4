@@ -1,4 +1,6 @@
 #include "Game.h"
+#include "Initialise.h"
+#include "raylib.h"
 
 // Below are my member function constructor and destructor. These don't have return types like in C#. They belong to an instance of the class.
 // (class) (scope resolution operator) (function)
@@ -12,4 +14,32 @@ Game::Game()
 Game::~Game() 
 {
 
+}
+
+// 0: Initialise a game session
+// Create a pointer to a new instance of the Initialise class.
+Initialise* init = new Initialise();
+	// The Initialise class instance (init) will in turn set all of the parameters that constitute the starting conditions of the game.
+
+// 1: UPDATE FUNCTION
+void Game::Update()
+{
+	// 1.1: Update the game timer
+	UpdateTimer();
+
+	// 1.2: Update object relationships
+	UpdateRelationships();
+
+	// 1.3: Update scene calculations
+	UpdateCalculations();
+
+	// 1.4: Draw the scene
+	Draw();
+}
+		
+
+// 2: ENDIF FUNCTION
+void Game::Shutdown() 
+{
+	// 2.1: Detect whether the game has ended
 }

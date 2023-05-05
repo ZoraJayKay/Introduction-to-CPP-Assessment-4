@@ -1,20 +1,24 @@
 // Assessment 4.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include <iostream>
 #include "raylib.h"
+#include "Game.h"
 
 
-
+// the main function of the program starts and ends the game.
 int main()
 {
-    // the main function of the program starts and ends the game.
-    // 1: Create a pointer to an instance of a Game class. This will in turn initialise the game, create the play area, draw the scene, and update the game calculations until the game ends.
-    Game game = new Game;
+    // 1: Create a pointer to a new instance of a Game class. 
+    Game* game = new Game();
+        // The Game class instance (game) will in turn initialise a game, create the play area, draw the scene, and update the game calculations until the game ends.
         
-    // Shutdown function
-    // 2: End the game.
+    // 2: Keep the game running until the loss condtion is met.
+    while (!WindowShouldClose()) 
+    {
+        game->Update();        
+    }
+        // This while loop keeps the game running for as long as the game does not meet the conditions to close the game. The Update function in the Game class performs
 
-
-    std::cout << "Hello World!\n";
+    game->Shutdown();
+    CloseWindow();
 }

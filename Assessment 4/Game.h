@@ -1,4 +1,5 @@
 #pragma once
+
 class Game
 {
 private:
@@ -14,17 +15,25 @@ public:
 	~Game();
 
 	// 0: Initialise a game session
-
-	// 1: UPDATE FUNCTION
-		// 1.1: Update the game timer
-
-		// 1.2: Update object relationships
 	
-		// 1.3: Update scene calculations
+	// 1: UPDATE FUNCTION
+	void Update();
 
-		// 1.4: Draw the scene
+	// 1.1: Update the game timer
+	void UpdateTimer();
+
+	// 1.2: Update object relationships
+	void UpdateRelationships();
+
+	// 1.3: Update scene calculations
+	void UpdateCalculations();
+
+	// 1.4: Draw the scene
+	void Draw();
+		
 
 	// 2: ENDIF FUNCTION
-		// 2.1: Detect whether the game has ended
+	void Shutdown();
+			// 2.1: Detect whether the game has ended
 };
 
