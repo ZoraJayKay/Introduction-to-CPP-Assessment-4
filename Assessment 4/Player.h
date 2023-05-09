@@ -8,12 +8,12 @@ class Player : GameObject
 public:
 	//	***		CONSTRUCTOR & DESTRUCTOR	***
 	// default constructor function
-	Player() {};
+	Player();
 
 	// custom constructor
-	Player(int health, enum enumType, bool weapon) {}
+	Player(int, objectType, bool);
 
 	// default destructor function
-	~Player() {};
+	~Player();
 };
 

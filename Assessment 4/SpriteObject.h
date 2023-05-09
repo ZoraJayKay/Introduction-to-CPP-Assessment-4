@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include <math.h>
 
 class SpriteObject : GameObject
 {
@@ -22,14 +23,17 @@ public:
 
 	//	*** FUNCTIONS	***
 	// load the image and turn it into a texture  (behaviour in source file)
-	void Load(string fileName) {};
+	void Load(const char* fileName);
 	
-	float Width() {};
-	float Height() {};
+	// return the width of the texture
+	float Width();
+
+	// return the height of the texture
+	float Height();
 
 
 	//	*** DRAWING FUNCTIONS	***
 	// definition to override the OnDraw from parent GameObject so that the sprite source file can use OnDraw with sprite texture
-	void OnDraw() override {};
+	//void OnDraw() override;
 };
 

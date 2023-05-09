@@ -3,10 +3,12 @@
 
 // default constructor (just to avoid null errors)
 Matrix3::Matrix3() {}
+
+// default destructor
 Matrix3::~Matrix3() {}
 
 
-// establish identity matrix
+// constructor to set an identity matrix
 Matrix3::Matrix3(float identity)
 {
     //Column 1
@@ -46,13 +48,16 @@ Matrix3::Matrix3(float _m00, float _m10, float _m20, float _m01, float _m11, flo
 
 // MATRIX MULTIPLICATION OPERATOR OVERLOAD
 // Multiply a matrix by a matrix (3x3 matrix * 3x3 matrix = 3x3 matrix)
-        // my comments assume a 1st matrix3 of 3 columns ABC, and a 2nd matrix of 3 columns DEF
+// My comments assume a 1st matrix3 of 3 columns ABC, and a 2nd matrix of 3 columns DEF
+// This operator overload function has been written so as to be inherently place the matrix that calls it as the first matrix in the multiplication
 
-Matrix3 Matrix3::operator *(Matrix3 M2)
-{
+Matrix3 Matrix3::operator * (Matrix3 M2)
+// the scope operator comes AFTER the type
+// there is only one parameter needed because the member calling this function is IMPLICITLY the first parameter.
+{    
     return Matrix3(
         // COLUMN MAJOR
-             // ABCxyz * Dxyz
+        // ABCxyz * Dxyz
         (this->m00 * M2.m00 + this->m01 * M2.m10 + this->m02 * M2.m20),  // Ax * Dx + Bx * Dy + Cx * Dz
         (this->m10 * M2.m00 + this->m11 * M2.m10 + this->m12 * M2.m20),  // Ay * Dx + By * Dy + Cy * Dz
         (this->m20 * M2.m00 + this->m21 * M2.m10 + this->m22 * M2.m20),  // Az * Dx + Bz * Dy + Cz * Dz
@@ -68,15 +73,79 @@ Matrix3 Matrix3::operator *(Matrix3 M2)
         (this->m20 * M2.m02 + this->m21 * M2.m12 + this->m22 * M2.m22)); // Az * Fx + Bz * Fy + Cz * Fz
 }
 
+
+
+
+// set the matrix that calls this function equal to the matrix it passes in
 Matrix3 Matrix3::Set(Matrix3 m)
 {
-    this->m00 = m.m00;
-    this->m10 = m.m10;
-    this->m20 = m.m20;
-    this->m01 = m.m01;
-    this->m11 = m.m11;
-    this->m21 = m.m21;
-    this->m02 = m.m02;
-    this->m12 = m.m12;
-    this->m22 = m.m22;
+    return Matrix3
+    (
+        this->m00 = m.m00,
+        this->m10 = m.m10,
+        this->m20 = m.m20,
+        this->m01 = m.m01,
+        this->m11 = m.m11,
+        this->m21 = m.m21,
+        this->m02 = m.m02,
+        this->m12 = m.m12,
+        this->m22 = m.m22
+    );    
 }
+
+//	MATRIX ROTATION
+// Set rotation to specific point
+void Matrix3::SetRotateX(float rotationInRadians) 
+{
+    float c = (float)cos(rotationInRadians);
+    float s = (float)sin(rotationInRadians);
+
+    // COLUMN MAJOR ORDER
+    this->m00 = 1; this->m01 = 0; this->m02 = 0;
+    this->m10 = 0; this->m11 = c; this->m12 = -s;
+    this->m20 = 0; this->m21 = s; this->m22 = c;
+};
+
+void Matrix3::SetRotateY(float rotationInRadians)
+{
+    float c = (float)cos(rotationInRadians);
+    float s = (float)sin(rotationInRadians);
+
+    // COLUMN MAJOR ORDER
+    this->m00 = c;  this->m01 = 0;  this->m02 = -s;
+    this->m10 = 0;  this->m11 = 1;  this->m12 = 0;
+    this->m20 = s;  this->m21 = 0;  this->m22 = c;
+};
+
+void Matrix3::SetRotateZ(float rotationInRadians)
+{
+    float c = (float)cos(rotationInRadians);
+    float s = (float)sin(rotationInRadians);
+
+    // COLUMN MAJOR ORDER
+    this->m00 = c;  this->m01 = -s; this->m02 = 0;
+    this->m10 = s;  this->m11 = c;  this->m12 = 0;
+    this->m20 = 0;  this->m21 = 0;  this->m22 = 1;
+};
+
+// Rotate incrementally					 
+Matrix3 Matrix3::RotateX(float rotationinRadians)
+{
+    Matrix3* m = new Matrix3(1);        // create an identity matrix
+    m->SetRotateX(rotationinRadians);   // set up the identity matrix as a rotation matrix
+    return *this * *m;
+};
+
+Matrix3 Matrix3::RotateY(float rotationinRadians)
+{
+    Matrix3* m = new Matrix3(1);        // create an identity matrix
+    m->SetRotateY(rotationinRadians);   // set up the identity matrix as a rotation matrix
+    return *this * *m;
+};
+
+Matrix3 Matrix3::RotateZ(float rotationinRadians)
+{
+    Matrix3* m = new Matrix3(1);        // create an identity matrix
+    m->SetRotateZ(rotationinRadians);   // set up the identity matrix as a rotation matrix
+    return *this * *m;
+};

@@ -23,18 +23,35 @@ Initialise* init = new Initialise();
 
 // 1: UPDATE FUNCTION
 void Game::Update()
-{
-	// 1.1: Update the game timer
+{	
 	UpdateTimer();
-
-	// 1.2: Update object relationships
 	UpdateRelationships();
-
-	// 1.3: Update scene calculations
 	UpdateCalculations();
-
-	// 1.4: Draw the scene
 	Draw();
+}
+
+// 1.1: Update the game timer
+void Game::UpdateTimer()
+{
+
+}
+
+// 1.2: Update object relationships
+void Game::UpdateRelationships()
+{
+
+}
+
+// 1.3: Update scene calculations
+void Game::UpdateCalculations() 
+{
+
+}
+
+// 1.4: Draw the scene
+void Game::Draw() 
+{
+
 }
 		
 

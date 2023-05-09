@@ -10,8 +10,7 @@ private:
 
 public: 
 	// The default constuctor function fires once on instantiation, so this is an ideal place to set the startig conditions of the game.
-	Initialise() 
-	{
+	Initialise();
 		/* 1: GAME PARAMETERS
 		1.1: Starting conditions
 		Set the parameters for the game to run after starting and before ending
@@ -43,9 +42,7 @@ public:
 				1.3.3.2: Set lives = 1
 				1.3.3.3: Set position
 				1.3.3.4: Instantiate sprites
-
-	*/
-	};
+				*/
 
 	// default destructor function
 	~Initialise();

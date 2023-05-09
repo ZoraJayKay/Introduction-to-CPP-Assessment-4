@@ -1,4 +1,7 @@
 #pragma once
+#include "raylib.h"
+#define RAYGUI_IMPLEMENTATION
+#define RAYGUI_SUPPORT_ICONS
 
 class Game
 {
@@ -15,7 +18,8 @@ public:
 	~Game();
 
 	// 0: Initialise a game session
-	
+
+
 	// 1: UPDATE FUNCTION
 	void Update();
 
