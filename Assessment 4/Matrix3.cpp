@@ -51,10 +51,10 @@ Matrix3::Matrix3(float _m00, float _m10, float _m20, float _m01, float _m11, flo
 // My comments assume a 1st matrix3 of 3 columns ABC, and a 2nd matrix of 3 columns DEF
 // This operator overload function has been written so as to be inherently place the matrix that calls it as the first matrix in the multiplication
 
-Matrix3 Matrix3::operator * (Matrix3 M2)
+Matrix3 Matrix3::operator * (Matrix3& M2)
 // the scope operator comes AFTER the type
 // there is only one parameter needed because the member calling this function is IMPLICITLY the first parameter.
-{    
+{
     return Matrix3(
         // COLUMN MAJOR
         // ABCxyz * Dxyz
@@ -149,3 +149,22 @@ Matrix3 Matrix3::RotateZ(float rotationinRadians)
     m->SetRotateZ(rotationinRadians);   // set up the identity matrix as a rotation matrix
     return *this * *m;
 };
+
+
+// *** NOTE TO SELF: THERE IS A DISTINCTION BETWEEN SETTRANSLATE AND TRANSLATE ***
+// ** SETTRANSLATE AKA MOVING TO ABSOLUTE DESTINATION; TELEPORTING**
+// * TRANSLATE AKA MOVING RELATIVE POSITION; WALKING*
+
+// Absolute translation; teleportation
+void Matrix3::SetTranslation(float x, float y)
+{
+    // COLUMN MAJOR ORDER
+    this->m02 = x; this->m12 = y;
+}
+
+// Incremental translation; movement
+void Matrix3::Translate(float x, float y)
+{
+    // COLUMN MAJOR ORDER
+    this->m02 += x; this->m12 += y;
+}

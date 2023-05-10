@@ -1,9 +1,14 @@
 #pragma once
 #include "Matrix3.h"
 #include "raylib.h"
+#include "SpriteObject.h"
+#include "Player.h"
+#include "Enemy.h"
 #include <cmath>
 #include <vector>
 #include "assert.h"
+#include <iostream>
+using namespace std;
 
 // Create a blueprint for any object with a transform in the game
 
@@ -16,12 +21,11 @@ private:
 
 protected: 
 	//	*** PROTECTED GAME PARAMETERS***
-	// declare a pointer to a parent object
+	// declare a pointer to a GameObject called parent
 	GameObject* parent;
 
 	// declare a vector of GameObject pointers to hold pointers to any child objects
 	std::vector<GameObject*> children;	
-		// this vector has been 
 
 	// create pointers to Matrix3's for local and global transform
 	Matrix3* localTransform = new Matrix3(1);
@@ -39,6 +43,8 @@ public:
 	// variable to count object's number of lives
 	unsigned int lives;
 
+	// variable to track player score
+	unsigned int score;
 
 	//	*** CONSTRUCTOR & DESTRUCTOR	***
 	// default constructor function
@@ -52,22 +58,27 @@ public:
 	void virtual GetWeapon();
 	// behaviour determined by derivative class, eg enemy, player, base
 
-	
+	// &(type)	= address of an object
+	// (type)&	= an object's reference [the object itself]
+	// (type)*	= pointer to an object
+	// *(type)	= dereference [contents of the reference]
+
+
 	// ***	RELATIONSHIP FUNCTIONS	***
-	// A method to set the parent of this object
-	void SetParent(GameObject* parent_01);
+	// A method to set the parent of the object that calls this function equal to an object that is passed in (by reference to it)
+	void SetParent(GameObject& parent_01);
 	
 	// A method to return a pointer to the parent of this object
-	GameObject* GetParent();
+	GameObject& GetParent();
 
 	// A method to count the children of this object
 	int CountChildren();
 
 	// A method to add a child to this object
-	void AddChild(GameObject* child);
+	void AddChild(GameObject& child);
 
 	// A method to remove a child from this object
-	void RemoveChild(GameObject* child);
+	void RemoveChild(GameObject& child);
 
 
 	// ***	UPDATE FUNCTIONS	***
@@ -89,11 +100,20 @@ public:
 
 	//	*** TRANSFORM FUNCTIONS	***
 	// get protected location of local Matrix3
-	Matrix3* LocalTransform();
+	Matrix3 LocalTransform();
 
 	// get protected location of global Matrix3
-	Matrix3* GlobalTransform();
+	Matrix3 GlobalTransform();
 
 	// update the location of this object
 	void UpdateTransform();
+
+	// call the Matrix3 class to set the object's position
+	void SetPosition(float x, float y);
+
+	// call the Matrix3 class to set the object's rotation
+	void SetRotate(float radians);
+
+	// call the Matrix3 class to incrementally move the object
+	void Translate(float x, float y);
 };

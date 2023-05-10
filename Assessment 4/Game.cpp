@@ -8,7 +8,11 @@
 
 Game::Game() 
 {
-
+	std::cout << "---Game constructor---" << endl;
+	// 0: Initialise a game session
+	// Create a pointer to a new instance of the Initialise class.
+	Initialise* init = new Initialise();
+	// The Initialise class instance (init) will in turn set all of the parameters that constitute the starting conditions of the game.
 }
 
 Game::~Game() 
@@ -16,10 +20,7 @@ Game::~Game()
 
 }
 
-// 0: Initialise a game session
-// Create a pointer to a new instance of the Initialise class.
-Initialise* init = new Initialise();
-	// The Initialise class instance (init) will in turn set all of the parameters that constitute the starting conditions of the game.
+
 
 // 1: UPDATE FUNCTION
 void Game::Update()

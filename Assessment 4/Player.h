@@ -11,7 +11,7 @@ public:
 	Player();
 
 	// custom constructor
-	Player(int, objectType, bool);
+	Player(int _lives, enum _type, bool _weapon, int score);
 
 	// default destructor function
 	~Player();

@@ -26,9 +26,15 @@ public:
 	// implementation in source file
 
 	// MATRIX MULTIPLICATION
-	Matrix3 operator * (Matrix3 M2);
+	Matrix3 operator * (Matrix3& M2);
 	// implementation in source file
 	// there is only one parameter needed because the member calling this function is IMPLICITLY the first parameter.
+
+	// &(type)	= address of an object
+	// (type)&	= an object's reference [the object itself]
+	// (type)*	= pointer to an object
+	// *(type)	= dereference [contents of the reference]
+
 
 	// MATRIX SETTING
 	Matrix3 Set(Matrix3);
@@ -45,10 +51,13 @@ public:
 	Matrix3 RotateY(float rotationinRadians);
 	Matrix3 RotateZ(float rotationinRadians);
 
-
-	// TRANSLATION
-	// Set translation to specific point
-
+	// MATRIX TRANSLATION
+	void SetTranslation(float x, float y);
+	void Translate(float x, float y);
 
 	// Translate incrementally
 };
+
+
+
+

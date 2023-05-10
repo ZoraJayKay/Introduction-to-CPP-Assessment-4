@@ -1,5 +1,9 @@
 #pragma once
-class Enemy
+class Enemy : GameObject
 {
+public:
+
+	Enemy();
+	~Enemy();
 };
 

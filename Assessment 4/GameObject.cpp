@@ -1,14 +1,16 @@
 #include "GameObject.h"
 
 // member function for constructor
-GameObject::GameObject() {};
+GameObject::GameObject() 
+{
+	std::cout << "---GameObject constructor---" << endl;
+};
 
 // member function for destructor
 GameObject::~GameObject() {};
 
 // a method to set the weapon of this object
 void GameObject::GetWeapon() {};
-
 
 //	*** PUBLIC GAME PARAMETERS	***
 	// object type
@@ -23,38 +25,42 @@ enum GameObject::objectType
 
 
 // ***	RELATIONSHIP FUNCTIONS	***
-// A method to set the parent of this object as a pointer to another object
-void GameObject::SetParent(GameObject* parent_01) 
+// A method to set the parent of the object that calls this function equal to an object that is passed in (by reference to it)
+void GameObject::SetParent(GameObject& parent_01) 
 {
-	this->parent = parent_01;
+	*this->parent = parent_01;
+	// in the contents of the object that called this function, set the parent object to the one that was passed in as a parameter
 };
 
 // A method to return a pointer to the parent of this object
-GameObject* GameObject::GetParent() 
+GameObject& GameObject::GetParent() 
 {
-	return parent;
+	return *this->parent;
+	// we return a dereferenced 'parent' because parent is a pointer, so by dereferencing it we return its contents
+	// don't I want to return the object, not its contents?
 };
 
 // A method to count the children of this object
 int GameObject::CountChildren()
 {	
-	return children.size();
-	// this returns actual vlume of elements, not a memory address
+	return this->children.size();
+	// this returns actual volume of elements, not a memory address
 };
 
 // A method to add a child to this object
-void GameObject::AddChild(GameObject* child) 
+void GameObject::AddChild(GameObject& child) 
 {
-	assert(child->parent == NULL);
+	GameObject* child_01 = &child;
+	assert(child_01->parent == NULL);
 	// check whether or not the child already has a parent object
-	child->parent = this;
+	child_01->parent = this;
 	// assign the object that called this function as the parent object
-	children.push_back(child);
+	children.push_back(child_01);
 	// push back adds an element to the END of the vector
 };
 
 // A method to remove a child from this object
-void GameObject::RemoveChild(GameObject* child) 
+void GameObject::RemoveChild(GameObject& child) 
 {
 	// implement
 };
@@ -97,41 +103,55 @@ void GameObject::Draw()
 
 //	*** TRANSFORM FUNCTIONS	***
 // get protected location of local Matrix3
-Matrix3* GameObject::LocalTransform() 
+Matrix3 GameObject::LocalTransform() 
 {
-	return localTransform;
+	return *localTransform;
 }
 
 // get protected location of global Matrix3
-Matrix3* GameObject::GlobalTransform()
+Matrix3 GameObject::GlobalTransform()
 {
-	return globalTransform;
+	return *globalTransform;
 }
 
-//void GameObject::UpdateTransform() 
-//{
-//	// 1: Update own global transform
-//	// The global transform is a combination of the object’s local transform and its parent’s global transform. 
-//	
-//	// fix
-//	if (this->parent != NULL)
-//	{
-//		this->globalTransform = parent->globalTransform * this->localTransform;
-//		// The global transform is a combination of the object’s local transform and its parent’s global transform. 
-//	}
-//
-//	else
-//	{
-//		globalTransform = localTransform;
-//		// If an object has no parent then its global transform is the same as its local transform.
-//	}
-//
-//	// update global transform of object's children
-//	// fix list
-//	for (GameObject* child : children)
-//	{
-//		child->UpdateTransform();
-//	}
-//
-//	// 2: Update global transform of children
-//};
+
+void GameObject::SetPosition(float x, float y)
+{
+	localTransform->SetTranslation(x, y);
+	UpdateTransform();
+}
+
+void GameObject::SetRotate(float radians) 
+{
+	localTransform->SetRotateZ(radians);
+	UpdateTransform();
+}
+
+
+
+
+void GameObject::UpdateTransform() 
+{
+	// 1: Update own global transform
+	// The global transform is a combination of the object’s local transform and its parent’s global transform. 
+	
+	// fix
+	if (this->parent != NULL)
+	{
+		this->globalTransform = this->parent->globalTransform * this->localTransform;
+		// The global transform is a combination of the object’s local transform and its parent’s global transform. 
+	}
+
+	else
+	{
+		this->globalTransform = this->localTransform;
+		// If an object has no parent then its global transform is the same as its local transform.
+	}
+
+	// update global transform of object's children
+	// fix list
+	for (GameObject* child : children)
+	{
+		child->UpdateTransform();
+	}
+};
