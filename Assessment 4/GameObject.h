@@ -1,24 +1,32 @@
 #pragma once
-#include "Matrix3.h"
+// Include RayLib
 #include "raylib.h"
+
+// include quality of life stuff
+#include <iostream>
+
+// Include derived classes
 #include "SpriteObject.h"
 #include "Player.h"
 #include "Enemy.h"
+
+// Include useful libraries
+#include "Matrix3.h"
 #include <cmath>
 #include <vector>
 #include "assert.h"
-#include <iostream>
+
 using namespace std;
 
-// Create a blueprint for any object with a transform in the game
+// &(type)	= address of an object
+// (type)&	= an object's reference [the object itself]
+// (type)*	= pointer to an object
+// *(type)	= dereference [contents of the reference]
 
+
+// Create a blueprint for any object with a transform in the game
 class GameObject
 {
-
-private:
-	// private stuff here (C++ classes are private by default)
-	
-
 protected: 
 	//	*** PROTECTED GAME PARAMETERS***
 	// declare a pointer to a GameObject called parent
@@ -30,7 +38,6 @@ protected:
 	// create pointers to Matrix3's for local and global transform
 	Matrix3* localTransform = new Matrix3(1);
 	Matrix3* globalTransform = new Matrix3(1);
-	
 
 public:
 	//	*** PUBLIC GAME PARAMETERS	***
@@ -57,11 +64,6 @@ public:
 	// Instantiate a weapon for this object if it is meant to have one, maybe some enemies will, some won't, base won't, etc
 	void virtual GetWeapon();
 	// behaviour determined by derivative class, eg enemy, player, base
-
-	// &(type)	= address of an object
-	// (type)&	= an object's reference [the object itself]
-	// (type)*	= pointer to an object
-	// *(type)	= dereference [contents of the reference]
 
 
 	// ***	RELATIONSHIP FUNCTIONS	***
@@ -90,22 +92,25 @@ public:
 	void Update(float deltaTime);
 		// a non-virtual method that first calls OnUpdate() on itself, then calls Update() on all children
 
-	// DRAW
+
+	// ***	DRAW FUNCTIONS		***
+	// ON-SCREEN GRAPHICS
 	// a virtual method for implementing specific derived drawing behaviours
-	void virtual OnDraw();
+			void virtual OnDraw();
 
-	// a non-virtual method that first calls OnDraw() on itself and then calls Draw() on all children
-	void Draw();
-
+		// a non-virtual method that first calls OnDraw() on itself and then calls Draw() on all children
+			void Draw();
+	
 
 	//	*** TRANSFORM FUNCTIONS	***
-	// get protected location of local Matrix3
+	// MOVE AND ROTATE AN OBJECT
+	// get the protected location of local Matrix3
 	Matrix3 LocalTransform();
 
-	// get protected location of global Matrix3
+	// get the protected location of global Matrix3
 	Matrix3 GlobalTransform();
 
-	// update the location of this object
+	// update the global transform of this object
 	void UpdateTransform();
 
 	// call the Matrix3 class to set the object's position
@@ -116,4 +121,7 @@ public:
 
 	// call the Matrix3 class to incrementally move the object
 	void Translate(float x, float y);
+
+	// call the Matrix3 class to incrementally rotate the object
+	void Rotate(float radians);
 };

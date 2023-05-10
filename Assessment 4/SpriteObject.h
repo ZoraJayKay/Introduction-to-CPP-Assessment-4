@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include <math.h>
 
-class SpriteObject : GameObject
+class SpriteObject : public GameObject
 {
 public:
 	// ***	CLASS PARAMETERS	***

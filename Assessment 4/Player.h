@@ -1,9 +1,8 @@
 #pragma once
 #include "GameObject.h"
-
 // This class is a container for all of the things that collectively represent the player
 
-class Player : GameObject
+class Player : public GameObject
 {
 public:
 	//	***		CONSTRUCTOR & DESTRUCTOR	***
@@ -11,7 +10,7 @@ public:
 	Player();
 
 	// custom constructor
-	Player(int _lives, enum _type, bool _weapon, int score);
+	Player(int _lives, int _type, bool _hasWeapon, int score);
 
 	// default destructor function
 	~Player();

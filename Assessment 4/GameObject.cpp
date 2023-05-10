@@ -1,4 +1,6 @@
+#pragma once
 #include "GameObject.h"
+
 
 // member function for constructor
 GameObject::GameObject() 
@@ -33,23 +35,20 @@ void GameObject::SetParent(GameObject& parent_01)
 };
 
 // A method to return a pointer to the parent of this object
-GameObject& GameObject::GetParent() 
-{
+GameObject& GameObject::GetParent() {
 	return *this->parent;
 	// we return a dereferenced 'parent' because parent is a pointer, so by dereferencing it we return its contents
 	// don't I want to return the object, not its contents?
 };
 
 // A method to count the children of this object
-int GameObject::CountChildren()
-{	
+int GameObject::CountChildren(){	
 	return this->children.size();
 	// this returns actual volume of elements, not a memory address
 };
 
 // A method to add a child to this object
-void GameObject::AddChild(GameObject& child) 
-{
+void GameObject::AddChild(GameObject& child) {
 	GameObject* child_01 = &child;
 	assert(child_01->parent == NULL);
 	// check whether or not the child already has a parent object
@@ -60,8 +59,7 @@ void GameObject::AddChild(GameObject& child)
 };
 
 // A method to remove a child from this object
-void GameObject::RemoveChild(GameObject& child) 
-{
+void GameObject::RemoveChild(GameObject& child) {
 	// implement
 };
 
@@ -77,8 +75,7 @@ void GameObject::Update(float deltaTime)
 	OnUpdate(deltaTime);
 	
 	// FIX FOR LISTS 
-	for (GameObject* child : children)
-	{
+	for (GameObject* child : children)	{
 		child->Update(deltaTime);
 	}
 };
@@ -94,8 +91,7 @@ void GameObject::Draw()
 	OnDraw();
 
 	// FIX FOR LISTS 
-	for (GameObject* child : children)
-	{
+	for (GameObject* child : children)	{
 		child->Draw();
 	}
 };
@@ -103,55 +99,58 @@ void GameObject::Draw()
 
 //	*** TRANSFORM FUNCTIONS	***
 // get protected location of local Matrix3
-Matrix3 GameObject::LocalTransform() 
-{
+Matrix3 GameObject::LocalTransform() {
 	return *localTransform;
 }
 
 // get protected location of global Matrix3
-Matrix3 GameObject::GlobalTransform()
-{
+Matrix3 GameObject::GlobalTransform(){
 	return *globalTransform;
 }
 
 
-void GameObject::SetPosition(float x, float y)
-{
-	localTransform->SetTranslation(x, y);
-	UpdateTransform();
-}
-
-void GameObject::SetRotate(float radians) 
-{
-	localTransform->SetRotateZ(radians);
-	UpdateTransform();
-}
-
-
-
-
-void GameObject::UpdateTransform() 
+// update the global transform of this object
+void GameObject::UpdateTransform()
 {
 	// 1: Update own global transform
 	// The global transform is a combination of the object’s local transform and its parent’s global transform. 
-	
-	// fix
-	if (this->parent != NULL)
-	{
-		this->globalTransform = this->parent->globalTransform * this->localTransform;
+
+	if (this->parent != NULL)	{
+		*(this->globalTransform) = *(this->parent->globalTransform) * *(this->localTransform);
 		// The global transform is a combination of the object’s local transform and its parent’s global transform. 
 	}
 
-	else
-	{
+	else	{
 		this->globalTransform = this->localTransform;
 		// If an object has no parent then its global transform is the same as its local transform.
 	}
 
-	// update global transform of object's children
-	// fix list
-	for (GameObject* child : children)
-	{
+	// 2: Update global transform of this object's children
+	for (GameObject* child : children)	{
 		child->UpdateTransform();
 	}
 };
+
+// call the Matrix3 class to set the object's position
+void GameObject::SetPosition(float x, float y){
+	localTransform->SetTranslation(x, y);
+	UpdateTransform();
+}
+
+// call the Matrix3 class to set the object's rotation
+void GameObject::SetRotate(float radians) {
+	localTransform->SetRotateZ(radians);
+	UpdateTransform();
+}
+
+// call the Matrix3 class to incrementally move the object
+void GameObject::Translate(float x, float y) {
+	localTransform->Translate(x, y);
+	UpdateTransform();
+}
+
+// call the Matrix3 class to incrementally rotate the object
+void GameObject::Rotate(float radians) {
+	*localTransform = localTransform->RotateZ(radians);
+
+}

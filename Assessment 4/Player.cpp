@@ -1,17 +1,16 @@
 #include "Player.h"
-#include "GameObject.cpp"
 
 Player::Player() {};
 Player::~Player() {};
 
 // fix enum
-Player::Player(int _lives, enum _type, bool _weapon, int _score)
+Player::Player(int _lives, int _type, bool _hasWeapon, int _score)
 {
 	std::cout << "---Player constructor---" << endl;
 
 	lives = _lives;	
 	objectType = _type;
-	hasWeapon = _weapon;
+	hasWeapon = _hasWeapon;
 	score = _score;
 }
 

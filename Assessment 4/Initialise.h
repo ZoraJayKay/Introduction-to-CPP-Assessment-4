@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "GameObject.h"
+
 using namespace std;
 
 // Set the parameters for the game to run after starting and before ending
