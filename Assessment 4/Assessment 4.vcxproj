@@ -136,6 +136,7 @@
     <ClCompile Include="Matrix3.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SpriteObject.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -150,6 +151,7 @@
     <ClInclude Include="Matrix3.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SpriteObject.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

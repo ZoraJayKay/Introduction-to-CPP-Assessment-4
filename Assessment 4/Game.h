@@ -11,18 +11,7 @@ using namespace std;
 class Game
 {
 private:
-	//	https://learncplusplus.org/how-to-make-a-millisecond-timer-in-c-and-c/
-	// 
-	//	***		TIMER VARIABLES		***
-	long currentTime = 0;   // for moment-in-time snapshots
-	long lastTime = 0;      // time at first moment of an update
-	float timer = 0;        // running timer of time spent updating
-	int fps = 1;            // variable that holds the FPS for printing to the screen
-	int frames;             // 
-	int speed = 100;
-	float deltaTime = 0.005f;
-	clock_t start, end;		// this is a datatype defined by the standard time.h library, not me
-	
+
 
 protected:
 	// a vector of parentless GameObjects
@@ -34,6 +23,10 @@ protected:
 	// a vector of GameObjects waiting to be removed from the vector of parentless GameObjects between updates
 	vector<GameObject*> rootObjectsToRemove;
 
+	float targetFps = 60.0f;
+	float elapsedTime = 0.0f;
+	int frames = 0;
+
 public: 
 	// default constructor function
 	Game();
@@ -41,8 +34,6 @@ public:
 	// default destructor function
 	~Game();
 
-	// TEST
-	void PrintTime();
 
 	// 0: Initialise a game session
 

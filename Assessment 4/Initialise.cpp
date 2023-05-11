@@ -14,12 +14,6 @@ Initialise::Initialise()
 	 //1: GAME PARAMETERS
 		//1.1: Starting conditions
 		//Set the parameters for the game to run after starting and before ending
-		//	1.1.1: Create the visible play area
-		//	MOVED TO PROGRAM CLASS FOR SIMPLICITY
-
-		//	1.1.2: Create a timer
-		//	1.1.3: Create and set player score = 0
-		//	1.1.4 Set target FPS
 
 		//1.2: Win/loss conditions
 		//	1.2.1: Win if enemy lives = 0

@@ -10,7 +10,8 @@ class Initialise
 {
 
 private:
-	// private stuff here (C++ classes are private by default)
+
+
 
 public: 
 	// The default constuctor function fires once on instantiation, so this is an ideal place to set the starting conditions of the game.
@@ -32,5 +33,8 @@ public:
 
 	// default destructor function
 	~Initialise();
+
+	void PrintTimeAtStart();
+	void PrintTimeElapsed();
 };
 
