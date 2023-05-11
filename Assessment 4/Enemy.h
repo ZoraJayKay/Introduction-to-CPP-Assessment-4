@@ -6,6 +6,7 @@ class Enemy : public GameObject
 public:
 
 	Enemy();
+	
 	~Enemy();
 };
 

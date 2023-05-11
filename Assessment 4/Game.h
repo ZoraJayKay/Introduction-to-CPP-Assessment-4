@@ -3,15 +3,36 @@
 #define RAYGUI_IMPLEMENTATION
 #define RAYGUI_SUPPORT_ICONS
 #include <iostream>
+#include <time.h>
+#include "GameObject.h"
 
 using namespace std;
 
 class Game
 {
 private:
-	// private stuff here (C++ classes are private by default)
+	//	https://learncplusplus.org/how-to-make-a-millisecond-timer-in-c-and-c/
+	// 
+	//	***		TIMER VARIABLES		***
+	long currentTime = 0;   // for moment-in-time snapshots
+	long lastTime = 0;      // time at first moment of an update
+	float timer = 0;        // running timer of time spent updating
+	int fps = 1;            // variable that holds the FPS for printing to the screen
+	int frames;             // 
+	int speed = 100;
+	float deltaTime = 0.005f;
+	clock_t start, end;		// this is a datatype defined by the standard time.h library, not me
+	
 
+protected:
+	// a vector of parentless GameObjects
+	vector<GameObject*> rootObjects;
 
+	// a vector of GameObjects waiting to be added to the vector of parentless GameObjects between updates
+	vector<GameObject*> rootObjectsToAdd;
+
+	// a vector of GameObjects waiting to be removed from the vector of parentless GameObjects between updates
+	vector<GameObject*> rootObjectsToRemove;
 
 public: 
 	// default constructor function
@@ -19,6 +40,9 @@ public:
 
 	// default destructor function
 	~Game();
+
+	// TEST
+	void PrintTime();
 
 	// 0: Initialise a game session
 

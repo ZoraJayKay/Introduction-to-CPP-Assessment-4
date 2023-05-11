@@ -27,13 +27,11 @@ Initialise::Initialise()
 
 		//1.3: Objects
 		//	1.3.1: Instantiate pointers to the player and its sprite
-	Player* playerObject = new Player(1, 1,true,0);
+	Player* playerObject = new Player(1, true, 0);
+	SpriteObject* playerSprite = new SpriteObject();
 		// Lives = 1.
-		// Type = Player; 1.
 		// Has weapon = true.
 		// Score = 0.
-
-	SpriteObject* playerSprite = new SpriteObject();
 
 		//	1.3.2: Load the sprite a texture
 	playerSprite->Load("");	// POPULATE WITH FILE PATH

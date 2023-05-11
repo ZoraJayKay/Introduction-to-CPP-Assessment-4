@@ -16,14 +16,15 @@ void GameObject::GetWeapon() {};
 
 //	*** PUBLIC GAME PARAMETERS	***
 	// object type
-enum GameObject::objectType
-{
-	Sprite,
-	Player,
-	Enemy,
-	Projectile,
-	Base
-};
+//enum GameObject::objectType
+//{
+//	Default_Type,
+//	Sprite_Type,
+//	Player_Type,
+//	Enemy_Type,
+//	Projectile_Type,
+//	Base_Type
+//};
 
 
 // ***	RELATIONSHIP FUNCTIONS	***

@@ -3,7 +3,9 @@
 
 //	*** CONSTRUCTOR AND DESTRUCTOR
 // default constructor function
-SpriteObject::SpriteObject() {};
+SpriteObject::SpriteObject() {
+	objType = Sprite_Type;
+};
 
 // default destructor function
 SpriteObject::~SpriteObject() {};

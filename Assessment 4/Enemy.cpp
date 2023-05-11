@@ -1,12 +1,14 @@
 #include "Enemy.h"
 
+// default constructor
 Enemy::Enemy()
-{
-	// default constructor
+{		
+	objType = Enemy_Type;
 }
 
+// default destructor
 Enemy::~Enemy()
 {
-	// default destructor
+	
 }
 

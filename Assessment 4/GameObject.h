@@ -37,15 +37,28 @@ protected:
 public:
 	//	*** PUBLIC GAME PARAMETERS	***
 	// object type
-	enum objectType;
+	enum objectType
+	{
+		Default_Type,
+		Sprite_Type,
+		Player_Type,
+		Enemy_Type,
+		Projectile_Type,
+		Base_Type
+	};
 
-	// is this character armed?
+	objectType objType;
+
+	// Speed of the object
+	int objectSpeed;
+
+	// Does this object have a weapon, true or false?
 	bool hasWeapon;
 
-	// variable to count object's number of lives
+	// How many lives does this object have?
 	unsigned int lives;
 
-	// variable to track player score
+	// The player's score
 	unsigned int score;
 
 	//	*** CONSTRUCTOR & DESTRUCTOR	***

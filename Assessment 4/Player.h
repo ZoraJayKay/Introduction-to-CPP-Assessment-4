@@ -10,7 +10,7 @@ public:
 	Player();
 
 	// custom constructor
-	Player(int _lives, int _type, bool _hasWeapon, int score);
+	Player(int _lives, bool _hasWeapon, int score);
 
 	// default destructor function
 	~Player();
