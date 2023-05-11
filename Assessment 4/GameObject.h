@@ -5,11 +5,6 @@
 // include quality of life stuff
 #include <iostream>
 
-// Include derived classes
-#include "SpriteObject.h"
-#include "Player.h"
-#include "Enemy.h"
-
 // Include useful libraries
 #include "Matrix3.h"
 #include <cmath>

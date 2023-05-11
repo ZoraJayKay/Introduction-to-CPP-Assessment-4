@@ -3,6 +3,7 @@
 #define RAYGUI_IMPLEMENTATION
 #define RAYGUI_SUPPORT_ICONS
 #include <iostream>
+
 using namespace std;
 
 class Game

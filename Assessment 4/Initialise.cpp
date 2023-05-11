@@ -3,8 +3,10 @@
 #define RAYGUI_IMPLEMENTATION
 #define RAYGUI_SUPPORT_ICONS
 #include "Player.h"
+#include "Enemy.h"
+#include "SpriteObject.h"
 
-// member function for constructor
+// member function constructor
 Initialise::Initialise() 
 {
 	std::cout << "---Initialise constructor---" << endl;
@@ -37,15 +39,14 @@ Initialise::Initialise()
 	playerSprite->Load("");	// POPULATE WITH FILE PATH
 
 		//	1.3.3: Set the initial position for the playerObject
-	// translate playerObject to centre of screen?
+	playerObject->SetPosition(GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f);
 
 		//	1.3.4: Make the point of rotation for the playerObject at its centre
-	playerObject->SetPosition(GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f);
+	// fill
 
 		//	1.3.5:	Rotate the sprite to be facing forward
 	playerSprite->SetRotate(-90 * (float)(PI / 180.0f));
 
-				
 		//	1.3.5: Make the point of rotation for the sprite at its centre
 	playerSprite->SetPosition(-playerSprite->Width() / 2.0f, playerSprite->Height() / 2.0f);
 

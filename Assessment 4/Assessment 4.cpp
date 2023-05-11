@@ -1,6 +1,6 @@
 // Assessment 4.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-
+#pragma once
 #include "raylib.h"
 #define RAYGUI_IMPLEMENTATION
 #define RAYGUI_SUPPORT_ICONS
