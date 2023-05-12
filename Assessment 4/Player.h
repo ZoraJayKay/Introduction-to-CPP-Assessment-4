@@ -5,6 +5,8 @@
 class Player : public GameObject
 {
 public:
+	// Player variables
+
 	//	***		CONSTRUCTOR & DESTRUCTOR	***
 	// default constructor function
 	Player();

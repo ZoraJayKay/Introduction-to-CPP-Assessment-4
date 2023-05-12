@@ -26,7 +26,9 @@ Initialise::Initialise()
 
 	//1.3: Objects
 	//	1.3.1: Instantiate pointers to the player and its sprite
-	Player* playerObject = new Player(1, true, 0);
+	//Player* playerObject = new Player(1, true, 0);
+	
+	playerObject = new Player(1, true, 0);
 	SpriteObject* playerSprite = new SpriteObject();
 		// Lives = 1.
 		// Has weapon = true.
@@ -47,9 +49,7 @@ Initialise::Initialise()
 	
 	// Parent the player sprite to the player object
 	playerObject->AddChild(*playerSprite);
-	// make a pointer accessible to the Game class to point to the playerObject pointer
-	playerPtr = &(*playerObject);
-	
+		
 	//	1.3.5: Set the initial position for the playerObject
 	playerObject->SetPosition(GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f);
 

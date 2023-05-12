@@ -46,11 +46,17 @@ public:
 		Projectile_Type,
 		Base_Type
 	};
-
+	
 	objectType objType;
+	
+	enum WeaponType {
+		Bullet
+	};
+	
+	WeaponType weaponEquipped;
 
-	// Speed of the object
-	int objectSpeed;
+	// Movement speed of the object
+	int moveSpeed;
 
 	// Does this object have a weapon, true or false?
 	bool hasWeapon;
@@ -70,9 +76,10 @@ public:
 
 	//	*** FUNCTIONS	***
 	// Instantiate a weapon for this object if it is meant to have one, maybe some enemies will, some won't, base won't, etc
-	void virtual GetWeapon();
+	int GetWeapon();
 	// behaviour determined by derivative class, eg enemy, player, base
 
+	void SetWeapon(WeaponType choice);
 
 	// ***	RELATIONSHIP FUNCTIONS	***
 	// A method to set the parent of the object that calls this function equal to an object that is passed in (by reference to it)

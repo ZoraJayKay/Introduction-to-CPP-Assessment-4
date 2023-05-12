@@ -11,8 +11,17 @@ GameObject::GameObject()
 // member function for destructor
 GameObject::~GameObject() {};
 
+// a method to get the weapon of this object
+int GameObject::GetWeapon() {
+	return weaponEquipped;
+};
+
 // a method to set the weapon of this object
-void GameObject::GetWeapon() {};
+void GameObject::SetWeapon(WeaponType choice) {
+	weaponEquipped = choice;
+};
+
+
 
 //	*** PUBLIC GAME PARAMETERS	***
 	// object type

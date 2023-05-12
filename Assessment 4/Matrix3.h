@@ -37,7 +37,7 @@ public:
 
 
 	// MATRIX SETTING
-	Matrix3 Set(Matrix3);
+	Matrix3 Set(Matrix3& m);
 	// implementation in source file
 
 	//	MATRIX ROTATION

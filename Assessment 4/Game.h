@@ -4,7 +4,10 @@
 //#define RAYGUI_SUPPORT_ICONS
 #include <iostream>
 #include "GameObject.h"
+#include "Initialise.h"
+#include "Timer.h"
 
+using namespace Utilities;
 using namespace std;
 
 class Game
@@ -23,6 +26,12 @@ protected:
 	vector<GameObject*> rootObjectsToRemove;
 
 public: 
+	// public access to the initialise object
+	Initialise* publicInit;
+
+	// Timer instance
+	Timer* gameTimer;
+
 	// 0: Initialise a game session (default constructor)
 	Game();
 

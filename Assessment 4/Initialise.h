@@ -9,7 +9,7 @@ using namespace std;
 
 // Set the parameters for the game to run after starting and before ending
 
-class Initialise //: public Game
+class Initialise
 {
 
 private:
@@ -18,7 +18,7 @@ private:
 
 public: 
 	// public pointers that other classes can access
-	Player* playerPtr;
+	Player* playerObject;
 	Enemy* EnemyPtr;
 	vector<Enemy*> EnemyPtrs;
 

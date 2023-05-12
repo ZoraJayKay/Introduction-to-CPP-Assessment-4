@@ -27,11 +27,12 @@ Game::Game()
 	// Create a pointer to a new instance of the Initialise class.
 	// The Initialise class instance (init) will in turn set all of the parameters that constitute the starting conditions of the game.	
 	Initialise* init = new Initialise();
-	
+	publicInit = init;
+
 	// Add the starting objects to the scene as root objects
-	AddRootObject(*(init->playerPtr));
-	// enemy objects
-	// base objects
+	AddRootObject(*(init->playerObject));
+	// AddRootObject(*(init(enemy objects));
+	// AddRootObject(*(init(base objects));
 
 	SetTargetFPS(60);
 }
@@ -46,24 +47,24 @@ Game::~Game()
 
 // 1: UPDATE FUNCTION
 void Game::Update()
-{	
+{
 	// 1.1: Update the game timer
 	// Instantiate a timer if one doesn't already exist
-	Utilities::Timer* timer = Utilities::Timer::Instance();
+	gameTimer = Timer::Instance();
 
 	// Update delta time
-	timer->Tick();
+	gameTimer->Tick();
 
 	// Reset the clock's 'start' timer
-	timer->Reset();
+	gameTimer->Reset();
 
 	// Increment the timer with delta time
-	elapsedTime += timer->DeltaTime();
+	elapsedTime += gameTimer->DeltaTime();
 
 	// Increment the frames
 	frames++;
 
-		if (elapsedTime >= timer->DeltaTime()) {
+		if (elapsedTime >= gameTimer->DeltaTime()) {
 			// print framerate
 			// std::cout << frames / elapsedTime << endl;	
 

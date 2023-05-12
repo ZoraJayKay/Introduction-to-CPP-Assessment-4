@@ -77,7 +77,7 @@ Matrix3 Matrix3::operator * (Matrix3& M2)
 
 
 // set the matrix that calls this function equal to the matrix it passes in
-Matrix3 Matrix3::Set(Matrix3 m)
+Matrix3 Matrix3::Set(Matrix3& m)
 {
     return Matrix3
     (
