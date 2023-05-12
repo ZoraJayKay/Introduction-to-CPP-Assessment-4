@@ -44,6 +44,7 @@ GameObject& GameObject::GetParent() {
 
 // A method to count the children of this object
 int GameObject::CountChildren(){	
+	// cout << "This object has " << this->children.size() << " children." << endl;
 	return this->children.size();
 	// this returns actual volume of elements, not a memory address
 };
@@ -74,8 +75,7 @@ void GameObject::OnUpdate(float deltaTime) {};
 void GameObject::Update(float deltaTime) 
 {
 	OnUpdate(deltaTime);
-	
-	// FIX FOR LISTS 
+		
 	for (GameObject* child : children)	{
 		child->Update(deltaTime);
 	}
@@ -91,7 +91,6 @@ void GameObject::Draw()
 {
 	OnDraw();
 
-	// FIX FOR LISTS 
 	for (GameObject* child : children)	{
 		child->Draw();
 	}

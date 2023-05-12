@@ -94,7 +94,7 @@ public:
 	// ***	UPDATE FUNCTIONS	***
 	// CALCULATIONS
 	// Create virtual OnUpdate function for use by separate types
-	void virtual OnUpdate(float deltaTime);
+	virtual void OnUpdate(float deltaTime);
 		// behaviour determined by derivative class eg player, enemy, base
 
 	void Update(float deltaTime);
@@ -104,10 +104,10 @@ public:
 	// ***	DRAW FUNCTIONS		***
 	// ON-SCREEN GRAPHICS
 	// a virtual method for implementing specific derived drawing behaviours
-			void virtual OnDraw();
+	virtual void OnDraw();
 
-		// a non-virtual method that first calls OnDraw() on itself and then calls Draw() on all children
-			void Draw();
+	// a non-virtual method that first calls OnDraw() on itself and then calls Draw() on all children
+	void Draw();
 	
 
 	//	*** TRANSFORM FUNCTIONS	***

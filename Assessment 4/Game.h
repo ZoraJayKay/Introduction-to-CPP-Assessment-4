@@ -23,16 +23,12 @@ protected:
 	vector<GameObject*> rootObjectsToRemove;
 
 public: 
-	// default constructor function
+	// 0: Initialise a game session (default constructor)
 	Game();
 
 	// default destructor function
 	~Game();
-
-
-	// 0: Initialise a game session
-
-
+		
 	// 1: UPDATE FUNCTION
 	void Update();	// 1.1: Update the game timer
 

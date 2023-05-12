@@ -1,9 +1,11 @@
 #include "SpriteObject.h"
-
+#include <string>
 
 //	*** CONSTRUCTOR AND DESTRUCTOR
 // default constructor function
 SpriteObject::SpriteObject() {
+	std::cout << "---SpriteObject constructor---" << endl;
+
 	objType = Sprite_Type;
 };
 
@@ -29,14 +31,16 @@ void SpriteObject::Load(const char* fileName)
 	texture = LoadTextureFromImage(image);
 }
 
-// a virtual override method for implementing specific derived drawing behaviours
-//void SpriteObject::OnDraw() 
-//{
-//	// perform any rotation needed
-//	// local x-axis y and x get passed into Atan2
-//	float rotation = (float)atan2(globalTransform->m10, globalTransform->m00);
-//
-//	// draw the texture
-//	// needs fixing
-//	DrawTextureEx(texture, new Vector2((float)globalTransform->m02, (float)globalTransform->m12), rotation * (float)(180 / PI), 1, WHITE);
-//}
+ //a virtual override method for implementing specific derived drawing behaviours
+void SpriteObject::OnDraw()
+{
+	// perform any rotation needed
+	// local x-axis y and x get passed into Atan2
+	float rotation = (float)atan2(globalTransform->m10, globalTransform->m00);
+
+	Vector2 v = {globalTransform->m02, globalTransform->m12};
+
+	// draw the texture
+	// needs fixing
+	DrawTextureEx(texture, v, rotation * (float)(180 / PI), 1, WHITE);
+}

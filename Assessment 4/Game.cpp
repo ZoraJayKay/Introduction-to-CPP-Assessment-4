@@ -6,26 +6,32 @@
 #define RAYGUI_SUPPORT_ICONS
 
 // Play area variables
-int screenWidth = 800;
-int screenHeight = 450;
+int screenWidth = 1080;
+int screenHeight = 720;
 
 // Timer variables
 float targetFps = 60.0f;
 float elapsedTime = 0.0f;
 int frames = 0;
 
-// Game class constructor
+// 0: Initialise a game session (default constructor)
 Game::Game() 
 {
 	std::cout << "---Game constructor---" << endl;
 	
+	// Print message in program banner at top of screen
+	// NOTE TO SELF: InitWindow needs to be done BEFORE loading any textures
+	InitWindow(screenWidth, screenHeight, "Zora Jane Kerr: Introduction to C++ (Assessment 4 - Retro Game) Space Invaders (AIE, 2023 [student year 1])");
+
 	// 0: Initialise a game session
 	// Create a pointer to a new instance of the Initialise class.
-	Initialise* init = new Initialise();
 	// The Initialise class instance (init) will in turn set all of the parameters that constitute the starting conditions of the game.	
-
-	// Print banner at top of screen
-	InitWindow(screenWidth, screenHeight, "Zora Jane Kerr: Introduction to C++ (Assessment 4 - Retro Game) Space Invaders (AIE, 2023 [student year 1])");
+	Initialise* init = new Initialise();
+	
+	// Add the starting objects to the scene as root objects
+	AddRootObject(*(init->playerPtr));
+	// enemy objects
+	// base objects
 
 	SetTargetFPS(60);
 }
@@ -58,10 +64,8 @@ void Game::Update()
 	frames++;
 
 		if (elapsedTime >= timer->DeltaTime()) {
-			std::cout << frames / elapsedTime << endl;	// framerate
-			//std::cout << timer->DeltaTime() << std::endl;	// time taken per tick
-			//frames = 0;
-			//elapsedTime -= 1;
+			// print framerate
+			// std::cout << frames / elapsedTime << endl;	
 
 			UpdateRelationships();
 			UpdateCalculations();
@@ -97,9 +101,8 @@ void Game::UpdateRelationships()
 			rootObjects.erase(rootObjects.begin() + index);
 		}
 
-		rootObjectsToRemove.clear();
 		// clear the remove-pending objects vector
-
+		rootObjectsToRemove.clear();
 }
 
 // 1.2.1: Add objects created since last update to the list of root objects
@@ -134,9 +137,10 @@ void Game::Draw()
 
 	DrawText("Placeholder text", screenWidth / 2, screenHeight / 2, 20, LIGHTGRAY);
 
-
-	// 1.4.2: Render objects
-	// fill
+	// 1.4.2: Draw all root objects (and thus their children)
+	for (GameObject* obj : rootObjects) {
+		obj->Draw();
+	}
 
 	EndDrawing();
 }

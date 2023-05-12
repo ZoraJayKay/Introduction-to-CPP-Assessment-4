@@ -1,12 +1,15 @@
 #pragma once
 #include <iostream>
 #include "GameObject.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "SpriteObject.h"
 
 using namespace std;
 
 // Set the parameters for the game to run after starting and before ending
 
-class Initialise
+class Initialise //: public Game
 {
 
 private:
@@ -14,7 +17,15 @@ private:
 
 
 public: 
-	// The default constuctor function fires once on instantiation, so this is an ideal place to set the starting conditions of the game.
+	// public pointers that other classes can access
+	Player* playerPtr;
+	Enemy* EnemyPtr;
+	vector<Enemy*> EnemyPtrs;
+
+	// File path variables
+	const char* playerShipFileName;
+	const char* enemyShipFileName;
+	const char* baseFileName;
 
 	Initialise();
 		/* 1: GAME PARAMETERS
@@ -33,8 +44,5 @@ public:
 
 	// default destructor function
 	~Initialise();
-
-	void PrintTimeAtStart();
-	void PrintTimeElapsed();
 };
 

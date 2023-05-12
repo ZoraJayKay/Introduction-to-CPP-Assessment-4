@@ -34,6 +34,6 @@ public:
 
 	//	*** DRAWING FUNCTIONS	***
 	// definition to override the OnDraw from parent GameObject so that the sprite source file can use OnDraw with sprite texture
-	//void OnDraw() override;
+	void OnDraw() override;
 };
 
