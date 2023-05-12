@@ -5,19 +5,13 @@
 #define RAYGUI_IMPLEMENTATION
 #define RAYGUI_SUPPORT_ICONS
 
-// Below are my member function constructor and destructor. 
-
-// Note to self: These don't have return types like in C#. They belong to an instance of the class.
-// (class) (scope resolution operator) (function)
-// Game::Game()
-
-
 // Play area variables
 int screenWidth = 800;
 int screenHeight = 450;
 
 
 
+// Game class constructor
 Game::Game() 
 {
 	std::cout << "---Game constructor---" << endl;
@@ -31,9 +25,10 @@ Game::Game()
 	InitWindow(screenWidth, screenHeight, "Zora Jane Kerr: Introduction to C++ (Assessment 4 - Retro Game) Space Invaders (AIE, 2023 [student year 1])");
 
 	SetTargetFPS(60);
+
 }
 
-
+// Game class destructor
 Game::~Game() 
 {
 
@@ -60,15 +55,17 @@ void Game::Update()
 		frames++;
 
 
-		if (elapsedTime >= 1.0f) {
-			//std::cout << elapsedTime << endl;	// framerate
-			std::cout << timer->DeltaTime() << std::endl;	// time taken per tick
+		if (elapsedTime >= timer->DeltaTime()) {
+			std::cout << frames / elapsedTime << endl;	// framerate
+			//std::cout << timer->DeltaTime() << std::endl;	// time taken per tick
+			//frames = 0;
+			//elapsedTime -= 1;
 
 			UpdateRelationships();
 			UpdateCalculations();
 			Draw();
-			//elapsedTime -= 1;
-			frames = 0;
+			
+			
 		}
 	}
 
@@ -79,8 +76,50 @@ void Game::Update()
 // 1.2: Update object relationships
 void Game::UpdateRelationships()
 {
+	//***	ADDING ROOT OBJECTS		***
+		// for each pointer in the vector of objects to remove...
+		for (GameObject* obj : rootObjectsToAdd) {
+			rootObjects.push_back(obj);
+		}
+	
+		// clear the add-pending objects vector
+		rootObjectsToAdd.clear();
+
+
+	//***	REMOVING ROOT OBJECTS		***
+		// for each pointer in the vector of objects to remove...
+		for (GameObject* obj : rootObjectsToRemove) {
+		
+			// create an iterator which will find the pointer to remove in the rootObjects vector
+			vector<GameObject*>::iterator itr = find(rootObjects.begin(), rootObjects.end(), obj);
+		
+			// save the position between index 0 and the found pointer
+			int index = distance(rootObjects.begin(), itr);
+
+			// erase the found pointer
+			rootObjects.erase(rootObjects.begin() + index);
+		}
+
+		rootObjectsToRemove.clear();
+		// clear the remove-pending objects vector
 
 }
+
+// 1.2.1: Add objects created since last update to the list of root objects
+void Game::AddRootObject(GameObject& obj) {
+	// Create a pointer of the object reference passed in 
+	GameObject* objPtr = &obj;
+	// Add the new pointer to the object passed in to the vector
+	rootObjectsToAdd.push_back(objPtr);
+};
+
+// 1.2.2: Add objects targeted for removal since last update to a list
+void Game::RemoveRootObject(GameObject& obj) {
+	// Create a pointer of the object reference passed in 
+	GameObject* objPtr = &obj;
+	// Add the new pointer to the object passed in to the vector
+	rootObjectsToRemove.push_back(objPtr);
+};
 
 // 1.3: Update scene calculations
 void Game::UpdateCalculations() 

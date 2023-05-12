@@ -19,10 +19,10 @@ namespace Utilities {
 		float mTimeScale;
 
 	public:
-		static Timer* Instance();	// Create a new timer
-		static void Release();		// Function to delete timer
-		void Reset();			
-		float DeltaTime();			// return delta time
+		static Timer* Instance();	// Create a new pointer to a new timer
+		static void Release();		// Function to delete timer pointer
+		void Reset();				// Function to set 'start' time
+		float DeltaTime();			// Function to return the delta time
 		void TimeScale(float t = 1.0f);	// set time scale
 		float TimeScale();			// return the timescale
 		void Tick();				// move the timer forward

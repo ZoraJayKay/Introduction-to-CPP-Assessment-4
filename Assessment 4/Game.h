@@ -1,7 +1,7 @@
 #pragma once
-#include "raylib.h"
-#define RAYGUI_IMPLEMENTATION
-#define RAYGUI_SUPPORT_ICONS
+//#include "raylib.h"
+//#define RAYGUI_IMPLEMENTATION
+//#define RAYGUI_SUPPORT_ICONS
 #include <iostream>
 #include <time.h>
 #include "GameObject.h"
@@ -46,6 +46,12 @@ public:
 
 	// 1.2: Update object relationships
 	void UpdateRelationships();
+
+	// 1.2.1: Add objects created since last update to the list of root objects
+	void AddRootObject(GameObject& obj);
+
+	// 1.2.2: Add objects targeted for removal since last update to a list
+	void RemoveRootObject(GameObject& obj);
 
 	// 1.3: Update scene calculations
 	void UpdateCalculations();

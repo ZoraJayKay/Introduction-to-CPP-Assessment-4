@@ -122,7 +122,7 @@ void GameObject::UpdateTransform()
 	}
 
 	else	{
-		this->globalTransform = this->localTransform;
+		*(this->globalTransform) = *(this->localTransform);
 		// If an object has no parent then its global transform is the same as its local transform.
 	}
 

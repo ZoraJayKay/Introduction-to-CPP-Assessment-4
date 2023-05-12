@@ -28,7 +28,7 @@ protected:
 	GameObject* parent;
 
 	// declare a vector of GameObject pointers to hold pointers to any child objects
-	std::vector<GameObject*> children;	
+	vector<GameObject*> children;	
 
 	// create pointers to Matrix3's for local and global transform
 	Matrix3* localTransform = new Matrix3(1);
