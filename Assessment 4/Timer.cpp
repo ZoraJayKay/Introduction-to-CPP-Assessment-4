@@ -49,7 +49,7 @@ namespace Utilities {
 		return mTimeScale;
 	}
 
-
+	// Update mDeltaTime
 	void Timer::Tick() {
 		mDeltaTime = std::chrono::system_clock::now() - mStartTime;
 	}

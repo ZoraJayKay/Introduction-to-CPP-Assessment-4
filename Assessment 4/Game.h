@@ -3,7 +3,6 @@
 //#define RAYGUI_IMPLEMENTATION
 //#define RAYGUI_SUPPORT_ICONS
 #include <iostream>
-#include <time.h>
 #include "GameObject.h"
 
 using namespace std;
@@ -14,18 +13,14 @@ private:
 
 
 protected:
-	// a vector of parentless GameObjects
+	// A vector of parentless GameObjects
 	vector<GameObject*> rootObjects;
 
-	// a vector of GameObjects waiting to be added to the vector of parentless GameObjects between updates
+	// A vector of GameObjects waiting to be added to the vector of parentless GameObjects between updates
 	vector<GameObject*> rootObjectsToAdd;
 
-	// a vector of GameObjects waiting to be removed from the vector of parentless GameObjects between updates
+	// A vector of GameObjects waiting to be removed from the vector of parentless GameObjects between updates
 	vector<GameObject*> rootObjectsToRemove;
-
-	float targetFps = 60.0f;
-	float elapsedTime = 0.0f;
-	int frames = 0;
 
 public: 
 	// default constructor function
@@ -39,10 +34,7 @@ public:
 
 
 	// 1: UPDATE FUNCTION
-	void Update();
-
-	// 1.1: Update the game timer
-	void UpdateTimer();
+	void Update();	// 1.1: Update the game timer
 
 	// 1.2: Update object relationships
 	void UpdateRelationships();
@@ -57,7 +49,9 @@ public:
 	void UpdateCalculations();
 
 	// 1.4: Draw the scene
-	void Draw();
+	void Draw();	// includes...
+	// 1.4.1: Create the visible play area
+	// 1.4.2: Render objects
 		
 
 	// 2: ENDIF FUNCTION

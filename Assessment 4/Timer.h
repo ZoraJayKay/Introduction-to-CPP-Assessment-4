@@ -14,7 +14,7 @@ namespace Utilities {
 		// define a Timer singleton instance
 		static Timer* sInstance;
 
-		std::chrono::system_clock::time_point mStartTime;		// current time
+		std::chrono::system_clock::time_point mStartTime;
 		std::chrono::duration<float> mDeltaTime;
 		float mTimeScale;
 
@@ -33,4 +33,4 @@ namespace Utilities {
 	};
 }
 
-#endif // !_TIMER_H
+#endif

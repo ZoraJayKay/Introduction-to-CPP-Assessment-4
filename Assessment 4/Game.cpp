@@ -9,7 +9,10 @@
 int screenWidth = 800;
 int screenHeight = 450;
 
-
+// Timer variables
+float targetFps = 60.0f;
+float elapsedTime = 0.0f;
+int frames = 0;
 
 // Game class constructor
 Game::Game() 
@@ -25,7 +28,6 @@ Game::Game()
 	InitWindow(screenWidth, screenHeight, "Zora Jane Kerr: Introduction to C++ (Assessment 4 - Retro Game) Space Invaders (AIE, 2023 [student year 1])");
 
 	SetTargetFPS(60);
-
 }
 
 // Game class destructor
@@ -37,23 +39,23 @@ Game::~Game()
 
 
 // 1: UPDATE FUNCTION
-// 1.1: Update the game timer
 void Game::Update()
 {	
-	// Instantiate a timer
+	// 1.1: Update the game timer
+	// Instantiate a timer if one doesn't already exist
 	Utilities::Timer* timer = Utilities::Timer::Instance();
 
-	// Recognise that the timer is running
-	bool isRunning = true;
+	// Update delta time
+	timer->Tick();
 
-	// While the clock is running...
-	while (isRunning) {
-		// increment the timer with the Tick function...
-		timer->Tick();
-		timer->Reset();
-		elapsedTime += timer->DeltaTime();
-		frames++;
+	// Reset the clock's 'start' timer
+	timer->Reset();
 
+	// Increment the timer with delta time
+	elapsedTime += timer->DeltaTime();
+
+	// Increment the frames
+	frames++;
 
 		if (elapsedTime >= timer->DeltaTime()) {
 			std::cout << frames / elapsedTime << endl;	// framerate
@@ -64,12 +66,7 @@ void Game::Update()
 			UpdateRelationships();
 			UpdateCalculations();
 			Draw();
-			
-			
 		}
-	}
-
-	Utilities::Timer::Release();
 }
 
 
@@ -124,18 +121,22 @@ void Game::RemoveRootObject(GameObject& obj) {
 // 1.3: Update scene calculations
 void Game::UpdateCalculations() 
 {
-
+	// reference the controller?
 }
 
 // 1.4: Draw the scene
 void Game::Draw() 
 {
-	// 1: Create the visible play area
 	BeginDrawing();
 
+	// 1.4.1: Create the visible play area
 	ClearBackground(RAYWHITE);
 
 	DrawText("Placeholder text", screenWidth / 2, screenHeight / 2, 20, LIGHTGRAY);
+
+
+	// 1.4.2: Render objects
+	// fill
 
 	EndDrawing();
 }

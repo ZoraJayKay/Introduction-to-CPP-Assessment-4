@@ -1,5 +1,3 @@
-// Assessment 4.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 #pragma once
 #include "raylib.h"
 #define RAYGUI_IMPLEMENTATION
@@ -7,32 +5,34 @@
 
 #include "Game.h"
 #include <iostream>
+#include "Timer.h"
 using namespace std;
+using namespace Utilities;
 
-// the main function of the program starts and ends the game.
 int main()
 {
     std::cout << "---Program constructor---" << endl;
 
     // 1: Create a pointer to a new instance of a Game class. 
-    Game* game = new Game();
     // The Game class instance (game) will in turn initialise a game, create the play area, draw the scene, and update the game calculations until the game ends.
+    Game* game = new Game();
 
-    // 2: Keep the game running until the loss condtion is met.
-    // This while loop keeps the game running for as long as the game does not meet the conditions to close the game. The Update function in the Game class performs
+    // 2: Keep the game running until the loss condition is met.
+    // This while loop keeps the game running for as long as the game does not meet the conditions to close the game.
     while (!WindowShouldClose()) 
     {
-        // update the game
+        // 2.1: Update the game, its calculations, and draw to the screen
         game->Update();
-
-        // draw the game
-        game->Draw();
     }        
 
-    // Destroy the game class instance
+    // 3: Shutdown
+    // 3.1: Destroy the game class instance
     game->Shutdown();
 
-    // Close the program
+    // 3.2: Destroy the timer
+    Utilities::Timer::Release();
+
+    // 3.3: Close the program
     CloseWindow();
 
     return 0;
