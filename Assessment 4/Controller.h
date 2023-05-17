@@ -1,6 +1,7 @@
 #pragma once
 #include "Player.h"
 #include "Game.h"
+#include "GameObject.h"
 
 class Controller
 {

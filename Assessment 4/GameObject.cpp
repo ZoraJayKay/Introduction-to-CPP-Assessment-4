@@ -24,16 +24,7 @@ void GameObject::SetWeapon(WeaponType choice) {
 
 
 //	*** PUBLIC GAME PARAMETERS	***
-	// object type
-//enum GameObject::objectType
-//{
-//	Default_Type,
-//	Sprite_Type,
-//	Player_Type,
-//	Enemy_Type,
-//	Projectile_Type,
-//	Base_Type
-//};
+
 
 
 // ***	RELATIONSHIP FUNCTIONS	***
@@ -84,12 +75,12 @@ void GameObject::OnUpdate(float deltaTime) {};
 // Pass the controller to the game object
 void GameObject::OnUpdate(Controller& ctrlr) {
 	// IF this object is the player...
-	if (this->objType == Player_Type) {
+	if (objType == Player_Type) {
 		// Call a function that can move the player
-		this->ctrlr->MoveSideways();
+		ctrlr.MoveSideways();
 
 		// Call a function that can shoot if a key is pressed
-		this->ctrlr>Shoot();
+		ctrlr.Shoot();
 	}
 };
 
