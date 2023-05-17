@@ -77,10 +77,10 @@ void GameObject::OnUpdate(Controller& ctrlr) {
 	// IF this object is the player...
 	if (objType == Player_Type) {
 		// Call a function that can move the player
-		ctrlr.MoveSideways();
+		ctrlr.MoveSideways(*this);
 
 		// Call a function that can shoot if a key is pressed
-		ctrlr.Shoot();
+		ctrlr.Shoot(weaponEquipped);
 	}
 };
 

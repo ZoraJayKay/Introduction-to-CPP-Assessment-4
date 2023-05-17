@@ -21,19 +21,25 @@ Controller::~Controller() {
 };
 
 // Conditionally move the player
-void Controller::MoveSideways() {
-	if (IsKeyDown(KeyboardKey(KEY_W))) {
-		MyVector3 facing = MyVector3(
-			
-			plyr.LocalTransform().m00,
-			plyr.LocalTransform().m10,
+void Controller::MoveSideways(GameObject& obj) {
+	if (IsKeyDown(KEY_W)) {
+		MyVector3 facing = MyVector3(			
+			obj.LocalTransform().m00,
+			obj.LocalTransform().m10,
 			0)
 			* 1 // delta time
-			* plyr.moveSpeed;
+			* obj.moveSpeed;
 
 		facing = facing * 1 * 1;
 	}
 };
+
+void Controller::Shoot(GameObject::WeaponType ammoType) {
+		if (IsKeyPressed(KEY_SPACE)) {
+		//Instantiate a new object of the type of weapon equipped
+		Weapon* newAttack = new Weapon(ammoType);
+	}
+}
 
 //// Conditionally shoot the player's weapon
 //void Controller::Shoot() {

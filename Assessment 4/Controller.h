@@ -11,8 +11,8 @@ public:
 	/*void MoveSideways(Player& plyr);
 	void Shoot(Player& plyr);*/
 
-	void MoveSideways();
-	void Shoot();
+	void MoveSideways(GameObject& obj);
+	void Shoot(GameObject::WeaponType ammoType);
 
 	~Controller();
 };
