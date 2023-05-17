@@ -40,7 +40,6 @@ void SpriteObject::OnDraw()
 
 	Vector2 v = {globalTransform->m02, globalTransform->m12};
 
-	// draw the texture
-	// needs fixing
+	// Draw the texture
 	DrawTextureEx(texture, v, rotation * (float)(180 / PI), 1, WHITE);
 }

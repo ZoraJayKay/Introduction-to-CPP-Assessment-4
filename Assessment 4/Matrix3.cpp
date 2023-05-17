@@ -133,21 +133,36 @@ Matrix3 Matrix3::RotateX(float rotationinRadians)
 {
     Matrix3* m = new Matrix3(1);        // create an identity matrix
     m->SetRotateX(rotationinRadians);   // set up the identity matrix as a rotation matrix
-    return *this * *m;
+    Matrix3 m2 = *this * *m;
+
+    delete m;
+    m = nullptr;
+
+    return m2;
 };
 
 Matrix3 Matrix3::RotateY(float rotationinRadians)
 {
     Matrix3* m = new Matrix3(1);        // create an identity matrix
     m->SetRotateY(rotationinRadians);   // set up the identity matrix as a rotation matrix
-    return *this * *m;
+    Matrix3 m2 = *this * *m;
+
+    delete m;
+    m = nullptr;
+
+    return m2;
 };
 
 Matrix3 Matrix3::RotateZ(float rotationinRadians)
 {
     Matrix3* m = new Matrix3(1);        // create an identity matrix
     m->SetRotateZ(rotationinRadians);   // set up the identity matrix as a rotation matrix
-    return *this * *m;
+    Matrix3 m2 = *this * *m;
+
+    delete m;
+    m = nullptr;
+
+    return m2;
 };
 
 

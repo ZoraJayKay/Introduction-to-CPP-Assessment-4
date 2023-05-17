@@ -28,7 +28,15 @@ int main()
 
     // 3: Shutdown
     // 3.1: Destroy the game class instance
-    game->Shutdown();
+    delete game;
+    game = nullptr;
+
+    {
+    
+        int u = 0;
+    
+    
+    }
 
     // 3.2: Destroy the timer
     Utilities::Timer::Release();

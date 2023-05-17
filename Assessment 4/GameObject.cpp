@@ -80,6 +80,20 @@ void GameObject::RemoveChild(GameObject& child) {
 // OnUpdate() uses the elapsed delta time as a parameter so that behaviours that use time have access to it
 void GameObject::OnUpdate(float deltaTime) {};
 
+
+// Pass the controller to the game object
+void GameObject::OnUpdate(Controller& ctrlr) {
+	// IF this object is the player...
+	if (this->objType == Player_Type) {
+		// Call a function that can move the player
+		this->ctrlr->MoveSideways();
+
+		// Call a function that can shoot if a key is pressed
+		this->ctrlr>Shoot();
+	}
+};
+
+
 // a non-virtual recursive method that first calls OnUpdate() on itself, then calls Update() on all children
 void GameObject::Update(float deltaTime) 
 {
@@ -94,6 +108,7 @@ void GameObject::Update(float deltaTime)
 // ***	DRAW FUNCTIONS	***
 	// a virtual method for implementing specific derived drawing behaviours
 void GameObject::OnDraw() {};
+
 
 // a non-virtual method that first calls OnDraw() on itself and then calls Draw() on all children
 void GameObject::Draw() 

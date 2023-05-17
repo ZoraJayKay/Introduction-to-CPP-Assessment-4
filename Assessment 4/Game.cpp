@@ -27,7 +27,6 @@ Game::Game()
 	// Create a pointer to a new instance of the Initialise class.
 	// The Initialise class instance (init) will in turn set all of the parameters that constitute the starting conditions of the game.	
 	Initialise* init = new Initialise();
-	publicInit = init;
 
 	// Add the starting objects to the scene as root objects
 	AddRootObject(*(init->playerObject));
@@ -35,12 +34,15 @@ Game::Game()
 	// AddRootObject(*(init(base objects));
 
 	SetTargetFPS(60);
+
+	delete init;
+	init = nullptr;
 }
 
 // Game class destructor
 Game::~Game() 
 {
-
+	
 }
 
 
@@ -144,11 +146,4 @@ void Game::Draw()
 	}
 
 	EndDrawing();
-}
-		
-
-// 2: ENDIF FUNCTION
-void Game::Shutdown() 
-{
-	delete this;
 }

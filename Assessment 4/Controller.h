@@ -7,8 +7,11 @@ class Controller
 public:
 	Controller();
 
-	void MoveLeft(Player& plyr);
-	void Shoot(Player& plyr);
+	/*void MoveSideways(Player& plyr);
+	void Shoot(Player& plyr);*/
+
+	void MoveSideways();
+	void Shoot();
 
 	~Controller();
 };

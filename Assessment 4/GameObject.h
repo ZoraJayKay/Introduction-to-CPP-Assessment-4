@@ -11,6 +11,8 @@
 #include <vector>
 #include "assert.h"
 
+#include "Controller.h"
+
 using namespace std;
 
 // &(type)	= address of an object
@@ -33,6 +35,9 @@ protected:
 	// create pointers to Matrix3's for local and global transform
 	Matrix3* localTransform = new Matrix3(1);
 	Matrix3* globalTransform = new Matrix3(1);
+
+	// Pointer for the controller 
+	Controller* ctrlr;
 
 public:
 	//	*** PUBLIC GAME PARAMETERS	***
@@ -104,6 +109,8 @@ public:
 	virtual void OnUpdate(float deltaTime);
 		// behaviour determined by derivative class eg player, enemy, base
 
+	virtual void OnUpdate(Controller& ctrl);
+
 	void Update(float deltaTime);
 		// a non-virtual method that first calls OnUpdate() on itself, then calls Update() on all children
 
@@ -112,7 +119,7 @@ public:
 	// ON-SCREEN GRAPHICS
 	// a virtual method for implementing specific derived drawing behaviours
 	virtual void OnDraw();
-
+	
 	// a non-virtual method that first calls OnDraw() on itself and then calls Draw() on all children
 	void Draw();
 	
