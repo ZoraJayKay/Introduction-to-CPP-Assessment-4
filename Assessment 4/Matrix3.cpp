@@ -90,12 +90,12 @@ Matrix3 Matrix3::Set(Matrix3& m)
         this->m02 = m.m02,
         this->m12 = m.m12,
         this->m22 = m.m22
-    );    
+    );
 }
 
 //	MATRIX ROTATION
 // Set rotation to specific point
-void Matrix3::SetRotateX(float rotationInRadians) 
+void Matrix3::SetRotateX(float rotationInRadians)
 {
     float c = (float)cos(rotationInRadians);
     float s = (float)sin(rotationInRadians);
@@ -133,21 +133,36 @@ Matrix3 Matrix3::RotateX(float rotationinRadians)
 {
     Matrix3* m = new Matrix3(1);        // create an identity matrix
     m->SetRotateX(rotationinRadians);   // set up the identity matrix as a rotation matrix
-    return *this * *m;
+    Matrix3 m2 = *this * *m;
+
+    delete m;
+    m = nullptr;
+
+    return m2;
 };
 
 Matrix3 Matrix3::RotateY(float rotationinRadians)
 {
     Matrix3* m = new Matrix3(1);        // create an identity matrix
     m->SetRotateY(rotationinRadians);   // set up the identity matrix as a rotation matrix
-    return *this * *m;
+    Matrix3 m2 = *this * *m;
+
+    delete m;
+    m = nullptr;
+
+    return m2;
 };
 
 Matrix3 Matrix3::RotateZ(float rotationinRadians)
 {
     Matrix3* m = new Matrix3(1);        // create an identity matrix
     m->SetRotateZ(rotationinRadians);   // set up the identity matrix as a rotation matrix
-    return *this * *m;
+    Matrix3 m2 = *this * *m;
+
+    delete m;
+    m = nullptr;
+
+    return m2;
 };
 
 

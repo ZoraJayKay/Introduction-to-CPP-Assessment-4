@@ -11,6 +11,8 @@
 #include <vector>
 #include "assert.h"
 
+#include "Controller.h"
+
 using namespace std;
 
 // &(type)	= address of an object
@@ -22,17 +24,20 @@ using namespace std;
 // Create a blueprint for any object with a transform in the game
 class GameObject
 {
-protected: 
+protected:
 	//	*** PROTECTED GAME PARAMETERS***
 	// declare a pointer to a GameObject called parent
 	GameObject* parent;
 
 	// declare a vector of GameObject pointers to hold pointers to any child objects
-	vector<GameObject*> children;	
+	vector<GameObject*> children;
 
 	// create pointers to Matrix3's for local and global transform
 	Matrix3* localTransform = new Matrix3(1);
 	Matrix3* globalTransform = new Matrix3(1);
+
+	// Pointer for the controller 
+	Controller* ctrlr;
 
 public:
 	//	*** PUBLIC GAME PARAMETERS	***
@@ -46,13 +51,13 @@ public:
 		Projectile_Type,
 		Base_Type
 	};
-	
+
 	objectType objType;
-	
+
 	enum WeaponType {
 		Bullet
 	};
-	
+
 	WeaponType weaponEquipped;
 
 	// Movement speed of the object
@@ -84,7 +89,7 @@ public:
 	// ***	RELATIONSHIP FUNCTIONS	***
 	// A method to set the parent of the object that calls this function equal to an object that is passed in (by reference to it)
 	void SetParent(GameObject& parent_01);
-	
+
 	// A method to return a pointer to the parent of this object
 	GameObject& GetParent();
 
@@ -102,20 +107,22 @@ public:
 	// CALCULATIONS
 	// Create virtual OnUpdate function for use by separate types
 	virtual void OnUpdate(float deltaTime);
-		// behaviour determined by derivative class eg player, enemy, base
+	// behaviour determined by derivative class eg player, enemy, base
+
+	virtual void OnUpdate(Controller& ctrl);
 
 	void Update(float deltaTime);
-		// a non-virtual method that first calls OnUpdate() on itself, then calls Update() on all children
+	// a non-virtual method that first calls OnUpdate() on itself, then calls Update() on all children
 
 
-	// ***	DRAW FUNCTIONS		***
-	// ON-SCREEN GRAPHICS
-	// a virtual method for implementing specific derived drawing behaviours
+// ***	DRAW FUNCTIONS		***
+// ON-SCREEN GRAPHICS
+// a virtual method for implementing specific derived drawing behaviours
 	virtual void OnDraw();
 
 	// a non-virtual method that first calls OnDraw() on itself and then calls Draw() on all children
 	void Draw();
-	
+
 
 	//	*** TRANSFORM FUNCTIONS	***
 	// MOVE AND ROTATE AN OBJECT

@@ -17,14 +17,14 @@ Player::Player(int _lives, bool _hasWeapon, int _score)
 {
 	std::cout << "---Overloaded Player constructor---" << endl;
 
-	lives = _lives;	
+	lives = _lives;
 	hasWeapon = _hasWeapon;
 	score = _score;
 
 	objType = Player_Type;
 }
 
- // a virtual method for implementing specific derived drawing behaviours for the player
+// a virtual method for implementing specific derived drawing behaviours for the player
 //void GameObject::OnUpdate(float deltaTime) 
 //{
 //

@@ -8,7 +8,7 @@ public:
 	// ***	CLASS PARAMETERS	***
 	// a new image for converting to a texture
 	Image image = Image();
-	
+
 	// a new texture for the sprite to use on top of the object
 	Texture2D texture = Texture2D();
 
@@ -24,7 +24,7 @@ public:
 	//	*** FUNCTIONS	***
 	// load the image and turn it into a texture  (behaviour in source file)
 	void Load(const char* fileName);
-	
+
 	// return the width of the texture
 	float Width();
 

@@ -45,7 +45,7 @@ public:
 	void SetRotateX(float rotationInRadians);
 	void SetRotateY(float rotationInRadians);
 	void SetRotateZ(float rotationInRadians);
-											
+
 	// Rotate incrementally					
 	Matrix3 RotateX(float rotationinRadians);
 	Matrix3 RotateY(float rotationinRadians);

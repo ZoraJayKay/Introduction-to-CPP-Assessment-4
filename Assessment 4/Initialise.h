@@ -16,7 +16,7 @@ private:
 
 
 
-public: 
+public:
 	// public pointers that other classes can access
 	Player* playerObject;
 	Enemy* EnemyPtr;
@@ -28,21 +28,21 @@ public:
 	const char* baseFileName;
 
 	Initialise();
-		/* 1: GAME PARAMETERS
-		1.1: Starting conditions
-		Set the parameters for the game to run after starting and before ending
+	/* 1: GAME PARAMETERS
+	1.1: Starting conditions
+	Set the parameters for the game to run after starting and before ending
 
-		1.2: Win/loss conditions
-			1.2.1: Win if enemy lives = 0
-			1.2.2: Lose of player lives = 0
+	1.2: Win/loss conditions
+		1.2.1: Win if enemy lives = 0
+		1.2.2: Lose of player lives = 0
 
-		1.3: Objects
-			1.3.1: Instantiate the player
-			1.3.2: Instantiate enemies
-			1.3.3: Instantiate the base
-				*/
+	1.3: Objects
+		1.3.1: Instantiate the player
+		1.3.2: Instantiate enemies
+		1.3.3: Instantiate the base
+			*/
 
-	// default destructor function
+			// default destructor function
 	~Initialise();
 };
 

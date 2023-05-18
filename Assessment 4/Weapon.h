@@ -5,7 +5,7 @@ class Weapon
 {
 public:
 	int weaponSpeed;
-	
+
 	Weapon(GameObject::WeaponType choice);
 	~Weapon();
 };

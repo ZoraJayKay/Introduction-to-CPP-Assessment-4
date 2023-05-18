@@ -6,13 +6,20 @@ MyVector3::MyVector3(float _x, float _y, float _z) {
 	z = _z;
 };
 
+// TRANSFORM: VECTOR SCALE (Float - multiply)    overloaded operator (accept one Vector3 and multiply it by a float)
+MyVector3 MyVector3::operator *(float rhs)
+{
+	return MyVector3(this->x * rhs, this->y * rhs, this->z * rhs);
+}
+
+
 // DOT PRODUCT
 // Function set up to accept one Vector3, presumption is that function is called from a Vector3 itself (so only needs to pass in one)
 // dot product returns a scalar value which is the length of the two vectors multiplied by the cosine of the angle between them
 float MyVector3::Dot(MyVector3& V1) {
-	float dotProduct = 
-		(V1.x * this->x) + 
-		(V1.y * this->y) + 
+	float dotProduct =
+		(V1.x * this->x) +
+		(V1.y * this->y) +
 		(V1.z * this->z);
 	return dotProduct;
 };

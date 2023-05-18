@@ -3,7 +3,7 @@
 
 
 // member function for constructor
-GameObject::GameObject() 
+GameObject::GameObject()
 {
 	std::cout << "---GameObject constructor---" << endl;
 };
@@ -24,21 +24,12 @@ void GameObject::SetWeapon(WeaponType choice) {
 
 
 //	*** PUBLIC GAME PARAMETERS	***
-	// object type
-//enum GameObject::objectType
-//{
-//	Default_Type,
-//	Sprite_Type,
-//	Player_Type,
-//	Enemy_Type,
-//	Projectile_Type,
-//	Base_Type
-//};
+
 
 
 // ***	RELATIONSHIP FUNCTIONS	***
 // A method to set the parent of the object that calls this function equal to an object that is passed in (by reference to it)
-void GameObject::SetParent(GameObject& parent_01) 
+void GameObject::SetParent(GameObject& parent_01)
 {
 	*this->parent = parent_01;
 	// in the contents of the object that called this function, set the parent object to the one that was passed in as a parameter
@@ -52,7 +43,7 @@ GameObject& GameObject::GetParent() {
 };
 
 // A method to count the children of this object
-int GameObject::CountChildren(){	
+int GameObject::CountChildren() {
 	// cout << "This object has " << this->children.size() << " children." << endl;
 	return this->children.size();
 	// this returns actual volume of elements, not a memory address
@@ -80,12 +71,26 @@ void GameObject::RemoveChild(GameObject& child) {
 // OnUpdate() uses the elapsed delta time as a parameter so that behaviours that use time have access to it
 void GameObject::OnUpdate(float deltaTime) {};
 
+
+// Pass the controller to the game object
+void GameObject::OnUpdate(Controller& ctrlr) {
+	// IF this object is the player...
+	if (objType == Player_Type) {
+		// Call a function that can move the player
+		ctrlr.MoveSideways(*this);
+
+		// Call a function that can shoot if a key is pressed
+		ctrlr.Shoot(weaponEquipped);
+	}
+};
+
+
 // a non-virtual recursive method that first calls OnUpdate() on itself, then calls Update() on all children
-void GameObject::Update(float deltaTime) 
+void GameObject::Update(float deltaTime)
 {
 	OnUpdate(deltaTime);
-		
-	for (GameObject* child : children)	{
+
+	for (GameObject* child : children) {
 		child->Update(deltaTime);
 	}
 };
@@ -95,12 +100,13 @@ void GameObject::Update(float deltaTime)
 	// a virtual method for implementing specific derived drawing behaviours
 void GameObject::OnDraw() {};
 
+
 // a non-virtual method that first calls OnDraw() on itself and then calls Draw() on all children
-void GameObject::Draw() 
+void GameObject::Draw()
 {
 	OnDraw();
 
-	for (GameObject* child : children)	{
+	for (GameObject* child : children) {
 		child->Draw();
 	}
 };
@@ -113,7 +119,7 @@ Matrix3 GameObject::LocalTransform() {
 }
 
 // get protected location of global Matrix3
-Matrix3 GameObject::GlobalTransform(){
+Matrix3 GameObject::GlobalTransform() {
 	return *globalTransform;
 }
 
@@ -124,24 +130,24 @@ void GameObject::UpdateTransform()
 	// 1: Update own global transform
 	// The global transform is a combination of the object’s local transform and its parent’s global transform. 
 
-	if (this->parent != NULL)	{
+	if (this->parent != NULL) {
 		*(this->globalTransform) = *(this->parent->globalTransform) * *(this->localTransform);
 		// The global transform is a combination of the object’s local transform and its parent’s global transform. 
 	}
 
-	else	{
+	else {
 		*(this->globalTransform) = *(this->localTransform);
 		// If an object has no parent then its global transform is the same as its local transform.
 	}
 
 	// 2: Update global transform of this object's children
-	for (GameObject* child : children)	{
+	for (GameObject* child : children) {
 		child->UpdateTransform();
 	}
 };
 
 // call the Matrix3 class to set the object's position
-void GameObject::SetPosition(float x, float y){
+void GameObject::SetPosition(float x, float y) {
 	localTransform->SetTranslation(x, y);
 	UpdateTransform();
 }

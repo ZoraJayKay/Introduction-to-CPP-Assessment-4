@@ -25,7 +25,7 @@ protected:
 	// A vector of GameObjects waiting to be removed from the vector of parentless GameObjects between updates
 	vector<GameObject*> rootObjectsToRemove;
 
-public: 
+public:
 	// public access to the initialise object
 	Initialise* publicInit;
 
@@ -37,7 +37,7 @@ public:
 
 	// default destructor function
 	~Game();
-		
+
 	// 1: UPDATE FUNCTION
 	void Update();	// 1.1: Update the game timer
 
@@ -57,10 +57,10 @@ public:
 	void Draw();	// includes...
 	// 1.4.1: Create the visible play area
 	// 1.4.2: Render objects
-		
+
 
 	// 2: ENDIF FUNCTION
 	void Shutdown();
-			// 2.1: Detect whether the game has ended
+	// 2.1: Detect whether the game has ended
 };
 

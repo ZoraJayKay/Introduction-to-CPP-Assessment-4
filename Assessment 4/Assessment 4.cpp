@@ -20,15 +20,23 @@ int main()
 
     // 2: Keep the game running until the loss condition is met.
     // This while loop keeps the game running for as long as the game does not meet the conditions to close the game.
-    while (!WindowShouldClose()) 
+    while (!WindowShouldClose())
     {
         // 2.1: Update the game, its calculations, and draw to the screen
         game->Update();
-    }        
+    }
 
     // 3: Shutdown
     // 3.1: Destroy the game class instance
-    game->Shutdown();
+    delete game;
+    game = nullptr;
+
+    {
+
+        int u = 0;
+
+
+    }
 
     // 3.2: Destroy the timer
     Utilities::Timer::Release();
