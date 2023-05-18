@@ -1,11 +1,11 @@
-#include "Controller.h"
-#include "Weapon.h"
-#include "raylib.h"
-#include "Vector3.h"
-#include "Timer.h"
-
 #define RAYGUI_IMPLEMENTATION
 #define RAYGUI_SUPPORT_ICONS
+#include "raylib.h"
+
+#include "Controller.h"
+#include "Weapon.h"
+#include "Vector3.h"
+#include "Timer.h"
 
 using namespace Utilities;
 

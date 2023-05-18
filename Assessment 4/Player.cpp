@@ -1,4 +1,5 @@
 #include "Player.h"
+#include <iostream>
 
 // default constructor
 Player::Player() {

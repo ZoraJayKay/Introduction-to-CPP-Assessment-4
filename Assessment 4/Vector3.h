@@ -7,7 +7,6 @@ public:
 	float x, y, z;
 
 	MyVector3(float x, float y, float z);
-	~MyVector3();
 
 	// TRANSFORM: VECTOR ADDITION
 	MyVector3 operator + (MyVector3&);

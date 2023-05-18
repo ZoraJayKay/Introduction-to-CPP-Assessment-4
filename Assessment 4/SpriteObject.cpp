@@ -1,5 +1,10 @@
+#define RAYGUI_IMPLEMENTATION
+#define RAYGUI_SUPPORT_ICONS
+#include "raylib.h"
+
 #include "SpriteObject.h"
 #include <string>
+#include <iostream>
 
 //	*** CONSTRUCTOR AND DESTRUCTOR
 // default constructor function

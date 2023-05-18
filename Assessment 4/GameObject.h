@@ -1,17 +1,10 @@
 #pragma once
-// Include RayLib
-#include "raylib.h"
-
-// include quality of life stuff
-#include <iostream>
 
 // Include useful libraries
 #include "Matrix3.h"
 #include <cmath>
 #include <vector>
 #include "assert.h"
-
-#include "Controller.h"
 
 using namespace std;
 
@@ -37,7 +30,7 @@ protected:
 	Matrix3* globalTransform = new Matrix3(1);
 
 	// Pointer for the controller 
-	Controller* ctrlr;
+	class Controller* ctrlr;
 
 public:
 	//	*** PUBLIC GAME PARAMETERS	***

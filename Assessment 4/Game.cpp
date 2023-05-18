@@ -1,9 +1,12 @@
+#define RAYGUI_IMPLEMENTATION
+#define RAYGUI_SUPPORT_ICONS
+#include "raylib.h"
+
+
 #include "Game.h"
 #include "Initialise.h"
 #include "Timer.h"
-#include "raylib.h"
-#define RAYGUI_IMPLEMENTATION
-#define RAYGUI_SUPPORT_ICONS
+
 
 // Play area variables
 int screenWidth = 1080;

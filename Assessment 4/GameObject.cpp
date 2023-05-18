@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
-
+#include "Controller.h"
+#include <iostream>
 
 // member function for constructor
 GameObject::GameObject() 
