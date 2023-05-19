@@ -12,10 +12,11 @@ Initialise::Initialise()
 {
 	std::cout << "---Initialise constructor---" << endl;
 
-	// texture file paths
+	// Texture file paths included within this program's files
 	playerShipFileName = "x64/Images/playerShip1_green.png";
-	enemyShipFileName = "";
-	baseFileName = "";
+	enemyShipFileName = "x64/Images/enemyBlack1.png";
+	baseFileName = "x64/Images/ ... ";
+	laserAttackFileName = "x64/Images/laserBlue01";
 
 	 //1: GAME PARAMETERS
 		//1.1: Starting conditions

@@ -29,8 +29,6 @@ void Controller::MoveSideways(GameObject& obj) {
 			0)
 			* 1 // delta time
 			* obj.moveSpeed;
-
-		facing = facing * 1 * 1;
 	}
 };
 

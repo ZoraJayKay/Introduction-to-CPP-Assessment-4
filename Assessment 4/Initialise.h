@@ -26,6 +26,7 @@ public:
 	const char* playerShipFileName;
 	const char* enemyShipFileName;
 	const char* baseFileName;
+	const char* laserAttackFileName;
 
 	Initialise();
 		/* 1: GAME PARAMETERS
