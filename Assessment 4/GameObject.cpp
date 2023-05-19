@@ -68,31 +68,29 @@ void GameObject::RemoveChild(GameObject& child) {
 
 
 //	***	UPDATE FUNCTIONS	***
-// a virtual method for behaviour during updates (to be overwritten by derivative classes)
-// OnUpdate() uses the elapsed delta time as a parameter so that behaviours that use time have access to it
-void GameObject::OnUpdate(float deltaTime) {};
-
-
 // Pass the controller to the game object
-void GameObject::OnUpdate(Controller& ctrlr) {
-	// IF this object is the player...
+void GameObject::OnUpdate(float deltaTime, Controller& ctrlr) {
+	// PLAYER MOVEMENT
 	if (objType == Player_Type) {
 		// Call a function that can move the player
-		ctrlr.MoveSideways(*this);
+		ctrlr.MoveSideways(*this, deltaTime);
 
 		// Call a function that can shoot if a key is pressed
 		ctrlr.Shoot(weaponEquipped);
 	}
+
+	// ENEMY MOVEMENT
+	if (objType == Enemy_Type) {
+	// implementation
+	};
 };
 
 
-// a non-virtual recursive method that first calls OnUpdate() on itself, then calls Update() on all children
-void GameObject::Update(float deltaTime) 
-{
-	OnUpdate(deltaTime);
-		
-	for (GameObject* child : children)	{
-		child->Update(deltaTime);
+void GameObject::Update(float deltaTime, Controller& ctrlr) {
+	OnUpdate(deltaTime, ctrlr);
+
+	for (GameObject* child : children) {
+		child->Update(deltaTime, ctrlr);
 	}
 };
 

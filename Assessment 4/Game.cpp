@@ -2,10 +2,10 @@
 #define RAYGUI_SUPPORT_ICONS
 #include "raylib.h"
 
-
 #include "Game.h"
 #include "Initialise.h"
 #include "Timer.h"
+#include "Controller.h"
 
 
 // Play area variables
@@ -27,15 +27,18 @@ Game::Game()
 	InitWindow(screenWidth, screenHeight, "Zora Jane Kerr: Introduction to C++ (Assessment 4 - Retro Game) Space Invaders (AIE, 2023 [student year 1])");
 
 	// 0: Initialise a game session
-	// Create a pointer to a new instance of the Initialise class.
+	// Initialise a pointer to a new instance of the Initialise class.
 	// The Initialise class instance (init) will in turn set all of the parameters that constitute the starting conditions of the game.	
-	// Initialise* init = new Initialise();
 	init = new Initialise();
 
 	// Add the starting objects to the scene as root objects
 	AddRootObject(*(init->playerObject));
 	// AddRootObject(*(init(enemy objects));
 	// AddRootObject(*(init(base objects));
+
+	// 0: Initialise a player controller
+	// Initialise a pointer to a new instance of the Controller class.
+	cntrlr = new Controller();
 
 	SetTargetFPS(60);
 }
@@ -61,7 +64,11 @@ Game::~Game()
 	for (GameObject* obj : rootObjectsToRemove) {
 		delete obj;
 		obj = nullptr;
-	}	
+	}
+
+	// Delete the controller pointer
+	delete cntrlr;
+	cntrlr = nullptr;
 }
 
 
@@ -91,7 +98,7 @@ void Game::Update()
 
 			UpdateRelationships();
 			UpdateCalculations();
-			Debug();
+			//Debug();
 			Draw();			
 		}
 }
@@ -147,7 +154,11 @@ void Game::RemoveRootObject(GameObject& obj) {
 // 1.3: Update scene calculations
 void Game::UpdateCalculations() 
 {
-	// reference the controller?
+	// 1.3.1: Update the calculations for all root objects (and thus their children)
+	for (GameObject* obj : rootObjects) {
+		// Call the Update function that is defined in the GameObject class
+		obj->Update(gameTimer->DeltaTime(), *cntrlr);
+	}
 }
 
 // 1.4: Draw the scene

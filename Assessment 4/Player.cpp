@@ -23,6 +23,9 @@ Player::Player(int _lives, bool _hasWeapon, int _score)
 	score = _score;
 
 	objType = Player_Type;
+
+	// Set movement speed to standard
+	moveSpeed = 100;
 }
 
  // a virtual method for implementing specific derived drawing behaviours for the player

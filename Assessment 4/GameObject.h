@@ -66,77 +66,73 @@ public:
 	unsigned int score;
 
 	//	*** CONSTRUCTOR & DESTRUCTOR	***
-	// default constructor function
-	GameObject();
+		// default constructor function
+		GameObject();
 
-	// default destructor function
-	~GameObject();
+		// default destructor function
+		~GameObject();
 
 	//	*** FUNCTIONS	***
-	// Instantiate a weapon for this object if it is meant to have one, maybe some enemies will, some won't, base won't, etc
-	int GetWeapon();
-	// behaviour determined by derivative class, eg enemy, player, base
+		// Instantiate a weapon for this object if it is meant to have one, maybe some enemies will, some won't, base won't, etc
+		int GetWeapon();
+		// behaviour determined by derivative class, eg enemy, player, base
 
 	void SetWeapon(WeaponType choice);
 
 	// ***	RELATIONSHIP FUNCTIONS	***
-	// A method to set the parent of the object that calls this function equal to an object that is passed in (by reference to it)
-	void SetParent(GameObject& parent_01);
+		// A method to set the parent of the object that calls this function equal to an object that is passed in (by reference to it)
+		void SetParent(GameObject& parent_01);
 	
-	// A method to return a pointer to the parent of this object
-	GameObject& GetParent();
+		// A method to return a pointer to the parent of this object
+		GameObject& GetParent();
 
-	// A method to count the children of this object
-	int CountChildren();
+		// A method to count the children of this object
+		int CountChildren();
 
-	// A method to add a child to this object
-	void AddChild(GameObject& child);
+		// A method to add a child to this object
+		void AddChild(GameObject& child);
 
-	// A method to remove a child from this object
-	void RemoveChild(GameObject& child);
+		// A method to remove a child from this object
+		void RemoveChild(GameObject& child);
 
 
 	// ***	UPDATE FUNCTIONS	***
-	// CALCULATIONS
-	// Create virtual OnUpdate function for use by separate types
-	virtual void OnUpdate(float deltaTime);
-		// behaviour determined by derivative class eg player, enemy, base
+		// CALCULATIONS
+			// Create virtual OnUpdate function for use by separate object types. Behaviour determined by derivative class.
+			virtual void OnUpdate(float deltaTime, Controller& ctrlr);
+			
+			// a non-virtual method that first calls OnUpdate() on itself, then calls Update() on all children
+			void Update(float deltaTime, Controller& ctrlr);
+
+		// ***	DRAW FUNCTIONS		***
+			// ON-SCREEN GRAPHICS
+			// a virtual method for implementing specific derived drawing behaviours
+			virtual void OnDraw();
 	
-	virtual void OnUpdate(Controller& ctrlr);
-
-	void Update(float deltaTime);
-		// a non-virtual method that first calls OnUpdate() on itself, then calls Update() on all children
-
-
-	// ***	DRAW FUNCTIONS		***
-	// ON-SCREEN GRAPHICS
-	// a virtual method for implementing specific derived drawing behaviours
-	virtual void OnDraw();
-	
-	// a non-virtual method that first calls OnDraw() on itself and then calls Draw() on all children
-	void Draw();
+			// a non-virtual method that first calls OnDraw() on itself and then calls Draw() on all children
+			void Draw();
 	
 
 	//	*** TRANSFORM FUNCTIONS	***
-	// MOVE AND ROTATE AN OBJECT
-	// get the protected location of local Matrix3
-	Matrix3 LocalTransform();
+		// MOVE AND ROTATE AN OBJECT
+		// get the protected location of local Matrix3
+		Matrix3 LocalTransform();
 
-	// get the protected location of global Matrix3
-	Matrix3 GlobalTransform();
+		// get the protected location of global Matrix3
+		Matrix3 GlobalTransform();
 
-	// update the global transform of this object
-	void UpdateTransform();
+		// update the global transform of this object
+		void UpdateTransform();
 
-	// call the Matrix3 class to set the object's position
-	void SetPosition(float x, float y);
+		// call the Matrix3 class to set the object's position
+		void SetPosition(float x, float y);
 
-	// call the Matrix3 class to set the object's rotation
-	void SetRotate(float radians);
+		// call the Matrix3 class to set the object's rotation
+		void SetRotate(float radians);
 
-	// call the Matrix3 class to incrementally move the object
-	void Translate(float x, float y);
+		// call the Matrix3 class to incrementally move the object
+		void Translate(float x, float y);
 
-	// call the Matrix3 class to incrementally rotate the object
-	void Rotate(float radians);
+		// call the Matrix3 class to incrementally rotate the object
+		void Rotate(float radians);
 };

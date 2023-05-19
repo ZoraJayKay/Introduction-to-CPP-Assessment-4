@@ -6,6 +6,7 @@
 #include "Weapon.h"
 #include "Vector3.h"
 #include "Timer.h"
+#include <iostream>
 
 using namespace Utilities;
 
@@ -21,14 +22,29 @@ Controller::~Controller() {
 };
 
 // Conditionally move the player
-void Controller::MoveSideways(GameObject& obj) {
-	if (IsKeyDown(KEY_W)) {
-		MyVector3 facing = MyVector3(			
+void Controller::MoveSideways(GameObject& obj, float deltaTime) {
+	if (IsKeyDown(KEY_D)) {
+		MyVector3 facing = MyVector3(
 			obj.LocalTransform().m00,
 			obj.LocalTransform().m10,
 			0)
-			* 1 // delta time
+			* deltaTime
 			* obj.moveSpeed;
+
+		// Move the object forward to the extent set by the facing vector
+		obj.Translate(facing.x, facing.y);
+	}
+
+	if (IsKeyDown(KEY_A)) {
+		MyVector3 facing = MyVector3(
+			obj.LocalTransform().m00,
+			obj.LocalTransform().m10,
+			0)
+			* deltaTime
+			* obj.moveSpeed;
+
+		// Move the object forward to the extent set by the facing vector
+		obj.Translate(-facing.x, facing.y);
 	}
 };
 

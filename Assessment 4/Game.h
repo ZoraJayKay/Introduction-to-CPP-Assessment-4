@@ -28,6 +28,9 @@ protected:
 	// Create a forward declaration of an initialisation class for the use of the Game
 	class Initialise* init;
 
+	// Create a forward declaration of a controller class for the use of the Game
+	class Controller* cntrlr;
+
 public: 
 	// Timer instance
 	class Timer* gameTimer;

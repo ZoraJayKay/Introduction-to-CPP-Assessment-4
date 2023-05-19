@@ -27,9 +27,8 @@ Initialise::Initialise()
 		//	1.2.2: Lose of player lives = 0
 
 	//1.3: Objects
+	//		***		PLAYER OBJECT	***
 	//	1.3.1: Instantiate pointers to the player and its sprite
-	//Player* playerObject = new Player(1, true, 0);
-	
 	playerObject = new Player(1, true, 0);
 	SpriteObject* playerSprite = new SpriteObject();
 		// Lives = 1.
@@ -42,9 +41,7 @@ Initialise::Initialise()
 	//	1.3.4: Make the point of rotation for the sprite at its centre
 	playerSprite->SetPosition(-playerSprite->Width() / 2.0f, playerSprite->Height() / 2.0f);
 
-	//		***		PLAYER OBJECT	***
 	
-
 	// 1.3.1.1: Set initial position
 	// 1.3.1.2: Offset the player object to the middle of its object rather than top left
 	// 1.3.1.3: set size of the offset for collision detection?			
