@@ -26,5 +26,5 @@ Player::Player(int _lives, bool _hasWeapon, int _score)
 	objType = Player_Type;
 
 	// Set movement speed to standard
-	moveSpeed = 100;
+	moveSpeed = 250;
 }
