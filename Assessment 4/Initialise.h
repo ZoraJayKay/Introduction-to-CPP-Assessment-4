@@ -15,6 +15,8 @@ class Initialise
 private:
 
 
+protected:
+	
 
 public: 
 	// public pointers that other classes can access

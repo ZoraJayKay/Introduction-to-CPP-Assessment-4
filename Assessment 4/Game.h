@@ -25,12 +25,12 @@ protected:
 	// A vector of GameObjects waiting to be removed from the vector of parentless GameObjects between updates
 	vector<GameObject*> rootObjectsToRemove;
 
-public: 
-	// public access to the initialise object
-	Initialise* publicInit;
+	// Create a forward declaration of an initialisation class for the use of the Game
+	class Initialise* init;
 
+public: 
 	// Timer instance
-	Timer* gameTimer;
+	class Timer* gameTimer;
 
 	// 0: Initialise a game session (default constructor)
 	Game();
@@ -57,7 +57,9 @@ public:
 	void Draw();	// includes...
 	// 1.4.1: Create the visible play area
 	// 1.4.2: Render objects
-		
+	
+	// A temporary function for printing analysis to the console
+	void Debug();
 
 	// 2: ENDIF FUNCTION
 	void Shutdown();

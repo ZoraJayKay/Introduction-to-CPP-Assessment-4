@@ -29,7 +29,8 @@ Game::Game()
 	// 0: Initialise a game session
 	// Create a pointer to a new instance of the Initialise class.
 	// The Initialise class instance (init) will in turn set all of the parameters that constitute the starting conditions of the game.	
-	Initialise* init = new Initialise();
+	// Initialise* init = new Initialise();
+	init = new Initialise();
 
 	// Add the starting objects to the scene as root objects
 	AddRootObject(*(init->playerObject));
@@ -37,15 +38,30 @@ Game::Game()
 	// AddRootObject(*(init(base objects));
 
 	SetTargetFPS(60);
-
-	delete init;
-	init = nullptr;
 }
 
 // Game class destructor
 Game::~Game() 
 {
-	
+	// Delete the pointer for the initialisation process
+	delete init;
+	init = nullptr;
+
+	// Delete all of the vectors of game object pointers for the game actors
+	for (GameObject* obj : rootObjects) {
+		delete obj;
+		obj = nullptr;
+	}
+
+	for (GameObject* obj : rootObjectsToAdd) {
+		delete obj;
+		obj = nullptr;
+	}
+
+	for (GameObject* obj : rootObjectsToRemove) {
+		delete obj;
+		obj = nullptr;
+	}	
 }
 
 
@@ -75,7 +91,8 @@ void Game::Update()
 
 			UpdateRelationships();
 			UpdateCalculations();
-			Draw();
+			Debug();
+			Draw();			
 		}
 }
 
@@ -142,11 +159,44 @@ void Game::Draw()
 	ClearBackground(RAYWHITE);
 
 	DrawText("Placeholder text", screenWidth / 2, screenHeight / 2, 20, LIGHTGRAY);
-
+	
 	// 1.4.2: Draw all root objects (and thus their children)
 	for (GameObject* obj : rootObjects) {
+		// Call the Draw function that is defined in the GameObject class
 		obj->Draw();
 	}
 
 	EndDrawing();
+}
+
+void Game::Debug() {
+	int playerCount = 0;
+	int enemyCount = 0;
+	int baseCount = 0;
+
+	// CONSOLE DEBUG: COUNT THE PLAYER OBJECTS
+	for (GameObject* obj : rootObjects) {
+		if (obj->objType == GameObject::Player_Type) {
+			playerCount++;
+		}
+	}
+
+	// CONSOLE DEBUG: COUNT THE ENEMY OBJECTS
+	for (GameObject* obj : rootObjects) {
+		if (obj->objType == GameObject::Enemy_Type) {
+			enemyCount++;
+		}
+	}
+
+	// CONSOLE DEBUG: COUNT THE BASE OBJECTS
+	for (GameObject* obj : rootObjects) {
+		if (obj->objType == GameObject::Base_Type) {
+			baseCount++;
+		}
+	}
+
+	std::cout << "Number of Root objects: " << rootObjects.size() << std::endl;
+	std::cout << "Number of Player objects: " << playerCount << std::endl;
+	std::cout << "Number of Enemy objects: " << enemyCount << std::endl;
+	std::cout << "Number of Base objects: " << baseCount << std::endl;
 }

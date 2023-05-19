@@ -101,8 +101,8 @@ public:
 	// Create virtual OnUpdate function for use by separate types
 	virtual void OnUpdate(float deltaTime);
 		// behaviour determined by derivative class eg player, enemy, base
-
-	virtual void OnUpdate(Controller& ctrl);
+	
+	virtual void OnUpdate(Controller& ctrlr);
 
 	void Update(float deltaTime);
 		// a non-virtual method that first calls OnUpdate() on itself, then calls Update() on all children

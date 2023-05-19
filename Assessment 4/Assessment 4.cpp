@@ -31,13 +31,6 @@ int main()
     delete game;
     game = nullptr;
 
-    {
-    
-        int u = 0;
-    
-    
-    }
-
     // 3.2: Destroy the timer
     Utilities::Timer::Release();
 
