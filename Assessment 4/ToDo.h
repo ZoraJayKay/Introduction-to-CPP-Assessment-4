@@ -2,13 +2,10 @@
 
 /* Zora's to do list
 * 
-* Instantiate and texture an enemy ship
-* Make enemy ship move left and right
-* When enemy ship collides with edge of screen, reverse direction
 * When enemy ship collides with edge of screen, move closer to player
 * Let enemy instantiate bullets
 * 
-* Instantiate bullets
+* Let player instantiate bullets
 * Destroy bullets when they leave screen
 * 
 * Show score

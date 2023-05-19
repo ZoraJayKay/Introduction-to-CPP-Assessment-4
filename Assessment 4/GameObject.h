@@ -32,6 +32,8 @@ protected:
 	// Pointer for the controller 
 	class Controller* ctrlr;
 
+	class Enemy* enemyPtr;
+
 public:
 	//	*** PUBLIC GAME PARAMETERS	***
 	// object type
@@ -101,6 +103,9 @@ public:
 			// Create virtual OnUpdate function for use by separate object types. Behaviour determined by derivative class.
 			virtual void OnUpdate(float deltaTime, Controller& ctrlr);
 			
+			// Virtual override for enemies and bullets
+			virtual void OnUpdate(float deltaTime);
+
 			// a non-virtual method that first calls OnUpdate() on itself, then calls Update() on all children
 			void Update(float deltaTime, Controller& ctrlr);
 

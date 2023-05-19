@@ -6,18 +6,22 @@
 #include "Initialise.h"
 #include "Timer.h"
 #include "Controller.h"
+#include <string>
 
-
-// Play area variables
+// Program screen size
 int screenWidth = 1080;
 int screenHeight = 720;
+
+// Play area variables
+int playWidth = 1000;
+int playHeight = 660;
 
 // Timer variables
 float targetFps = 60.0f;
 float elapsedTime = 0.0f;
 int frames = 0;
 
-// 0: Initialise a game session (default constructor)
+// 1: Initialise a game session (default constructor)
 Game::Game() 
 {
 	std::cout << "---Game constructor---" << endl;
@@ -26,24 +30,22 @@ Game::Game()
 	// NOTE TO SELF: InitWindow needs to be done BEFORE loading any textures
 	InitWindow(screenWidth, screenHeight, "Zora Jane Kerr: Introduction to C++ (Assessment 4 - Retro Game) Space Invaders (AIE, 2023 [student year 1])");
 
-	// 0: Initialise a game session
+	// 1.1: Initialise a game session
 	// Initialise a pointer to a new instance of the Initialise class.
 	// The Initialise class instance (init) will in turn set all of the parameters that constitute the starting conditions of the game.	
 	init = new Initialise();
 
-	// Add the starting objects to the scene as root objects
-	AddRootObject(*(init->playerObject));
-	// AddRootObject(*(init(enemy objects));
+	// 1.2: Add the objects from initialisation to the scene as root objects
+	AddRootObject(*(init->playerObjectPtr));
+	AddRootObject(*(init->enemyPtr));
 	// AddRootObject(*(init(base objects));
 
-	// 0: Initialise a player controller
-	// Initialise a pointer to a new instance of the Controller class.
+	// 1.3: Initialise a pointer to a new instance of the Controller class.
 	cntrlr = new Controller();
 
 	SetTargetFPS(60);
 }
 
-// Game class destructor
 Game::~Game() 
 {
 	// Delete the pointer for the initialisation process
@@ -73,43 +75,50 @@ Game::~Game()
 
 
 
-// 1: UPDATE FUNCTION
+// 2: UPDATE FUNCTION
 void Game::Update()
 {
-	// 1.1: Update the game timer
-	// Instantiate a timer if one doesn't already exist
-	gameTimer = Timer::Instance();
+	// 2.1: Update the game timer
+		// 2.1.1: Instantiate a timer if one doesn't already exist
+		gameTimer = Timer::Instance();
+		// 2.1.2: Update delta time
+		gameTimer->Tick();
+		// 2.1.3: Reset the clock's 'start' timer
+		gameTimer->Reset();
+		// 2.1.4: Increment the timer with delta time
+		elapsedTime += gameTimer->DeltaTime();
 
-	// Update delta time
-	gameTimer->Tick();
+			// Increment the frames (may or may not be using a frame counter)
+			frames++;
 
-	// Reset the clock's 'start' timer
-	gameTimer->Reset();
-
-	// Increment the timer with delta time
-	elapsedTime += gameTimer->DeltaTime();
-
-	// Increment the frames
-	frames++;
-
+	// 2.2: Update the game
 		if (elapsedTime >= gameTimer->DeltaTime()) {
+			// vvv		these are just a few time-based metrics that may or may not be in use printing to the console	vvv
 			// print framerate
 			// std::cout << frames / elapsedTime << endl;	
 
+			// 2.2.1: Update the object hierarchy including adding and removing parent / child relationships
 			UpdateRelationships();
+
+			// 2.2.2: Update the arithmetic underlying movement and drawing
 			UpdateCalculations();
-			//Debug();
+
+			// 2.2.3: Debug if necessary
+			// Debug();
+
+			// 2.2.4: Draw the game scene
 			Draw();			
 		}
 }
 
 
-// 1.2: Update object relationships
+// 2.2.1: Update the object hierarchy including adding and removing parent / child relationships
 void Game::UpdateRelationships()
 {
 	//***	ADDING ROOT OBJECTS		***
 		// for each pointer in the vector of objects to remove...
 		for (GameObject* obj : rootObjectsToAdd) {
+			// add the pointer to the object to the back of the vector of root objects
 			rootObjects.push_back(obj);
 		}
 	
@@ -151,27 +160,36 @@ void Game::RemoveRootObject(GameObject& obj) {
 	rootObjectsToRemove.push_back(objPtr);
 };
 
-// 1.3: Update scene calculations
+// 2.2.2: Update the arithmetic underlying movement and drawing
 void Game::UpdateCalculations() 
 {
-	// 1.3.1: Update the calculations for all root objects (and thus their children)
+	// Update the calculations for all root objects (and thus their children)
 	for (GameObject* obj : rootObjects) {
 		// Call the Update function that is defined in the GameObject class
 		obj->Update(gameTimer->DeltaTime(), *cntrlr);
 	}
 }
 
-// 1.4: Draw the scene
+// 2.2.4: Draw the game scene
 void Game::Draw() 
 {
 	BeginDrawing();
 
-	// 1.4.1: Create the visible play area
+	// 2.2.4.1: Create the visible play area
 	ClearBackground(RAYWHITE);
 
-	DrawText("Placeholder text", screenWidth / 2, screenHeight / 2, 20, LIGHTGRAY);
+	// 2.2.4.2: Write information to the screen
+	// score
+	// lives
 	
-	// 1.4.2: Draw all root objects (and thus their children)
+	// Create a string out of the player score
+	std::string s = to_string(init->playerObjectPtr->score);
+	// Create a const char pointer that points to the address of the string 's' as an array of characters
+	const char* scr = s.c_str();
+	
+	DrawText("Score: " + *scr, 20, 20, 20, LIGHTGRAY);
+	
+	// 2.2.4.3: Draw all root objects (and thus their children)
 	for (GameObject* obj : rootObjects) {
 		// Call the Draw function that is defined in the GameObject class
 		obj->Draw();
@@ -179,6 +197,7 @@ void Game::Draw()
 
 	EndDrawing();
 }
+
 
 void Game::Debug() {
 	int playerCount = 0;

@@ -20,15 +20,19 @@ protected:
 
 public: 
 	// public pointers that other classes can access
-	Player* playerObject;
-	Enemy* EnemyPtr;
-	vector<Enemy*> EnemyPtrs;
+	Player* playerObjectPtr;
+	SpriteObject* playerSpritePtr;
+
+	Enemy* enemyPtr;
+	SpriteObject* enemySpritePtr;
+	vector<Enemy*> enemyPtrs;
 
 	// File path variables
 	const char* playerShipFileName;
 	const char* enemyShipFileName;
 	const char* baseFileName;
 	const char* laserAttackFileName;
+	const char* backgroundFileName;
 
 	Initialise();
 		/* 1: GAME PARAMETERS

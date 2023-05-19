@@ -27,11 +27,3 @@ Player::Player(int _lives, bool _hasWeapon, int _score)
 	// Set movement speed to standard
 	moveSpeed = 100;
 }
-
- // a virtual method for implementing specific derived drawing behaviours for the player
-//void GameObject::OnUpdate(float deltaTime) 
-//{
-//
-//}
-
-// look up how to override in C++
