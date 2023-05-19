@@ -154,6 +154,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="SpriteObject.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="ToDo.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
