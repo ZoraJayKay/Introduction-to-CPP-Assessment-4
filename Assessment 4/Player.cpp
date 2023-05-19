@@ -21,6 +21,7 @@ Player::Player(int _lives, bool _hasWeapon, int _score)
 	lives = _lives;	
 	hasWeapon = _hasWeapon;
 	score = _score;
+	// weaponEquipped = 0; // Laser by default
 
 	objType = Player_Type;
 

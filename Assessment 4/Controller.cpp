@@ -48,9 +48,9 @@ void Controller::MoveSideways(GameObject& obj, float deltaTime) {
 	}
 };
 
-void Controller::Shoot(GameObject::WeaponType ammoType) {
-		if (IsKeyPressed(KEY_SPACE)) {
-		//Instantiate a new object of the type of weapon equipped
-		Weapon* newAttack = new Weapon(ammoType);
-	}
-}
+//void Controller::Shoot(GameObject::WeaponType ammoType) {
+//		if (IsKeyPressed(KEY_SPACE)) {
+//		//Instantiate a new object of the type of weapon equipped
+//		Weapon* newAttack = new Weapon(ammoType);
+//	}
+//}

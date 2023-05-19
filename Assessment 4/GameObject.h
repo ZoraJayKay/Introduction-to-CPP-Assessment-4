@@ -32,7 +32,11 @@ protected:
 	// Pointer for the controller 
 	class Controller* ctrlr;
 
+	// Pointer for use with enemies
 	class Enemy* enemyPtr;
+
+	// Pointer to the weapon of this game object
+	// class Weapon* weapon;
 
 public:
 	//	*** PUBLIC GAME PARAMETERS	***
@@ -47,14 +51,9 @@ public:
 		Base_Type
 	};
 	
+	// The type of game object
 	objectType objType;
 	
-	enum WeaponType {
-		Bullet
-	};
-	
-	WeaponType weaponEquipped;
-
 	// Movement speed of the object
 	int moveSpeed;
 
@@ -76,10 +75,10 @@ public:
 
 	//	*** FUNCTIONS	***
 		// Instantiate a weapon for this object if it is meant to have one, maybe some enemies will, some won't, base won't, etc
-		int GetWeapon();
+		//int GetWeapon();
 		// behaviour determined by derivative class, eg enemy, player, base
 
-	void SetWeapon(WeaponType choice);
+		//void SetWeapon(Weapon::WeaponType choice);
 
 	// ***	RELATIONSHIP FUNCTIONS	***
 		// A method to set the parent of the object that calls this function equal to an object that is passed in (by reference to it)

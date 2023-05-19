@@ -1,6 +1,5 @@
 #pragma once
 #include "GameObject.h"
-#include <math.h>
 
 class SpriteObject : public GameObject
 {

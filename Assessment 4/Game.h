@@ -1,7 +1,4 @@
 #pragma once
-//#include "raylib.h"
-//#define RAYGUI_IMPLEMENTATION
-//#define RAYGUI_SUPPORT_ICONS
 #include <iostream>
 #include "GameObject.h"
 #include "Initialise.h"

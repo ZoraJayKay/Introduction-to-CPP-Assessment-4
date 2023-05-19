@@ -10,17 +10,42 @@ GameObject::GameObject()
 };
 
 // member function for destructor
-GameObject::~GameObject() {};
+GameObject::~GameObject() {
+	// Delete parent object pointer
+	delete parent;
+	parent = nullptr;
 
-// a method to get the weapon of this object
-int GameObject::GetWeapon() {
-	return weaponEquipped;
+	// Delete controller object pointer
+	delete ctrlr;
+	ctrlr = nullptr;
+
+	// Delete enemy object pointer
+	delete enemyPtr;
+	enemyPtr = nullptr;
+
+	// Delete vector of pointers of child objects
+	for (GameObject* obj : children) {
+		delete obj;
+		obj = nullptr;
+	}
+
+	// Delete matrices of transforms
+	delete localTransform;
+	localTransform = nullptr;
+
+	delete globalTransform;
+	globalTransform = nullptr;
 };
 
-// a method to set the weapon of this object
-void GameObject::SetWeapon(WeaponType choice) {
-	weaponEquipped = choice;
-};
+//// a method to get the weapon of this object
+//int GameObject::GetWeapon() {
+//	return this->objType;
+//};
+//
+//// a method to set the weapon of this object
+//void GameObject::SetWeapon(int choice) {
+//	this->objType = choice;
+//};
 
 
 
@@ -76,7 +101,7 @@ void GameObject::OnUpdate(float deltaTime, Controller& ctrlr) {
 		ctrlr.MoveSideways(*this, deltaTime);
 
 		// Call a function that can shoot if a key is pressed
-		ctrlr.Shoot(weaponEquipped);
+		//ctrlr.Shoot(*weaponEquipped);
 	}
 };
 

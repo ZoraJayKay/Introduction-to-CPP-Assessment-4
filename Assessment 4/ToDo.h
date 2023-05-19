@@ -2,6 +2,7 @@
 
 /* Zora's to do list
 * 
+* Make all enemies side-scroll when any one of them hits the edge by implementing a shared bool pointer as to whether or not they are moving right or left.
 * When enemy ship collides with edge of screen, move closer to player
 * Let enemy instantiate bullets
 * 

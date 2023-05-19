@@ -3,14 +3,15 @@
 #include "raylib.h"
 
 #include "SpriteObject.h"
-#include <string>
 #include <iostream>
+#include <math.h>
 
 //	*** CONSTRUCTOR AND DESTRUCTOR
 // default constructor function
 SpriteObject::SpriteObject() {
 	std::cout << "---SpriteObject constructor---" << endl;
 
+	// Set the type of game object as being a weapon
 	objType = Sprite_Type;
 };
 

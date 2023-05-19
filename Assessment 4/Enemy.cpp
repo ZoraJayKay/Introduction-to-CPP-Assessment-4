@@ -7,7 +7,7 @@ Enemy::Enemy()
 {		
 	std::cout << "---Enemy constructor---" << std::endl;
 	objType = Enemy_Type;
-	moveSpeed = 100;
+	moveSpeed = 250;
 	movingRight = true;
 }
 
@@ -19,30 +19,29 @@ Enemy::~Enemy()
 
 void Enemy::OnUpdate(float deltaTime) {
 	// Program screen size
-	int screenWidth = 1080;
+	int leftSideOfScreen = 0;
+	int rightSideOfScreen = 1080;
 	int screenHeight = 720;
 
-	std::cout << this->GlobalTransform().m02 << std::endl;
-
 	// If the ship is moving to the right and has not yet hit the edge of the screen...
-	if (this->movingRight && this->GlobalTransform().m02 < screenWidth) {
+	if (this->movingRight && this->GlobalTransform().m02 < rightSideOfScreen) {
 		MoveRight(deltaTime);		
 	}
 
 	// If the ship is moving to the right and HAS hit the edge of the screen...
-	if (this->movingRight && this->GlobalTransform().m02 >= screenWidth) {
+	if (this->movingRight && this->GlobalTransform().m02 >= rightSideOfScreen) {
 		// cease the trigger to keep moving right
 		this->movingRight = false;
 		MoveLeft(deltaTime);
 	}
 
 	// If the ship is moving to the left and has not yet hit the edge of the screen...
-	if (!this->movingRight && this->GlobalTransform().m02 > 0) {
+	if (!this->movingRight && this->GlobalTransform().m02 > leftSideOfScreen) {
 		MoveLeft(deltaTime);
 	}
 
 	// If the ship is moving to the left and HAS hit the edge of the screen...
-	if (!this->movingRight && this->GlobalTransform().m02 <= 0) {
+	if (!this->movingRight && this->GlobalTransform().m02 <= leftSideOfScreen) {
 		// turn on the trigger to move right
 		this->movingRight = true;
 		MoveRight(deltaTime);

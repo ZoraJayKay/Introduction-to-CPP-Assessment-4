@@ -17,7 +17,6 @@ Initialise::Initialise()
 	enemyShipFileName = "x64/Images/enemyBlack1.png";
 	baseFileName = "x64/Images/spaceBuilding_009.png";
 	backgroundFileName = "x64/Images/black.png";
-	laserAttackFileName = "x64/Images/laserBlue01.png";
 
 	 //1: GAME PARAMETERS
 		//1.1: Starting conditions / parameters for the game to run after starting and before ending

@@ -53,10 +53,11 @@ Game::~Game()
 	init = nullptr;
 
 	// Delete all of the vectors of game object pointers for the game actors
-	for (GameObject* obj : rootObjects) {
+	/*for (GameObject* obj : rootObjects) {
 		delete obj;
 		obj = nullptr;
-	}
+	}*/
+	// Above causing stack overflow on exit?
 
 	for (GameObject* obj : rootObjectsToAdd) {
 		delete obj;

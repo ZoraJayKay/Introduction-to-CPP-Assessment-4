@@ -31,7 +31,6 @@ public:
 	const char* playerShipFileName;
 	const char* enemyShipFileName;
 	const char* baseFileName;
-	const char* laserAttackFileName;
 	const char* backgroundFileName;
 
 	Initialise();
