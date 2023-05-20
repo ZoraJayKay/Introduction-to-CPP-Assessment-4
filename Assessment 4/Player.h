@@ -12,7 +12,7 @@ public:
 	Player();
 
 	// custom constructor
-	Player(int _lives, bool _hasWeapon, int score);
+	Player(int _lives, bool _hasWeapon, int score, GameObject::weaponType startingWeapon);
 
 	// default destructor function
 	~Player();

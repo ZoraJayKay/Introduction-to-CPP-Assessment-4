@@ -43,6 +43,9 @@ Game::Game()
 	// 1.3: Initialise a pointer to a new instance of the Controller class.
 	cntrlr = new Controller();
 
+	// 1.4 Permit the controller to make use of a game class pointer
+	cntrlr->g = this;
+
 	SetTargetFPS(60);
 }
 
@@ -105,7 +108,7 @@ void Game::Update()
 			UpdateCalculations();
 
 			// 2.2.3: Debug if necessary
-			// Debug();
+			Debug();
 
 			// 2.2.4: Draw the game scene
 			Draw();			
@@ -188,7 +191,7 @@ void Game::Draw()
 	// Create a const char pointer that points to the address of the string 's' as an array of characters
 	const char* scr = s.c_str();
 	
-	DrawText("Score: " + *scr, 20, 20, 20, LIGHTGRAY);
+	// DrawText("Score: " + *scr, 50, 50, 40, LIGHTGRAY);
 	
 	// 2.2.4.3: Draw all root objects (and thus their children)
 	for (GameObject* obj : rootObjects) {
@@ -226,8 +229,36 @@ void Game::Debug() {
 		}
 	}
 
+	
+
 	std::cout << "Number of Root objects: " << rootObjects.size() << std::endl;
 	std::cout << "Number of Player objects: " << playerCount << std::endl;
 	std::cout << "Number of Enemy objects: " << enemyCount << std::endl;
 	std::cout << "Number of Base objects: " << baseCount << std::endl;
+	std::cout << "Player weapon equipped: " << init->playerObjectPtr->GetWeapon() << std::endl;
+	DebugCheckWeapon();
 }
+
+void Game::DebugCheckWeapon() {
+	switch (init->playerObjectPtr->GetWeapon()) {
+	case 0:	// Laser fire
+		// Load laser attack texture
+		//spritePtr->Load(laserAttackFileName);
+		// set spawn point to the end of the barrel of the weapon
+		//spritePtr->SetPosition(spritePtr->Height() * 2.5f, -spritePtr->Width() / 2);
+		std::cout << "Laser equipped" << std::endl;
+		break;
+
+	case 1:	// name of weapon
+		std::cout << "Double laser equipped" << std::endl;
+		break;
+
+	case 2:	// name of weapon
+		std::cout << "Weapon not equipped" << std::endl;
+		break;
+
+	case 3:	// name of weapon
+		std::cout << "Weapon not equipped" << std::endl;
+		break;
+	}
+};

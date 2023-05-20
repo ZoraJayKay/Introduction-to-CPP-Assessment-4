@@ -60,6 +60,7 @@ public:
 	
 	// A temporary function for printing analysis to the console
 	void Debug();
+	void DebugCheckWeapon();
 
 	// 2: ENDIF FUNCTION
 	void Shutdown();

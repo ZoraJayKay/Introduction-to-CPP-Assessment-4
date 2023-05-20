@@ -29,7 +29,7 @@ Initialise::Initialise()
 			//	1.3.1	*** |||	PLAYER ||| ***
 				//		***		PLAYER OBJECT	***
 				//	1.3.1.1: Set pointers of the player and its sprite to their objects
-				playerObjectPtr = new Player(1, true, 0);
+				playerObjectPtr = new Player(1, true, 0, (GameObject::weaponType)0);
 				playerSpritePtr = new SpriteObject();
 					// Lives = 1.
 					// Has weapon = true.

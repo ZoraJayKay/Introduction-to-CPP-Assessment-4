@@ -3,6 +3,12 @@
 #include "Controller.h"
 #include <iostream>
 
+// Weapon options
+enum WeaponType {
+	Laser,
+	DoubleLaser,
+};
+
 // member function for constructor
 GameObject::GameObject() 
 {
@@ -37,15 +43,15 @@ GameObject::~GameObject() {
 	globalTransform = nullptr;
 };
 
-//// a method to get the weapon of this object
-//int GameObject::GetWeapon() {
-//	return this->objType;
-//};
-//
-//// a method to set the weapon of this object
-//void GameObject::SetWeapon(int choice) {
-//	this->objType = choice;
-//};
+// Return the equipped weapon of a game object as an integer
+int GameObject::GetWeapon() {
+	return this->weaponEquipped;
+};
+
+// a method to set the weapon of this object
+void GameObject::SetWeapon(weaponType chosenWeapon) {
+	this->weaponEquipped = chosenWeapon;
+};
 
 
 
@@ -101,7 +107,7 @@ void GameObject::OnUpdate(float deltaTime, Controller& ctrlr) {
 		ctrlr.MoveSideways(*this, deltaTime);
 
 		// Call a function that can shoot if a key is pressed
-		//ctrlr.Shoot(*weaponEquipped);
+		ctrlr.Shoot(weaponEquipped);
 	}
 };
 

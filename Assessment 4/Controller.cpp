@@ -3,17 +3,19 @@
 #include "raylib.h"
 
 #include "Controller.h"
-#include "Weapon.h"
 #include "Vector3.h"
 #include "Timer.h"
 #include <iostream>
+#include "SpriteObject.h"
+#include "Game.h"
 
 using namespace Utilities;
 
 
 
-Controller::Controller() {
-
+Controller::Controller() {};
+Controller::Controller(Game& gme) {
+	*g = gme;
 };
 
 Controller::~Controller() {
@@ -48,9 +50,19 @@ void Controller::MoveSideways(GameObject& obj, float deltaTime) {
 	}
 };
 
-//void Controller::Shoot(GameObject::WeaponType ammoType) {
-//		if (IsKeyPressed(KEY_SPACE)) {
-//		//Instantiate a new object of the type of weapon equipped
-//		Weapon* newAttack = new Weapon(ammoType);
-//	}
-//}
+void Controller::Shoot(GameObject::weaponType weaponEquipped) {
+		if (IsKeyPressed(KEY_SPACE)) {
+		// Instantiate a new object of the type of weapon equipped
+		Weapon* newAttack = new Weapon(weaponEquipped);
+		// Create the attack a sprite and make it the weapon's child
+		SpriteObject* weaponSpritePtr = new SpriteObject();
+		// Load the sprite a texture
+		weaponSpritePtr->Load(newAttack->laserAttackFileName);
+		// Set the start position of the attack
+		weaponSpritePtr->SetPosition(weaponSpritePtr->Height() * 2.5f, -weaponSpritePtr->Width() / 2);
+		// Parent the attack to its sprite
+		newAttack->AddChild(*weaponSpritePtr);
+		// Make the new attack a root object
+		g->AddRootObject(*newAttack);
+	}
+}

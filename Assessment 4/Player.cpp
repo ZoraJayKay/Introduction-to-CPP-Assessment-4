@@ -14,14 +14,14 @@ Player::~Player() {};
 
 
 // overloaded constructor
-Player::Player(int _lives, bool _hasWeapon, int _score)
+Player::Player(int _lives, bool _hasWeapon, int _score, GameObject::weaponType startingWeapon)
 {
 	std::cout << "---Overloaded Player constructor---" << endl;
 
 	lives = _lives;	
 	hasWeapon = _hasWeapon;
 	score = _score;
-	// weaponEquipped = 0; // Laser by default
+	this->SetWeapon(startingWeapon); // Laser by default
 
 	objType = Player_Type;
 

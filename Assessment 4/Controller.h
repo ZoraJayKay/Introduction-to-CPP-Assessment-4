@@ -1,16 +1,20 @@
 #pragma once
 #include "GameObject.h"
+#include "Weapon.h"
 
 class Controller
 {
 public:
-	Controller();
+	class Game* g;
 
-	/*void MoveSideways(Player& plyr);
-	void Shoot(Player& plyr);*/
+	Controller();
+	Controller(Game& gme);
+
+	
 
 	void MoveSideways(GameObject& obj, float deltaTime);
-	//void Shoot(GameObject::WeaponType ammoType);
+
+	void Shoot(GameObject::weaponType weaponEquipped);
 
 	~Controller();
 };

@@ -1,24 +1,20 @@
 #pragma once
 #include "GameObject.h"
 
-class Weapon
-// class Weapon : public GameObject
+class Weapon : public GameObject
 {
 protected:
-	// class SpriteObject* spritePtr;
+	class SpriteObject* attackSpritePtr;
 
 public:
-	enum WeaponType {
-		Laser
-	};
-
+	//enum WeaponType;	
 	int weaponSpeed;
 	const char* laserAttackFileName;
 	
 	Weapon();
-	Weapon(WeaponType choice);
+	Weapon(GameObject::weaponType weaponEquipped);
 	~Weapon();
 
-	//void OnUpdate(float deltaTime) override;
+	void OnUpdate(float deltaTime) override;
 };
 
