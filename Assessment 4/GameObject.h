@@ -2,6 +2,7 @@
 
 // Include useful libraries
 #include "Matrix3.h"
+#include "Vector3.h"
 #include <cmath>
 #include <vector>
 #include "assert.h"
@@ -28,7 +29,7 @@ protected:
 	// create pointers to Matrix3's for local and global transform
 	Matrix3* localTransform = new Matrix3(1);
 	Matrix3* globalTransform = new Matrix3(1);
-
+	
 	// Pointer for the controller 
 	class Controller* ctrlr;
 
@@ -48,6 +49,8 @@ public:
 		Base_Type
 	};
 	
+	MyVector3* acceleration = new MyVector3(1, 1, 0);
+
 	// The type of game object
 	objectType objType;
 	
@@ -140,4 +143,7 @@ public:
 
 		// call the Matrix3 class to incrementally rotate the object
 		void Rotate(float radians);
+
+		// Call the Matrix3 class so a child may inherit its parent's global position
+		void CopyTransform(GameObject& prnt);
 };

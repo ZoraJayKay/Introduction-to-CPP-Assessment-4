@@ -21,5 +21,5 @@ public:
 	float Dot(MyVector3&);
 
 	// CROSS PRODUCT
-	MyVector3* Cross(MyVector3&);
+	MyVector3 Cross(MyVector3&);
 };

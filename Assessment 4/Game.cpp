@@ -131,6 +131,21 @@ void Game::UpdateRelationships()
 
 
 	//***	REMOVING ROOT OBJECTS		***
+		// For any objects destroyed...
+		// 
+		
+		// For any projectiles that have left the play area...
+		for (GameObject* obj : rootObjects) {
+			if (
+				// if x axis is off the width, or...
+				(obj->GlobalTransform().m02 < 0 || obj->GlobalTransform().m02 > screenWidth) ||
+				// if y axis is off the height...
+				(obj->GlobalTransform().m12 < 0 || obj->GlobalTransform().m12 > screenHeight))
+			{
+				RemoveRootObject(*obj);
+			}
+		};
+		
 		// for each pointer in the vector of objects to remove...
 		for (GameObject* obj : rootObjectsToRemove) {
 		
@@ -140,7 +155,7 @@ void Game::UpdateRelationships()
 			// save the position between index 0 and the found pointer
 			int index = distance(rootObjects.begin(), itr);
 
-			// erase the found pointer
+			// erase the found pointer from the vector
 			rootObjects.erase(rootObjects.begin() + index);
 		}
 
@@ -184,14 +199,7 @@ void Game::Draw()
 
 	// 2.2.4.2: Write information to the screen
 	// score
-	// lives
-	
-	// Create a string out of the player score
-	std::string s = to_string(init->playerObjectPtr->score);
-	// Create a const char pointer that points to the address of the string 's' as an array of characters
-	const char* scr = s.c_str();
-	
-	// DrawText("Score: " + *scr, 50, 50, 40, LIGHTGRAY);
+	// lives	
 	
 	// 2.2.4.3: Draw all root objects (and thus their children)
 	for (GameObject* obj : rootObjects) {
@@ -204,9 +212,29 @@ void Game::Draw()
 
 
 void Game::Debug() {
+	// Create a string out of the player score
+	//std::string s = to_string(init->playerObjectPtr->score);
+	// Create a const char pointer that points to the address of the string 's' as an array of characters
+	//const char* scr = s.c_str();
+
 	int playerCount = 0;
 	int enemyCount = 0;
 	int baseCount = 0;
+	int attackCount = 0;
+
+	// Player object global x location
+	float playerX = init->playerObjectPtr->GlobalTransform().m02;
+	std::string plyrX = to_string(playerX);
+	const char* x = plyrX.c_str();
+
+	// Player sprite global x location
+	float spriteX = init->playerSpritePtr->GlobalTransform().m02;
+	std::string sprtX = to_string(playerX);
+	const char* sX = sprtX.c_str();
+
+	DrawText(x, 50, 40, 20, LIGHTGRAY);
+	DrawText(sX, 50, 80, 20, LIGHTGRAY);
+
 
 	// CONSOLE DEBUG: COUNT THE PLAYER OBJECTS
 	for (GameObject* obj : rootObjects) {
@@ -229,12 +257,19 @@ void Game::Debug() {
 		}
 	}
 
+	// CONSOLE DEBUG: COUNT THE PROJECTILE OBJECTS
+	for (GameObject* obj : rootObjects) {
+		if (obj->objType == GameObject::Projectile_Type) {
+			attackCount++;
+		}
+	}
 	
 
 	std::cout << "Number of Root objects: " << rootObjects.size() << std::endl;
 	std::cout << "Number of Player objects: " << playerCount << std::endl;
 	std::cout << "Number of Enemy objects: " << enemyCount << std::endl;
 	std::cout << "Number of Base objects: " << baseCount << std::endl;
+	std::cout << "Number of Weapon objects: " << attackCount << std::endl;
 	std::cout << "Player weapon equipped: " << init->playerObjectPtr->GetWeapon() << std::endl;
 	DebugCheckWeapon();
 }

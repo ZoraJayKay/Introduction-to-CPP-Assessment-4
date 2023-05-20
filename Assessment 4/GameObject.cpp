@@ -107,7 +107,7 @@ void GameObject::OnUpdate(float deltaTime, Controller& ctrlr) {
 		ctrlr.MoveSideways(*this, deltaTime);
 
 		// Call a function that can shoot if a key is pressed
-		ctrlr.Shoot(weaponEquipped);
+		ctrlr.Shoot(*this, this->weaponEquipped);
 	}
 };
 
@@ -125,9 +125,7 @@ void GameObject::Update(float deltaTime, Controller& ctrlr) {
 		}
 	}
 
-	// ENEMY MOVEMENT
-	if (objType == Enemy_Type) {
-
+	else {
 		OnUpdate(deltaTime);
 
 
@@ -135,6 +133,19 @@ void GameObject::Update(float deltaTime, Controller& ctrlr) {
 			child->Update(deltaTime, ctrlr);
 		}
 	};
+
+	// ENEMY MOVEMENT
+	/*if (objType == Enemy_Type) {
+
+		OnUpdate(deltaTime);
+
+
+		for (GameObject* child : children) {
+			child->Update(deltaTime, ctrlr);
+		}
+	};*/
+
+
 };
 
 
@@ -209,5 +220,16 @@ void GameObject::Translate(float x, float y) {
 // call the Matrix3 class to incrementally rotate the object
 void GameObject::Rotate(float radians) {
 	*localTransform = localTransform->RotateZ(radians);
-
+	UpdateTransform();
 }
+
+// Call the Matrix3 class so a child may inherit its parent's global position
+void GameObject::CopyTransform(GameObject& prnt) {
+	Matrix3* m = new Matrix3;
+	*m = prnt.GlobalTransform();
+	this->localTransform->Set(*m);
+	UpdateTransform();
+
+	delete m;
+	m = nullptr;
+};

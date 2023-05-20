@@ -6,8 +6,8 @@
 * When enemy ship collides with edge of screen, move closer to player
 * Let enemy instantiate bullets
 * 
-* Let player instantiate bullets
-* Destroy bullets when they leave screen
+* Have bullets make a sound
+* Have bullets destroy ships
 * 
 * Show score
 * Increment score when enemy is destroyed

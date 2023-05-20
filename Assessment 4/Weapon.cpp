@@ -64,8 +64,12 @@ void Weapon::OnUpdate(float deltaTime) {
 	// Create a new vector whose elements are the x, y, z of the firing object's X axis (its forward axis) and multiply that by time and speed (set its magnitude in the direction of its forward axis).
 	// This override function goes to the SceneObject, not the SpriteObject, so there's no problem that I rotated the Sprite by 90 degrees in its constructor, because the SceneObject is still facing the right way.
 	MyVector3 facing = MyVector3(
-		this->LocalTransform().m00,
-		this->LocalTransform().m10,
-		0) * deltaTime * this->weaponSpeed;
-	Translate(facing.x, facing.y);
+		this->LocalTransform().m01,
+		this->LocalTransform().m11,
+		0)
+		* deltaTime
+		* this->weaponSpeed;
+
+	// Move the object forward to the extent set by the facing vector
+	this->Translate(facing.x, -facing.y);
 };
