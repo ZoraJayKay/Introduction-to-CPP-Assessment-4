@@ -34,6 +34,7 @@ Initialise::Initialise()
 					// Lives = 1.
 					// Has weapon = true.
 					// Score = 0.
+					// Weapon = laser (0)
 
 				//		***		PLAYER SPRITE	***
 				//	1.3.1.2: Load the sprite a texture
@@ -43,7 +44,7 @@ Initialise::Initialise()
 				//	1.3.1.4: Make the player sprite the child of the player object
 				playerObjectPtr->AddChild(*playerSpritePtr);
 				//	1.3.1.5: Set the initial position for the playerObject (and thus child as well)
-				playerObjectPtr->SetPosition(GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f);
+				playerObjectPtr->SetPosition(GetScreenWidth() / 2.0f, GetScreenHeight() * 0.7f);
 
 				// vvv		NOT YET IMPLEMENTED		vvv
 				//	1.3.1.1: Set initial position
@@ -54,8 +55,10 @@ Initialise::Initialise()
 			// 1.3.2	*** |||	ENEMY ||| ***
 				//		***		ENEMY OBJECT	***
 				//	1.3.2.1: Set pointers of the enemy and its sprite to their objects
-				enemyPtr = new Enemy;
+				enemyPtr = new Enemy(250, (GameObject::weaponType)0);
 				enemySpritePtr = new SpriteObject;
+					// Move speed = 250.
+					// Weapon = laser (0)
 			
 				//		***		ENEMY SPRITE	***
 				//	1.3.2.2: Load the sprite a texture
@@ -65,7 +68,7 @@ Initialise::Initialise()
 				//	1.3.2.4: Make the player sprite the child of the player object
 				enemyPtr->AddChild(*enemySpritePtr);
 				//	1.3.2.5: Set the initial position for the playerObject (and thus child as well)
-				enemyPtr->SetPosition(GetScreenWidth() / 2.0f, GetScreenHeight() / 5.0f);
+				enemyPtr->SetPosition(GetScreenWidth() / 2.0f, GetScreenHeight() * 0.05f);
 
 
 				/* 1.3.2.1: Set initial position

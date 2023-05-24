@@ -32,6 +32,14 @@ public:
 	// Timer instance
 	class Timer* gameTimer;
 
+	// Program screen size
+	int screenWidth;
+	int screenHeight;
+
+	// Play area variables
+	int playWidth;
+	int playHeight;
+
 	// 0: Initialise a game session (default constructor)
 	Game();
 

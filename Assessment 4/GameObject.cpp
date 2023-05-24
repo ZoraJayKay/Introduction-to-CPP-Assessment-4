@@ -53,7 +53,9 @@ void GameObject::SetWeapon(weaponType chosenWeapon) {
 	this->weaponEquipped = chosenWeapon;
 };
 
-
+//void GameObject::ShootRandomly(GameObject& obj, weaponType weaponEquipped) {
+//	// override this in derivative classes for each object type's functions, if relevant
+//};
 
 //	*** PUBLIC GAME PARAMETERS	***
 
@@ -109,43 +111,21 @@ void GameObject::OnUpdate(float deltaTime, Controller& ctrlr) {
 		// Call a function that can shoot if a key is pressed
 		ctrlr.Shoot(*this, this->weaponEquipped);
 	}
-};
 
+	// Enemy movement comes frm overridden OnUpdate() in Enemy class
+}
+
+
+// Update for objects that only need time
 void GameObject::OnUpdate(float deltaTime) {};
 
+
+// Update for objects that need time and the controller
 void GameObject::Update(float deltaTime, Controller& ctrlr) {
-	// OnUpdate(deltaTime, ctrlr);
-
-	// PLAYER MOVEMENT
-	if (objType == Player_Type) {
-		OnUpdate(deltaTime, ctrlr);
-
-		for (GameObject* child : children) {
-			child->Update(deltaTime, ctrlr);
-		}
+	OnUpdate(deltaTime, ctrlr);
+	for (GameObject* child : children) {
+		child->Update(deltaTime, ctrlr);
 	}
-
-	else {
-		OnUpdate(deltaTime);
-
-
-		for (GameObject* child : children) {
-			child->Update(deltaTime, ctrlr);
-		}
-	};
-
-	// ENEMY MOVEMENT
-	/*if (objType == Enemy_Type) {
-
-		OnUpdate(deltaTime);
-
-
-		for (GameObject* child : children) {
-			child->Update(deltaTime, ctrlr);
-		}
-	};*/
-
-
 };
 
 

@@ -45,7 +45,8 @@ public:
 		Sprite_Type,
 		Player_Type,
 		Enemy_Type,
-		Projectile_Type,
+		Friendly_Projectile_Type,
+		Enemy_Projectile_Type,
 		Base_Type
 	};
 	
@@ -83,6 +84,8 @@ public:
 		// behaviour determined by derivative class, eg enemy, player, base
 
 		void SetWeapon(weaponType chosenWeapon);
+
+		/*virtual void ShootRandomly(GameObject& obj, weaponType weaponEquipped);*/
 
 	// ***	RELATIONSHIP FUNCTIONS	***
 		// A method to set the parent of the object that calls this function equal to an object that is passed in (by reference to it)

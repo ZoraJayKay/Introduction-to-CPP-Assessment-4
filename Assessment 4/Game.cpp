@@ -8,13 +8,13 @@
 #include "Controller.h"
 #include <string>
 
-// Program screen size
-int screenWidth = 1080;
-int screenHeight = 720;
-
-// Play area variables
-int playWidth = 1000;
-int playHeight = 660;
+//// Program screen size
+//int screenWidth = 1080;
+//int screenHeight = 720;
+//
+//// Play area variables
+//int playWidth = 1000;
+//int playHeight = 660;
 
 // Timer variables
 float targetFps = 60.0f;
@@ -26,6 +26,14 @@ Game::Game()
 {
 	std::cout << "---Game constructor---" << endl;
 	
+	// Program screen size
+	screenWidth = 1080;
+	screenHeight = 720;
+
+	// Play area variables
+	playWidth = 1000;
+	playHeight = 660;
+
 	// Print message in program banner at top of screen
 	// NOTE TO SELF: InitWindow needs to be done BEFORE loading any textures
 	InitWindow(screenWidth, screenHeight, "Zora Jane Kerr: Introduction to C++ (Assessment 4 - Retro Game) Space Invaders (AIE, 2023 [student year 1])");
@@ -108,7 +116,7 @@ void Game::Update()
 			UpdateCalculations();
 
 			// 2.2.3: Debug if necessary
-			Debug();
+			// Debug();
 
 			// 2.2.4: Draw the game scene
 			Draw();			
@@ -220,7 +228,8 @@ void Game::Debug() {
 	int playerCount = 0;
 	int enemyCount = 0;
 	int baseCount = 0;
-	int attackCount = 0;
+	int enemyAttackCount = 0;
+	int friendlyAttackCount = 0;
 
 	// Player object global x location
 	float playerX = init->playerObjectPtr->GlobalTransform().m02;
@@ -257,10 +266,17 @@ void Game::Debug() {
 		}
 	}
 
-	// CONSOLE DEBUG: COUNT THE PROJECTILE OBJECTS
+	// CONSOLE DEBUG: COUNT THE ENEMY PROJECTILE OBJECTS
 	for (GameObject* obj : rootObjects) {
-		if (obj->objType == GameObject::Projectile_Type) {
-			attackCount++;
+		if (obj->objType == GameObject::Enemy_Projectile_Type) {
+			enemyAttackCount++;
+		}
+	}
+
+	// CONSOLE DEBUG: COUNT THE FRIENDLY PROJECTILE OBJECTS
+	for (GameObject* obj : rootObjects) {
+		if (obj->objType == GameObject::Friendly_Projectile_Type) {
+			friendlyAttackCount++;
 		}
 	}
 	
@@ -269,7 +285,8 @@ void Game::Debug() {
 	std::cout << "Number of Player objects: " << playerCount << std::endl;
 	std::cout << "Number of Enemy objects: " << enemyCount << std::endl;
 	std::cout << "Number of Base objects: " << baseCount << std::endl;
-	std::cout << "Number of Weapon objects: " << attackCount << std::endl;
+	std::cout << "Number of Weapon objects: " << enemyAttackCount << std::endl;
+	std::cout << "Number of Weapon objects: " << friendlyAttackCount << std::endl;
 	std::cout << "Player weapon equipped: " << init->playerObjectPtr->GetWeapon() << std::endl;
 	DebugCheckWeapon();
 }

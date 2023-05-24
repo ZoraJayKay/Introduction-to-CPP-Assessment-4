@@ -10,11 +10,13 @@ public:
 	//enum WeaponType;	
 	int weaponSpeed;
 	const char* laserAttackFileName;
-	
+	// other weapon 2 file name
+	// other weapon 3 file name
+
 	Weapon();
-	Weapon(GameObject::weaponType weaponEquipped);
+	Weapon(GameObject::weaponType weaponEquipped, GameObject::objectType shooter);
 	~Weapon();
 
-	void OnUpdate(float deltaTime) override;
+	void OnUpdate(float deltaTime, Controller& ctrlr) override;
 };
 

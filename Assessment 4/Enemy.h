@@ -7,13 +7,17 @@ protected:
 	bool movingRight;
 
 public:
+	int shotTimer;
 
 	Enemy();
+	Enemy(int _moveSpeed, GameObject::weaponType startingWeapon);
 	
 	~Enemy();
 
-	void OnUpdate(float deltaTime) override;
+	void OnUpdate(float deltaTime, Controller& ctrlr) override;
+	/*void ShootRandomly(GameObject& obj, GameObject::weaponType weaponEquipped) override;*/
 
+	void MoveSideways(float deltaTime);
 	void MoveRight(float deltaTime);
 	void MoveLeft(float deltaTime);
 };
