@@ -16,7 +16,13 @@ SpriteObject::SpriteObject() {
 };
 
 // default destructor function
-SpriteObject::~SpriteObject() {};
+SpriteObject::~SpriteObject() {
+	delete minVector3AABB;
+	minVector3AABB = nullptr;
+
+	delete maxVector3AABB;
+	maxVector3AABB = nullptr;
+};
 
 
 //	*** FUNCTIONS	***
@@ -49,3 +55,9 @@ void SpriteObject::OnDraw()
 	// Draw the texture
 	DrawTextureEx(texture, v, rotation * (float)(180 / PI), 1, WHITE);
 }
+
+// *** BOUNDING BOX FUNCTIONS ***
+	// Return the centre of the collision hitbox
+	Vector3 SpriteObject::ReturnCenter() {
+
+	};
