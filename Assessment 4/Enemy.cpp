@@ -10,7 +10,14 @@
 // default constructor
 Enemy::Enemy() {};
 
-// overloaded constructor
+
+// default destructor
+Enemy::~Enemy()
+{
+
+}
+
+// overloaded constructor for speed and weapon of the enemy
 Enemy::Enemy(int _moveSpeed, GameObject::weaponType startingWeapon)
 {		
 	std::cout << "---Enemy constructor---" << std::endl;
@@ -20,28 +27,26 @@ Enemy::Enemy(int _moveSpeed, GameObject::weaponType startingWeapon)
 	this->SetWeapon(startingWeapon); // Laser by default
 }
 
-// default destructor
-Enemy::~Enemy()
-{
-	
-}
-
+// This OnUpdate() overrides the one in the GameObject class
 void Enemy::OnUpdate(float deltaTime, Controller& ctrlr) {
+	// Always be sidescrolling, yo
 	MoveSideways(deltaTime);
 	
-	// approximately once a second, give the enemy a chance to fire
+	// After 60 updates (approximately once a second) give the enemy a chance to fire
 	if (shotTimer == 60) {
 		ctrlr.ShootRandomly(*this, this->weaponEquipped);
+		// Reset the counter
 		shotTimer = 0;
 	}
 
-	// If the enemy doesn't fire, increment the shot timer (until it has another chance)
+	// If the enemy doesn't fire, increment the shot timer (until it has another chance to fire)
 	shotTimer++;	
 };
 
 
 void Enemy::MoveRight(float deltaTime) {
-	// Moving...
+	// Get the local x and y of the x axis, multiply by time and speed
+	// I think this effectively calculates the velocity (change in position over change in time)
 	MyVector3 facing = MyVector3(
 		this->LocalTransform().m00,
 		this->LocalTransform().m10,
@@ -49,12 +54,13 @@ void Enemy::MoveRight(float deltaTime) {
 		* deltaTime
 		* this->moveSpeed;
 
-	// Move the object right to the extent set by the facing vector
+	// Move the object right (positive x facing) to the extent set by the facing vector
 	this->Translate(facing.x, facing.y);
 };
 
 void Enemy::MoveLeft(float deltaTime) {
-	// Moving...
+	// Get the local x and y of the x axis, multiply by time and speed
+	// I think this effectively calculates the velocity (change in position over change in time)
 	MyVector3 facing = MyVector3(
 		this->LocalTransform().m00,
 		this->LocalTransform().m10,
@@ -62,13 +68,14 @@ void Enemy::MoveLeft(float deltaTime) {
 		* deltaTime
 		* this->moveSpeed;
 
-	// Move the object left to the extent set by the facing vector
+	// Move the object left (negative x facing) to the extent set by the facing vector
 	this->Translate(-facing.x, facing.y);
 };
 
 
 void Enemy::MoveSideways(float deltaTime) {
 	// Program screen size
+	// Set these as a shared pointer for all classes to use!
 	static const int leftSideOfScreen = 0;
 	static const int rightSideOfScreen = 1080;
 

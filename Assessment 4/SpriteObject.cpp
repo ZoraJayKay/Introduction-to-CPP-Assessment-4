@@ -48,4 +48,6 @@ void SpriteObject::OnDraw()
 
 	// Draw the texture
 	DrawTextureEx(texture, v, rotation * (float)(180 / PI), 1, WHITE);
+	
+	//DrawRectangle(this->GetParent()., /* paren'ts position? */, texture.width, texture.height, RED)
 }
