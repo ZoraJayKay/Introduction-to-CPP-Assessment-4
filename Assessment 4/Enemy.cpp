@@ -104,20 +104,3 @@ void Enemy::MoveSideways(float deltaTime) {
 		MoveRight(deltaTime);
 	}
 }
-
-//void Enemy::ShootRandomly(GameObject& obj, GameObject::weaponType weaponEquipped) {
-//	// Instantiate a new object of the type of weapon equipped
-//	Weapon* newAttack = new Weapon(weaponEquipped);
-//	// Create the new attack a sprite
-//	SpriteObject* weaponSpritePtr = new SpriteObject();
-//	// Load the attack sprite a texture
-//	weaponSpritePtr->Load(newAttack->laserAttackFileName);
-//	// Set the start position of the attack in the centre of the attacker's width and in front of their ship
-//	weaponSpritePtr->SetPosition(-weaponSpritePtr->Width() / 2, -weaponSpritePtr->Height() / 4);
-//	// Parent the attack object to its sprite object
-//	newAttack->AddChild(*weaponSpritePtr);
-//	// Copy the attacker's ship's global transform
-//	newAttack->CopyTransform(obj);
-//	// Make the new attack a root object of the game class instance
-//	g->AddRootObject(*newAttack);
-//};

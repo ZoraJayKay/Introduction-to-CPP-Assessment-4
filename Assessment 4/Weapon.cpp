@@ -1,25 +1,19 @@
 #include "Weapon.h"
 #include "Vector3.h"
 #include <iostream>
-//#include "SpriteObject.h"
-
-//// Weapon options
-//enum WeaponType {
-//		Laser
-//	};
-
-
 
 // Default, unused constructor
 Weapon::Weapon() {};
 
 // pass the constructor the type of weapon the game object has right now
 Weapon::Weapon(GameObject::weaponType weaponEquipped, GameObject::objectType shooter){
+//Weapon::Weapon(int weaponEquipped, int shooter){
 	std::cout << "---Weapon constructor---" << std::endl;
 	weaponSpeed = 0;
 	
 	// Set whether or not the weapon was fired by the player or an enemy, eg Friendly_Projectile_Type (4) or Enemy_Projectile_Type (5)
-	objType = shooter;
+	//this->SetObjectType(shooter);
+	this->objType = shooter;
 	
 	// file paths for new attacks to load textures
 	laserAttackFileName = "x64/Images/laserBlue01.png";
@@ -29,10 +23,6 @@ Weapon::Weapon(GameObject::weaponType weaponEquipped, GameObject::objectType sho
 	// use an integer switch case to determine weapon attack speed
 	switch (weaponEquipped) {
 	case 0:	// Laser fire
-		// Load laser attack texture
-		//spritePtr->Load(laserAttackFileName);
-		// set spawn point to the end of the barrel of the weapon
-		//spritePtr->SetPosition(spritePtr->Height() * 2.5f, -spritePtr->Width() / 2);
 		weaponSpeed = 400;
 		break;
 
@@ -77,8 +67,4 @@ void Weapon::OnUpdate(float deltaTime, Controller& ctrlr) {
 		// Move the object forward to the extent set by the facing vector
 		this->Translate(facing.x, facing.y);
 	}
-			
-	// Move the object forward to the extent set by the facing vector
-	//this->Translate(facing.x, -facing.y);
-	
 };

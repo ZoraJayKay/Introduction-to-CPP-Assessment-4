@@ -15,6 +15,7 @@ public:
 
 	Weapon();
 	Weapon(GameObject::weaponType weaponEquipped, GameObject::objectType shooter);
+	// Weapon(int weaponEquipped, int shooter);
 	~Weapon();
 
 	void OnUpdate(float deltaTime, Controller& ctrlr) override;

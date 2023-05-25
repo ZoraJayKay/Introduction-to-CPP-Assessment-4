@@ -85,7 +85,7 @@ public:
 
 		void SetWeapon(weaponType chosenWeapon);
 
-		/*virtual void ShootRandomly(GameObject& obj, weaponType weaponEquipped);*/
+		void SetObjectType(int choice);
 
 	// ***	RELATIONSHIP FUNCTIONS	***
 		// A method to set the parent of the object that calls this function equal to an object that is passed in (by reference to it)

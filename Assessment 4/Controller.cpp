@@ -11,39 +11,27 @@
 
 using namespace Utilities;
 
-
-
+// Default constructor
 Controller::Controller() {};
+
+// Overloaded constructor to permit accessing the hierarchy of parent/child objects
 Controller::Controller(Game& gme) {
 	*g = gme;
-
-
-	// acceleration *= speed
-	// My facing vector is my velocity vector
-	// 
-	// I need another vector for acceleration
-	// 
-	// 
-	// velocity must be a Vector3, start it at (0, 0, 0)
-	// velocity at a given moment = current velocity + (delta time * acceleration)
-	// velocity += (delta time * acceleration)
-	
-	// position = delta time * velocity * 1/2 acceleration * delta time squared
-	speedMin = 0;
-	speedMax = 1;	
 };
 
+// Destructor
 Controller::~Controller() {
-	// delete pointers
-	// set pointer to null
+	/*delete g;
+	g = nullptr;*/
 };
 
 
-// Conditionally move the player
+// A function to conditionally move the player based on keystrokes
 void Controller::MoveSideways(GameObject& obj, float deltaTime) {
-	if (IsKeyDown(KEY_D)) {
+	// If the player presses D or the right arrow key...
+	if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {
+		// Set the player to be moving
 		isMoving;
-		// position = delta time * velocity * (acceleration * 0.5) * delta time^2
 		MyVector3 facing = MyVector3(
 			obj.LocalTransform().m00,
 			obj.LocalTransform().m10,
@@ -51,13 +39,13 @@ void Controller::MoveSideways(GameObject& obj, float deltaTime) {
 			* deltaTime
 			* obj.moveSpeed;
 
-			//MyVector3 facing2 = facing.Cross(*obj.acceleration);
-
 		// Move the object forward to the extent set by the facing vector
 		obj.Translate(facing.x, facing.y);
 	}
 
-	if (IsKeyDown(KEY_A)) {
+	// If the player presses A or the left arrow key...
+	if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)) {
+		// Set the player to be moving
 		isMoving;
 		MyVector3 facing = MyVector3(
 			obj.LocalTransform().m00,
@@ -70,20 +58,31 @@ void Controller::MoveSideways(GameObject& obj, float deltaTime) {
 		obj.Translate(-facing.x, facing.y);
 	}
 
-	int h = 5;
-
-	if (!IsKeyDown(KEY_D) && !IsKeyDown(KEY_A)){
+	// Make sure that if the player has not pressed either left or right, I have a trigger that they are not moving
+	if (!IsKeyDown(KEY_D) && !IsKeyDown(KEY_A) && !IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT)){
 		!isMoving;
 	}
 };
 
+// An attack function only for use by the player
+//void Controller::Shoot(GameObject& obj, GameObject::weaponType weaponEquipped) {
+//		if (IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(0)) {
+//			// Shoot the weapon if the spacebar or left mouse button is pressed
+//			InstantiatePlayerAttack(obj, weaponEquipped);
+//		}
+//}
+
 void Controller::Shoot(GameObject& obj, GameObject::weaponType weaponEquipped) {
-		if (IsKeyPressed(KEY_SPACE)) {
-			InstantiatePlayerAttack(obj, weaponEquipped);
-		}
+//void Controller::Shoot(GameObject& obj, int weaponEquipped) {
+	if (IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(0)) {
+		// Shoot the weapon if the spacebar or left mouse button is pressed
+		InstantiatePlayerAttack(obj, weaponEquipped);
+	}
 }
 
-// A function for enemy craft to use (NOT YET FIRING RANDOMLY, DEBUGGING)
+
+
+// A function to let enemies fire at the player (see Enemy class OnUpdate() for what triggers this function)
 void Controller::ShootRandomly(GameObject& obj, GameObject::weaponType weaponEquipped) {
 	bool willAttack = false;  
 	int attackChance = GetRandomValue(0, 2);	// Give the enemy a 1 in 3 chance of firing per update
@@ -97,6 +96,7 @@ void Controller::ShootRandomly(GameObject& obj, GameObject::weaponType weaponEqu
 };
 
 void Controller::InstantiatePlayerAttack(GameObject& obj, GameObject::weaponType weaponEquipped) {
+//void Controller::InstantiatePlayerAttack(GameObject& obj, int weaponEquipped) {
 	// Instantiate a new object of the type of weapon equipped and tag the weapon as a friendly shot
 	Weapon* newAttack = new Weapon(weaponEquipped, (GameObject::objectType)4);
 	// Create the new attack a sprite

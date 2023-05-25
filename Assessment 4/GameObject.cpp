@@ -53,9 +53,18 @@ void GameObject::SetWeapon(weaponType chosenWeapon) {
 	this->weaponEquipped = chosenWeapon;
 };
 
-//void GameObject::ShootRandomly(GameObject& obj, weaponType weaponEquipped) {
-//	// override this in derivative classes for each object type's functions, if relevant
-//};
+// A function for setting the enum gameobject type of the calling object using an int
+void GameObject::SetObjectType(int choice) {
+	switch (choice) {
+	case 0: this->objType = Default_Type;
+	case 1: this->objType = Sprite_Type;
+	case 2: this->objType = Player_Type;
+	case 3: this->objType = Enemy_Type;
+	case 4: this->objType = Friendly_Projectile_Type;
+	case 5: this->objType = Enemy_Projectile_Type;
+	case 6: this->objType = Base_Type;
+	}	
+};
 
 //	*** PUBLIC GAME PARAMETERS	***
 
@@ -111,8 +120,6 @@ void GameObject::OnUpdate(float deltaTime, Controller& ctrlr) {
 		// Call a function that can shoot if a key is pressed
 		ctrlr.Shoot(*this, this->weaponEquipped);
 	}
-
-	// Enemy movement comes frm overridden OnUpdate() in Enemy class
 }
 
 
