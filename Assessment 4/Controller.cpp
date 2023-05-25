@@ -1,3 +1,5 @@
+#pragma once
+
 #define RAYGUI_IMPLEMENTATION
 #define RAYGUI_SUPPORT_ICONS
 #include "raylib.h"
@@ -12,35 +14,38 @@
 using namespace Utilities;
 
 // Default constructor
-Controller::Controller() {};
+Controller::Controller() {
+	std::cout << "---Default Controller constructor---" << endl;
+};
 
 // Overloaded constructor to permit accessing the hierarchy of parent/child objects
 Controller::Controller(Game& gme) {
+	std::cout << "---Overloaded Controller constructor---" << endl;
 	*g = gme;
 };
 
 // Destructor
 Controller::~Controller() {
-	/*delete g;
-	g = nullptr;*/
+	delete g;
+	g = nullptr;
 };
 
 
 // A function to conditionally move the player based on keystrokes
-void Controller::MoveSideways(GameObject& obj, float deltaTime) {
+void Controller::MoveSideways(GameObject& player, float deltaTime) {
 	// If the player presses D or the right arrow key...
 	if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {
 		// Set the player to be moving
 		isMoving;
 		MyVector3 facing = MyVector3(
-			obj.LocalTransform().m00,
-			obj.LocalTransform().m10,
+			player.LocalTransform().m00,
+			player.LocalTransform().m10,
 			0)		
 			* deltaTime
-			* obj.moveSpeed;
+			* player.moveSpeed;
 
 		// Move the object forward to the extent set by the facing vector
-		obj.Translate(facing.x, facing.y);
+		player.Translate(facing.x, facing.y);
 	}
 
 	// If the player presses A or the left arrow key...
@@ -48,14 +53,14 @@ void Controller::MoveSideways(GameObject& obj, float deltaTime) {
 		// Set the player to be moving
 		isMoving;
 		MyVector3 facing = MyVector3(
-			obj.LocalTransform().m00,
-			obj.LocalTransform().m10,
+			player.LocalTransform().m00,
+			player.LocalTransform().m10,
 			0)
 			* deltaTime
-			* obj.moveSpeed;
+			* player.moveSpeed;
 
 		// Move the object forward to the extent set by the facing vector
-		obj.Translate(-facing.x, facing.y);
+		player.Translate(-facing.x, facing.y);
 	}
 
 	// Make sure that if the player has not pressed either left or right, I have a trigger that they are not moving
@@ -64,26 +69,16 @@ void Controller::MoveSideways(GameObject& obj, float deltaTime) {
 	}
 };
 
-// An attack function only for use by the player
-//void Controller::Shoot(GameObject& obj, GameObject::weaponType weaponEquipped) {
-//		if (IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(0)) {
-//			// Shoot the weapon if the spacebar or left mouse button is pressed
-//			InstantiatePlayerAttack(obj, weaponEquipped);
-//		}
-//}
 
-void Controller::Shoot(GameObject& obj, GameObject::weaponType weaponEquipped) {
-//void Controller::Shoot(GameObject& obj, int weaponEquipped) {
+void Controller::Shoot(GameObject& player, GameObject::weaponType weaponEquipped) {
 	if (IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(0)) {
 		// Shoot the weapon if the spacebar or left mouse button is pressed
-		InstantiatePlayerAttack(obj, weaponEquipped);
+		InstantiatePlayerAttack(player, weaponEquipped);
 	}
 }
 
-
-
 // A function to let enemies fire at the player (see Enemy class OnUpdate() for what triggers this function)
-void Controller::ShootRandomly(GameObject& obj, GameObject::weaponType weaponEquipped) {
+void Controller::ShootRandomly(GameObject& enemy, GameObject::weaponType weaponEquipped) {
 	bool willAttack = false;  
 	int attackChance = GetRandomValue(0, 2);	// Give the enemy a 1 in 3 chance of firing per update
 	
@@ -91,42 +86,43 @@ void Controller::ShootRandomly(GameObject& obj, GameObject::weaponType weaponEqu
 	{
 	case 0: break;
 	case 1: break;
-	case 2: InstantiateEnemyAttack(obj, weaponEquipped);
+	case 2: InstantiateEnemyAttack(enemy, weaponEquipped);
 	}
 };
 
-void Controller::InstantiatePlayerAttack(GameObject& obj, GameObject::weaponType weaponEquipped) {
-//void Controller::InstantiatePlayerAttack(GameObject& obj, int weaponEquipped) {
+void Controller::InstantiatePlayerAttack(GameObject& player, GameObject::weaponType weaponEquipped) {
 	// Instantiate a new object of the type of weapon equipped and tag the weapon as a friendly shot
-	Weapon* newAttack = new Weapon(weaponEquipped, (GameObject::objectType)4);
+	Weapon* newAttack = new Weapon(weaponEquipped, player.Friendly_Projectile_Type);
 	// Create the new attack a sprite
 	SpriteObject* weaponSpritePtr = new SpriteObject();
 	// Load the attack sprite a texture
-	weaponSpritePtr->Load(newAttack->laserAttackFileName);
+	weaponSpritePtr->Load(newAttack->playerLaserAttackFileName);
 	// Set the start position of the attack in the centre of the attacker's width and in front of their ship
 	weaponSpritePtr->SetPosition(-weaponSpritePtr->Width() / 2, -weaponSpritePtr->Height() / 4);
 	// Parent the attack object to its sprite object
 	newAttack->AddChild(*weaponSpritePtr);
 	// Copy the attacker's ship's global transform
-	newAttack->CopyTransform(obj);
+	newAttack->CopyTransform(player);
 	// Make the new attack a root object of the game class instance
 	g->AddRootObject(*newAttack);
 };
 
 
-void Controller::InstantiateEnemyAttack(GameObject& obj, GameObject::weaponType weaponEquipped) {
+void Controller::InstantiateEnemyAttack(GameObject& enemy, GameObject::weaponType weaponEquipped) {
 	// Instantiate a new object of the type of weapon equipped and tag the weapon as an enemy shot
-	Weapon* newAttack = new Weapon(weaponEquipped, (GameObject::objectType)5);
+	Weapon* newAttack = new Weapon(weaponEquipped, enemy.Enemy_Projectile_Type);
 	// Create the new attack a sprite
 	SpriteObject* weaponSpritePtr = new SpriteObject();
 	// Load the attack sprite a texture
-	weaponSpritePtr->Load(newAttack->laserAttackFileName);
+	weaponSpritePtr->Load(newAttack->enemyLaserAttackFileName);
+	// Rotate the texture 180 degrees
+	weaponSpritePtr->SetRotate(PI);
 	// Set the start position of the attack in the centre of the attacker's width and in front of their ship
-	weaponSpritePtr->SetPosition(-weaponSpritePtr->Width() / 2, weaponSpritePtr->Height() * 2.25);
+	weaponSpritePtr->SetPosition(-weaponSpritePtr->Width() / 2, weaponSpritePtr->Height() * 4);
 	// Parent the attack object to its sprite object
 	newAttack->AddChild(*weaponSpritePtr);
 	// Copy the attacker's ship's global transform
-	newAttack->CopyTransform(obj);
+	newAttack->CopyTransform(enemy);
 	// Make the new attack a root object of the game class instance
 	g->AddRootObject(*newAttack);
 };

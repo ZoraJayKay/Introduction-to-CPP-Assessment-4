@@ -1,4 +1,5 @@
 #pragma once
+
 #include <iostream>
 #include "GameObject.h"
 #include "Initialise.h"
@@ -66,6 +67,9 @@ public:
 	// 1.4.1: Create the visible play area
 	// 1.4.2: Render objects
 	
+	void PrintPlayerScore();
+	void PrintPlayerLives();
+
 	// A temporary function for printing analysis to the console
 	void Debug();
 	void DebugCheckWeapon();

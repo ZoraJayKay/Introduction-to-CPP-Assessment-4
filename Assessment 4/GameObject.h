@@ -9,12 +9,6 @@
 
 using namespace std;
 
-// &(type)	= address of an object
-// (type)&	= an object's reference [the object itself]
-// (type)*	= pointer to an object
-// *(type)	= dereference [contents of the reference]
-
-
 // Create a blueprint for any object with a transform in the game
 class GameObject
 {
@@ -39,8 +33,7 @@ protected:
 public:
 	//	*** PUBLIC GAME PARAMETERS	***
 	// object type
-	enum objectType
-	{
+	enum objectType	{
 		Default_Type,
 		Sprite_Type,
 		Player_Type,
@@ -50,12 +43,13 @@ public:
 		Base_Type
 	};
 	
-	MyVector3* acceleration = new MyVector3(1, 1, 0);
-
 	// The type of game object
 	objectType objType;
 	
-	enum weaponType {};
+	enum weaponType {
+		Laser,
+		DoubleLaser,
+	};
 
 	weaponType weaponEquipped;
 
@@ -109,7 +103,7 @@ public:
 			// Create virtual OnUpdate function for use by separate object types. Behaviour determined by derivative class.
 			virtual void OnUpdate(float deltaTime, Controller& ctrlr);
 			
-			// Virtual override for enemies and bullets
+			// Update for objects that only need time
 			virtual void OnUpdate(float deltaTime);
 
 			// a non-virtual method that first calls OnUpdate() on itself, then calls Update() on all children

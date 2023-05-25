@@ -1,5 +1,6 @@
-#include "Matrix3.h"
+#pragma once
 
+#include "Matrix3.h"
 
 // default constructor (just to avoid null errors)
 Matrix3::Matrix3() {}

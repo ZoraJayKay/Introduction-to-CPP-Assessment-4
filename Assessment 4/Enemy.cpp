@@ -1,3 +1,5 @@
+#pragma once
+
 #define RAYGUI_IMPLEMENTATION
 #define RAYGUI_SUPPORT_ICONS
 #include "raylib.h"

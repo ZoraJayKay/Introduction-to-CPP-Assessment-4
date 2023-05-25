@@ -1,11 +1,12 @@
 #pragma once
+
 #include "GameObject.h"
 // This class is a container for all of the things that collectively represent the player
 
 class Player : public GameObject
 {
 public:
-	// Player variables
+	//class Controller* ctrlr;
 
 	//	***		CONSTRUCTOR & DESTRUCTOR	***
 	// default constructor function
@@ -16,5 +17,7 @@ public:
 
 	// default destructor function
 	~Player();
+
+	void OnUpdate(float deltaTime, Controller& ctrlr) override;
 };
 

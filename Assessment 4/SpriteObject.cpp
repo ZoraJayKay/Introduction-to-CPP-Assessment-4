@@ -1,3 +1,5 @@
+#pragma once
+
 #define RAYGUI_IMPLEMENTATION
 #define RAYGUI_SUPPORT_ICONS
 #include "raylib.h"
@@ -57,7 +59,7 @@ void SpriteObject::OnDraw()
 }
 
 // *** BOUNDING BOX FUNCTIONS ***
-	// Return the centre of the collision hitbox
-	Vector3 SpriteObject::ReturnCenter() {
+	//// Return the centre of the collision hitbox
+	//Vector3 SpriteObject::ReturnCenter() {
 
-	};
+	//};

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "GameObject.h"
 #include "Weapon.h"
 
@@ -8,23 +9,26 @@ public:
 	// Create a pointer to a game object so that the controller can interact with the hierarchy of objects 
 	class Game* g;
 
-	// Variables for 
+	// Variables for tracking movement
 	bool isMoving;
-	bool movingRight;
-	bool movingLeft;
 
 	Controller();
 	Controller(Game& gme);
-	
-	void MoveSideways(GameObject& obj, float deltaTime);
-
-	void Shoot(GameObject& obj, GameObject::weaponType weaponEquipped);
-	// void Shoot(GameObject& obj, int weaponEquipped);
-	void ShootRandomly(GameObject& obj, GameObject::weaponType weaponEquipped);
-	void InstantiatePlayerAttack(GameObject& obj, GameObject::weaponType weaponEquipped);
-	//void InstantiatePlayerAttack(GameObject& obj, int weaponEquipped);
-	void InstantiateEnemyAttack(GameObject& obj, GameObject::weaponType weaponEquipped);
-
 	~Controller();
+	
+	// A function to conditionally move the player based on keystrokes
+	void MoveSideways(GameObject& player, float deltaTime);
+
+	// Player functions
+		// A function to detect whether the player has pressed a key to attack
+		void Shoot(GameObject& player, GameObject::weaponType weaponEquipped);
+		// Instantiate a player attack
+		void InstantiatePlayerAttack(GameObject& player, GameObject::weaponType weaponEquipped);
+
+	// Enemy functions
+		// A function to let enemies fire at the player (see Enemy class OnUpdate() for what triggers this function)
+		void ShootRandomly(GameObject& enemy, GameObject::weaponType weaponEquipped);
+		// Instantiate an enemy attack
+		void InstantiateEnemyAttack(GameObject& enemy, GameObject::weaponType weaponEquipped);
 };
 

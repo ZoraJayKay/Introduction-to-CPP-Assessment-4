@@ -1,3 +1,5 @@
+#pragma once
+
 #define RAYGUI_IMPLEMENTATION
 #define RAYGUI_SUPPORT_ICONS
 #include "raylib.h"
@@ -63,19 +65,18 @@ Game::~Game()
 	delete init;
 	init = nullptr;
 
-	// Delete all of the vectors of game object pointers for the game actors
-	/*for (GameObject* obj : rootObjects) {
-		delete obj;
-		obj = nullptr;
-	}*/
-	// Above causing stack overflow on exit?
-
 	for (GameObject* obj : rootObjectsToAdd) {
 		delete obj;
 		obj = nullptr;
 	}
 
 	for (GameObject* obj : rootObjectsToRemove) {
+		delete obj;
+		obj = nullptr;
+	}
+
+	// Delete all of the vectors of game object pointers for the game actors
+	for (GameObject* obj : rootObjects) {
 		delete obj;
 		obj = nullptr;
 	}
@@ -116,7 +117,7 @@ void Game::Update()
 			UpdateCalculations();
 
 			// 2.2.3: Debug if necessary
-			// Debug();
+			//Debug();
 
 			// 2.2.4: Draw the game scene
 			Draw();			
@@ -142,7 +143,7 @@ void Game::UpdateRelationships()
 		// For any objects destroyed...
 		// 
 		
-		// For any projectiles that have left the play area...
+		// For any objects that have left the play area...
 		for (GameObject* obj : rootObjects) {
 			if (
 				// if x axis is off the width, or...
@@ -206,9 +207,11 @@ void Game::Draw()
 	ClearBackground(RAYWHITE);
 
 	// 2.2.4.2: Write information to the screen
-	// score
-	// lives	
-	
+	// Score
+	PrintPlayerScore();
+	// Lives
+	PrintPlayerLives();
+
 	// 2.2.4.3: Draw all root objects (and thus their children)
 	for (GameObject* obj : rootObjects) {
 		// Call the Draw function that is defined in the GameObject class
@@ -217,6 +220,22 @@ void Game::Draw()
 
 	EndDrawing();
 }
+
+void Game::PrintPlayerScore() {
+	//int playerScore = init->playerObjectPtr->score;
+	string playerScoreString = to_string(init->playerObjectPtr->score);
+	string scoreString = "Score:	" + playerScoreString;
+	const char* score = scoreString.c_str();
+	DrawText(score, 20, 40, 20, RED);
+};
+
+void Game::PrintPlayerLives() {
+	//int playerScore = init->playerObjectPtr->score;
+	string playerLivesString = to_string(init->playerObjectPtr->lives);
+	string livesString = "Lives:	" + playerLivesString;
+	const char* lives = livesString.c_str();
+	DrawText(lives, 20, 70, 20, RED);
+};
 
 
 void Game::Debug() {

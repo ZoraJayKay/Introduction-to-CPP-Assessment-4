@@ -1,3 +1,5 @@
+#pragma once
+
 #define RAYGUI_IMPLEMENTATION
 #define RAYGUI_SUPPORT_ICONS
 #include "raylib.h"
@@ -29,12 +31,13 @@ Initialise::Initialise()
 			//	1.3.1	*** |||	PLAYER ||| ***
 				//		***		PLAYER OBJECT	***
 				//	1.3.1.1: Set pointers of the player and its sprite to their objects
-				playerObjectPtr = new Player(1, true, 0, (GameObject::weaponType)0);
+				//playerObjectPtr = new Player(1, true, 0, (GameObject::weaponType)0);
+				playerObjectPtr = new Player(1, true, 0, playerObjectPtr->Laser);
 				playerSpritePtr = new SpriteObject();
 					// Lives = 1.
 					// Has weapon = true.
 					// Score = 0.
-					// Weapon = laser (0)
+					// Weapon = laser
 
 				//		***		PLAYER SPRITE	***
 				//	1.3.1.2: Load the sprite a texture
@@ -55,10 +58,10 @@ Initialise::Initialise()
 			// 1.3.2	*** |||	ENEMY ||| ***
 				//		***		ENEMY OBJECT	***
 				//	1.3.2.1: Set pointers of the enemy and its sprite to their objects
-				enemyPtr = new Enemy(250, (GameObject::weaponType)0);
+				enemyPtr = new Enemy(250, enemyPtr->Laser);
 				enemySpritePtr = new SpriteObject;
 					// Move speed = 250.
-					// Weapon = laser (0)
+					// Weapon = laser
 			
 				//		***		ENEMY SPRITE	***
 				//	1.3.2.2: Load the sprite a texture
@@ -89,7 +92,17 @@ Initialise::Initialise()
 }
 
 // member function for destructor
-Initialise::~Initialise() 
-{
+Initialise::~Initialise() {
+	delete playerObjectPtr;
+	playerObjectPtr = nullptr;
+
+	delete playerSpritePtr;
+	playerSpritePtr = nullptr;
+
+	for (Enemy* enemy : enemyPtrs) {
+		delete enemy;
+		enemy = nullptr;
+	}
+	
 
 }

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "GameObject.h"
 
 class Weapon : public GameObject
@@ -9,7 +10,8 @@ protected:
 public:
 	//enum WeaponType;	
 	int weaponSpeed;
-	const char* laserAttackFileName;
+	const char* playerLaserAttackFileName;
+	const char* enemyLaserAttackFileName;
 	// other weapon 2 file name
 	// other weapon 3 file name
 

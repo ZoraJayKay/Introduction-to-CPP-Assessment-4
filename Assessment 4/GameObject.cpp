@@ -1,13 +1,8 @@
 #pragma once
+
 #include "GameObject.h"
 #include "Controller.h"
 #include <iostream>
-
-// Weapon options
-enum WeaponType {
-	Laser,
-	DoubleLaser,
-};
 
 // member function for constructor
 GameObject::GameObject() 
@@ -82,7 +77,6 @@ void GameObject::SetParent(GameObject& parent_01)
 GameObject& GameObject::GetParent() {
 	return *this->parent;
 	// we return a dereferenced 'parent' because parent is a pointer, so by dereferencing it we return its contents
-	// don't I want to return the object, not its contents?
 };
 
 // A method to count the children of this object
@@ -110,18 +104,8 @@ void GameObject::RemoveChild(GameObject& child) {
 
 
 //	***	UPDATE FUNCTIONS	***
-// Pass the controller to the game object
-void GameObject::OnUpdate(float deltaTime, Controller& ctrlr) {
-	// PLAYER MOVEMENT
-	if (objType == Player_Type) {
-		// Call a function that can move the player
-		ctrlr.MoveSideways(*this, deltaTime);
-
-		// Call a function that can shoot if a key is pressed
-		ctrlr.Shoot(*this, this->weaponEquipped);
-	}
-}
-
+// Create virtual OnUpdate function for use by separate object types. Behaviour determined by derivative class.
+void GameObject::OnUpdate(float deltaTime, Controller& ctrlr) {}
 
 // Update for objects that only need time
 void GameObject::OnUpdate(float deltaTime) {};

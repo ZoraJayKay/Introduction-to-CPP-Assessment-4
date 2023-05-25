@@ -1,16 +1,25 @@
+#pragma once
+
 #include "Player.h"
 #include <iostream>
+#include "Controller.h"
 
 // default constructor
 Player::Player() {
-	std::cout << "---Player constructor---" << endl;
-
-	objType = Player_Type;
+	std::cout << "---Empty Player constructor---" << endl;
 };
 
 
 // default destructor
-Player::~Player() {};
+Player::~Player() {}
+
+void Player::OnUpdate(float deltaTime, Controller& ctrlr){
+	// PLAYER MOVEMENT
+	ctrlr.MoveSideways(*this, deltaTime);
+
+	// Call a function that can shoot if a key is pressed
+	ctrlr.Shoot(*this, this->weaponEquipped);
+};
 
 
 // overloaded constructor

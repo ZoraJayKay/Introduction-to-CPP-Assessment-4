@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Weapon.h"
 #include "Vector3.h"
 #include <iostream>
@@ -7,16 +9,15 @@ Weapon::Weapon() {};
 
 // pass the constructor the type of weapon the game object has right now
 Weapon::Weapon(GameObject::weaponType weaponEquipped, GameObject::objectType shooter){
-//Weapon::Weapon(int weaponEquipped, int shooter){
 	std::cout << "---Weapon constructor---" << std::endl;
 	weaponSpeed = 0;
 	
-	// Set whether or not the weapon was fired by the player or an enemy, eg Friendly_Projectile_Type (4) or Enemy_Projectile_Type (5)
-	//this->SetObjectType(shooter);
+	// Set whether or not the weapon was fired by the player or an enemy, eg Friendly_Projectile_Type or Enemy_Projectile_Type
 	this->objType = shooter;
 	
 	// file paths for new attacks to load textures
-	laserAttackFileName = "x64/Images/laserBlue01.png";
+	playerLaserAttackFileName = "x64/Images/laserBlue07.png";
+	enemyLaserAttackFileName = "x64/Images/laserRed07.png";
 	// option 2
 	// option 3
 
@@ -41,10 +42,12 @@ Weapon::Weapon(GameObject::weaponType weaponEquipped, GameObject::objectType sho
 };
 
 Weapon::~Weapon() {
-	delete this;
+	delete playerLaserAttackFileName;
+	playerLaserAttackFileName = nullptr;
 
-	delete laserAttackFileName;
-	laserAttackFileName = nullptr;
+	delete enemyLaserAttackFileName;
+	enemyLaserAttackFileName = nullptr;
+
 };
 
 void Weapon::OnUpdate(float deltaTime, Controller& ctrlr) {
@@ -59,12 +62,12 @@ void Weapon::OnUpdate(float deltaTime, Controller& ctrlr) {
 		* this->weaponSpeed;
 
 	if (this->objType == Friendly_Projectile_Type) {
-		// Move the object forward to the extent set by the facing vector
+		// Shoot from the bottom of the screen to the top
 		this->Translate(facing.x, -facing.y);
 	}
 
 	if (this->objType == Enemy_Projectile_Type) {
-		// Move the object forward to the extent set by the facing vector
+		// Shoot from the top of the screen to the bottom
 		this->Translate(facing.x, facing.y);
 	}
 };
