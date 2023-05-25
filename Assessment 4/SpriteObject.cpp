@@ -43,6 +43,10 @@ void SpriteObject::Load(const char* fileName)
 {
 	image = LoadImage(fileName);
 	texture = LoadTextureFromImage(image);
+
+	// TEMPORARY DEBUG
+	cout << Height() << endl;
+	cout << Width() << endl;
 }
 
  //a virtual override method for implementing specific derived drawing behaviours
