@@ -43,22 +43,24 @@ Game::Game()
 	// 0.2: Add the objects from initialisation to the scene as root, enemy and base objects
 		// 0.2.1: Add the player
 		AddRootObject(*(init->playerObjectPtr));
-		AddRootObject(*(init->enemyPtr));
-		AddRootObject(*(init->basePtr_01));
-		AddRootObject(*(init->basePtr_02));
-		AddRootObject(*(init->basePtr_03));
+		//AddRootObject(*(init->enemyPtr));
+		//AddRootObject(*(init->basePtr_01));
+		//AddRootObject(*(init->basePtr_02));
+		//AddRootObject(*(init->basePtr_03));
 
 
-		// 0.2.2: Add the vector of enemies
+		// 0.2.2: Add the vector of enemies from initialisation
 			// This adds the enemies WAITING to be put on the master vector of enemies because at this point in time, initialise has run but Update() *has not* and so they have not been moved out of the pending list yet
-			for (GameObject* enemy : init->enemiesToInitialise) {
+			for (Enemy* enemy : init->enemiesToInitialise) {
 					AddRootObject(*enemy);
+					AddEnemyObject(*enemy);
 				}
 
-		// 0.2.3: Add the vector of bases
+		// 0.2.3: Add the vector of bases from initialisation
 			// This adds the bases WAITING to be put on the master vector of bases because at this point in time, initialise has run but Update() *has not* and so they have not been moved out of the pending list yet
-			for (GameObject* base : init->basesToInitialise) {
+			for (Base* base : init->basesToInitialise) {
 					AddRootObject(*base);
+					AddBaseObject(*base);
 				}
 
 
@@ -120,7 +122,7 @@ void Game::UpdateRelationships()
 
 	//***	ADDING ENEMY OBJECTS		***
 		// for each pointer in the vector of enemies to add...
-		for (GameObject* enemy : enemiesToAdd) {
+		for (Enemy* enemy : enemiesToAdd) {
 			// add the pointer to the object to the back of the vector of enemy objects
 			enemies.push_back(enemy);
 		}
@@ -130,7 +132,7 @@ void Game::UpdateRelationships()
 
 	//***	ADDING BASE OBJECTS		***
 		// for each pointer in the vector of bases to add...
-		for (GameObject* base : basesToAdd) {
+		for (Base* base : basesToAdd) {
 			// add the pointer to the object to the back of the vector of enemy objects
 			bases.push_back(base);
 		}
@@ -142,9 +144,9 @@ void Game::UpdateRelationships()
 	//***	REMOVING ENEMY OBJECTS		***		
 		// BEFORE deleting the root object, remove enemies from the list of enemies
 		// for each pointer in the vector of enemies to remove...
-		for (GameObject* enemy : enemiesToRemove) {
+		for (Enemy* enemy : enemiesToRemove) {
 			// create an iterator which will find the pointer to remove in the enemies vector
-			vector<GameObject*>::iterator itr_01 = find(enemies.begin(), enemies.end(), enemy);
+			vector<Enemy*>::iterator itr_01 = find(enemies.begin(), enemies.end(), enemy);
 
 			// save the position between index 0 and the found pointer
 			int index = distance(enemies.begin(), itr_01);
@@ -159,9 +161,9 @@ void Game::UpdateRelationships()
 	//***	REMOVING BASE OBJECTS		***		
 		// BEFORE deleting the root object, remove enemies from the list of enemies
 		// for each pointer in the vector of enemies to remove...
-		for (GameObject* base : basesToRemove) {
+		for (Base* base : basesToRemove) {
 			// create an iterator which will find the pointer to remove in the enemies vector
-			vector<GameObject*>::iterator itr_01 = find(bases.begin(), bases.end(), base);
+			vector<Base*>::iterator itr_01 = find(bases.begin(), bases.end(), base);
 
 			// save the position between index 0 and the found pointer
 			int index = distance(bases.begin(), itr_01);
@@ -227,33 +229,33 @@ void Game::RemoveRootObject(GameObject& obj) {
 };
 
 // 1.2.1.3: Add enemy objects created since last update to the list of enemy objects
-void Game::AddEnemyObject(GameObject& enemy) {
+void Game::AddEnemyObject(Enemy& enemy) {
 	// Create a pointer of the object reference passed in 
-	GameObject* enmyPtr = &enemy;
+	Enemy* enmyPtr = &enemy;
 	// Add the new pointer to the object passed in to the vector
 	enemiesToAdd.push_back(enmyPtr);
 };
 
 // 1.2.1.4: Add enemy objects targeted for removal since last update to a list
-void Game::RemoveEnemyObject(GameObject& enemy) {
+void Game::RemoveEnemyObject(Enemy& enemy) {
 	// Create a pointer of the object reference passed in 
-	GameObject* enmyPtr = &enemy;
+	Enemy* enmyPtr = &enemy;
 	// Add the new pointer to the object passed in to the vector
 	enemiesToRemove.push_back(enmyPtr);
 };
 
 // 1.2.1.4: Add base objects created since last update to the list of base objects
-void Game::AddBaseObject(GameObject& base) {
+void Game::AddBaseObject(Base& base) {
 	// Create a pointer of the object reference passed in 
-	GameObject* basePtr = &base;
+	Base* basePtr = &base;
 	// Add the new pointer to the object passed in to the vector
 	basesToAdd.push_back(basePtr);
 };
 
 // 1.2.1.5: Add base objects targeted for removal since last update to a list
-void Game::RemoveBaseObject(GameObject& base) {
+void Game::RemoveBaseObject(Base& base) {
 	// Create a pointer of the object reference passed in 
-	GameObject* basePtr = &base;
+	Base* basePtr = &base;
 	// Add the new pointer to the object passed in to the vector
 	basesToRemove.push_back(basePtr);
 };
@@ -293,7 +295,6 @@ void Game::Draw()
 }
 
 void Game::PrintPlayerScore() {
-	//int playerScore = init->playerObjectPtr->score;
 	string playerScoreString = to_string(init->playerObjectPtr->score);
 	string scoreString = "Score:	" + playerScoreString;
 	const char* score = scoreString.c_str();
@@ -301,7 +302,6 @@ void Game::PrintPlayerScore() {
 };
 
 void Game::PrintPlayerLives() {
-	//int playerScore = init->playerObjectPtr->score;
 	string playerLivesString = to_string(init->playerObjectPtr->lives);
 	string livesString = "Lives:	" + playerLivesString;
 	const char* lives = livesString.c_str();
@@ -311,38 +311,34 @@ void Game::PrintPlayerLives() {
 
 Game::~Game()
 {
-	// Delete the pointer for the initialisation process
-	delete init;
-	init = nullptr;
-
 	// Delete all of the vectors of enemy pointers
-	for (GameObject* enemy : enemiesToAdd) {
+	for (Enemy* enemy : enemiesToAdd) {
 		delete enemy;
 		enemy = nullptr;
 	}
 
-	for (GameObject* enemy : enemiesToRemove) {
+	for (Enemy* enemy : enemiesToRemove) {
 		delete enemy;
 		enemy = nullptr;
 	}
 
-	for (GameObject* enemy : enemies) {
+	for (Enemy* enemy : enemies) {
 		delete enemy;
 		enemy = nullptr;
 	}
 
 	// Delete all of the vectors of base pointers
-	for (GameObject* base : basesToAdd) {
+	for (Base* base : basesToAdd) {
 		delete base;
 		base = nullptr;
 	}
 
-	for (GameObject* base : basesToRemove) {
+	for (Base* base : basesToRemove) {
 		delete base;
 		base = nullptr;
 	}
 
-	for (GameObject* base : bases) {
+	for (Base* base : bases) {
 		delete base;
 		base = nullptr;
 	}
@@ -363,6 +359,10 @@ Game::~Game()
 		obj = nullptr;
 	}
 
+	// Delete the pointer for the initialisation process
+	delete init;
+	init = nullptr;
+
 	// Delete the controller pointer
 	delete cntrlr;
 	cntrlr = nullptr;
@@ -374,108 +374,144 @@ Game::~Game()
 
 
 void Game::Debug() {
-	// Create a string out of the player score
-	//std::string s = to_string(init->playerObjectPtr->score);
-	// Create a const char pointer that points to the address of the string 's' as an array of characters
-	//const char* scr = s.c_str();
-
+	// Variables for tallying debug printouts
 	int playerCount = 0;
 	int enemyCount = 0;
 	int baseCount = 0;
 	int enemyAttackCount = 0;
 	int friendlyAttackCount = 0;
+	int enemyVectorCount = 0;
+	int baseVectorCount = 0;
 
-
-	// Player object global x location
-	float playerX = init->playerObjectPtr->GlobalTransform().m02;
-	std::string plyrX = to_string(playerX);
-	const char* pX = plyrX.c_str();
-
-	// Player object global y location
-	float playerY = init->playerObjectPtr->GlobalTransform().m12;
-	std::string plyrY = to_string(playerY);
-	const char* pY = plyrY.c_str();
-
-
-	// Player sprite global x location
-	float spriteX = init->playerSpritePtr->GlobalTransform().m02;
-	std::string sprtX = to_string(spriteX);
-	const char* sX = sprtX.c_str();
-
-	// Player sprite global y location
-	float spriteY = init->playerSpritePtr->GlobalTransform().m12;
-	std::string sprtY = to_string(spriteY);
-	const char* sY = sprtY.c_str();
-
-	// Player printouts
-	// Player x and y
-	DrawText(pX, 50, 340, 20, LIGHTGRAY);
-	DrawText(pY, 50, 380, 20, LIGHTGRAY);
-
-	// Player sprite x and y
-	DrawText(sX, 50, 420, 20, LIGHTGRAY);
-	DrawText(sY, 50, 460, 20, LIGHTGRAY);
-
-
-	// Player base 1 global x location
-	float base_01_x = init->basePtr_01->GlobalTransform().m02;
-	std::string baseX = to_string(base_01_x);
-	const char* bX = baseX.c_str();
-
-	// Player base 1 global y location
-	float base_01_y = init->basePtr_01->GlobalTransform().m12;
-	std::string baseY = to_string(base_01_y);
-	const char* bY = baseY.c_str();
-
-	// Base printouts
-	DrawText(bX, 50, 550, 20, LIGHTGRAY);
-	DrawText(bY, 50, 600, 20, LIGHTGRAY);
-
-
-	// CONSOLE DEBUG: COUNT THE PLAYER OBJECTS
-	for (GameObject* obj : rootObjects) {
-		if (obj->objType == GameObject::Player_Type) {
-			playerCount++;
+	// For statements to tall debug printouts
+		// CONSOLE DEBUG: COUNT THE PLAYER OBJECTS
+		for (GameObject* obj : rootObjects) {
+			if (obj->objType == GameObject::Player_Type) {
+				playerCount++;
+			}
 		}
-	}
 
-	// CONSOLE DEBUG: COUNT THE ENEMY OBJECTS
-	for (GameObject* obj : rootObjects) {
-		if (obj->objType == GameObject::Enemy_Type) {
-			enemyCount++;
+		// CONSOLE DEBUG: COUNT THE ENEMY OBJECTS IN ROOT OBJECTS
+		for (GameObject* obj : rootObjects) {
+			if (obj->objType == GameObject::Enemy_Type) {
+				enemyCount++;
+			}
 		}
-	}
 
-	// CONSOLE DEBUG: COUNT THE BASE OBJECTS
-	for (GameObject* obj : rootObjects) {
-		if (obj->objType == GameObject::Base_Type) {
-			baseCount++;
+		// CONSOLE DEBUG: COUNT THE ENEMY OBJECTS IN THEIR OWN VECTOR
+		for (Enemy* enemy : enemies) {
+			enemyVectorCount++;
 		}
-	}
 
-	// CONSOLE DEBUG: COUNT THE ENEMY PROJECTILE OBJECTS
-	for (GameObject* obj : rootObjects) {
-		if (obj->objType == GameObject::Enemy_Projectile_Type) {
-			enemyAttackCount++;
+		// CONSOLE DEBUG: COUNT THE BASE OBJECTS IN ROOT OBJECTS
+		for (GameObject* obj : rootObjects) {
+			if (obj->objType == GameObject::Base_Type) {
+				baseCount++;
+			}
 		}
-	}
 
-	// CONSOLE DEBUG: COUNT THE FRIENDLY PROJECTILE OBJECTS
-	for (GameObject* obj : rootObjects) {
-		if (obj->objType == GameObject::Friendly_Projectile_Type) {
-			friendlyAttackCount++;
+		// CONSOLE DEBUG: COUNT THE BASE OBJECTS IN THEIR OWN VECTOR
+		for (Base* base : bases) {
+			baseVectorCount++;
 		}
-	}
+
+		// CONSOLE DEBUG: COUNT THE ENEMY PROJECTILE OBJECTS
+		for (GameObject* obj : rootObjects) {
+			if (obj->objType == GameObject::Enemy_Projectile_Type) {
+				enemyAttackCount++;
+			}
+		}
+
+		// CONSOLE DEBUG: COUNT THE FRIENDLY PROJECTILE OBJECTS
+		for (GameObject* obj : rootObjects) {
+			if (obj->objType == GameObject::Friendly_Projectile_Type) {
+				friendlyAttackCount++;
+			}
+		}
+
+	// DEBUG PRINTOUTS
+		// Root object printouts
+			// 
+			
+		// Player printouts
+			// Debug print the player object global x location
+			string playerXPositionString = to_string(init->playerObjectPtr->GlobalTransform().m02);
+			string playerXString = "Player object x:	" + playerXPositionString;
+			const char* playerX = playerXString.c_str();
+			DrawText(playerX, 20, 130, 20, RED);
+
+			// Debug print the player object global y location
+			string playerYPositionString = to_string(init->playerObjectPtr->GlobalTransform().m12);
+			string playerYString = "Player object y:	" + playerYPositionString;
+			const char* playerY = playerYString.c_str();
+			DrawText(playerY, 20, 160, 20, RED);
+
+			// Debug print the player sprite global x location
+			string spriteXPositionString = to_string(init->playerSpritePtr->GlobalTransform().m02);
+			string spriteXString = "Player sprite x:	" + spriteXPositionString;
+			const char* spriteX = spriteXString.c_str();
+			DrawText(spriteX, 20, 190, 20, RED);
+
+			// Debug print the player sprite global y location
+			string spriteYPositionString = to_string(init->playerSpritePtr->GlobalTransform().m12);
+			string spriteYString = "Player sprite y:	" + spriteYPositionString;
+			const char* spriteY = spriteYString.c_str();
+			DrawText(spriteY, 20, 210, 20, RED);
+
+		// Enemy printouts
+			// Debug print the number of enemies in the root objects
+			string enemyRootObjectsString = to_string(enemyCount);
+			string enemyRootString = "Root object enemies:	" + enemyRootObjectsString;
+			const char* numEnemies_01 = enemyRootString.c_str();
+			DrawText(numEnemies_01, 20, 240, 20, RED);
+			
+			// Debug print the number of enemies in their own vector
+			string enemyObjectsString = to_string(enemies.size());
+			string enemyString = "Enemy list enemies:	" + enemyObjectsString;
+			const char* numEnemies_02 = enemyString.c_str();
+			DrawText(numEnemies_02, 20, 270, 20, RED);
+
+		// Base printouts
+			// Debug print the number of bases in the root objects
+			string baseRootObjectsString = to_string(baseCount);
+			string baseRootString = "Root object bases:	" + baseRootObjectsString;
+			const char* numBases_01 = baseRootString.c_str();
+			DrawText(numBases_01, 20, 300, 20, RED);
+
+			// Debug print the number of bases in their own vector
+			string basesObjectsString = to_string(bases.size());
+			string basesString = "Base list bases:	" + basesObjectsString;
+			const char* numBases_02 = basesString.c_str();
+			DrawText(numBases_02, 20, 330, 20, RED);
 	
 
-	std::cout << "Number of Root objects: " << rootObjects.size() << std::endl;
-	std::cout << "Number of Player objects: " << playerCount << std::endl;
-	std::cout << "Number of Enemy objects: " << enemyCount << std::endl;
-	std::cout << "Number of Base objects: " << baseCount << std::endl;
-	std::cout << "Number of Weapon objects: " << enemyAttackCount << std::endl;
-	std::cout << "Number of Weapon objects: " << friendlyAttackCount << std::endl;
-	std::cout << "Player weapon equipped: " << init->playerObjectPtr->GetWeapon() << std::endl;
-	DebugCheckWeapon();
+
+	//// Player base 1 global x location
+	//float base_01_x = init->basePtr_01->GlobalTransform().m02;
+	//std::string baseX = to_string(base_01_x);
+	//const char* bX = baseX.c_str();
+
+	//// Player base 1 global y location
+	//float base_01_y = init->basePtr_01->GlobalTransform().m12;
+	//std::string baseY = to_string(base_01_y);
+	//const char* bY = baseY.c_str();
+
+	//// Base printouts
+	//DrawText(bX, 50, 250, 20, LIGHTGRAY);
+	//DrawText(bY, 50, 300, 20, LIGHTGRAY);
+
+
+	
+	
+
+	//std::cout << "Number of Root objects: " << rootObjects.size() << std::endl;
+	//std::cout << "Number of Player objects: " << playerCount << std::endl;
+	//std::cout << "Number of Enemy objects: " << enemyCount << std::endl;
+	//std::cout << "Number of Base objects: " << baseCount << std::endl;
+	//std::cout << "Number of Weapon objects: " << enemyAttackCount << std::endl;
+	//std::cout << "Number of Weapon objects: " << friendlyAttackCount << std::endl;
+	//std::cout << "Player weapon equipped: " << init->playerObjectPtr->GetWeapon() << std::endl;
+	//DebugCheckWeapon();
 }
 
 void Game::DebugCheckWeapon() {

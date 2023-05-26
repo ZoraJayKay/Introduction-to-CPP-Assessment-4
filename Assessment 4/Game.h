@@ -24,19 +24,19 @@ protected:
 
 	//	*** ---	ENEMY OBJECT HIERARCHY --- ***
 		// A vector of all enemies
-		vector<GameObject*> enemies;
+		vector<Enemy*> enemies;
 		// A vector of enemy objects waiting to be added to the vector of enemies between updates
-		vector<GameObject*> enemiesToAdd;
+		vector<Enemy*> enemiesToAdd;
 		// A vector of enemy objects waiting to be removed from the vector of enemies between updates
-		vector<GameObject*> enemiesToRemove;
+		vector<Enemy*> enemiesToRemove;
 
 	//	*** ---	BASE OBJECT HIERARCHY --- ***
 		// A vector of all bases
-		vector<GameObject*> bases;
+		vector<Base*> bases;
 		// A vector of base objects waiting to be added to the vector of bases between updates
-		vector<GameObject*> basesToAdd;
+		vector<Base*> basesToAdd;
 		// A vector of base objects waiting to be removed from the vector of bases between updates
-		vector<GameObject*> basesToRemove;
+		vector<Base*> basesToRemove;
 
 
 	// Create a forward declaration of an initialisation class for the use of the Game
@@ -72,13 +72,13 @@ public:
 			// 1.2.1.2: Add objects targeted for removal since last update to a list
 			void RemoveRootObject(GameObject& obj);
 			// 1.2.1.3: Add enemy objects created since last update to the list of enemy objects
-			void AddEnemyObject(GameObject& enemy);
+			void AddEnemyObject(Enemy& enemy);
 			// 1.2.1.4: Add enemy objects targeted for removal since last update to a list
-			void RemoveEnemyObject(GameObject& enemy);
+			void RemoveEnemyObject(Enemy& enemy);
 			// 1.2.1.5: Add base objects created since last update to the list of base objects
-			void AddBaseObject(GameObject& base);
+			void AddBaseObject(Base& base);
 			// 1.2.1.5: Add base objects targeted for removal since last update to a list
-			void RemoveBaseObject(GameObject& base);
+			void RemoveBaseObject(Base& base);
 
 		// 1.2.2: Update scene calculations
 		void UpdateCalculations();

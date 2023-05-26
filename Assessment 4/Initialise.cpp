@@ -73,7 +73,7 @@ Initialise::Initialise(int screenWidth, int screenHeight)
 	//	1.3.2.5: Set the initial position for the object (and thus child as well)
 	enemyPtr->SetPosition(screenWidth / 2.0f, screenHeight * 0.05f);
 	//	1.3.2.6: Add the new enemy to the list of enemies to initialise
-	//enemiesToInitialise.push_back(enemyPtr);
+	enemiesToInitialise.push_back(enemyPtr);
 
 	// 1.3.3	*** |||	BASES ||| ***
 	//		***		BASE OBJECT	***
@@ -107,9 +107,9 @@ Initialise::Initialise(int screenWidth, int screenHeight)
 	baseSpritePtr_03->AddChild(*basePtr_03);*/
 
 	//	1.3.3.6: Add the new bases to the list of bases to initialise
-	/*basesToInitialise.push_back(basePtr_01);
+	basesToInitialise.push_back(basePtr_01);
 	basesToInitialise.push_back(basePtr_02);
-	basesToInitialise.push_back(basePtr_03);*/
+	basesToInitialise.push_back(basePtr_03);
 
 
 		/* 1.3.2.1: Set initial position

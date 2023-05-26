@@ -45,6 +45,7 @@ public:
 	// ENEMIES
 	class Enemy* enemyPtr;
 	class SpriteObject* enemySpritePtr;
+	vector<Enemy*> enemiesToInitialise;
 
 	// BASE
 	class Base* basePtr_01;
@@ -53,8 +54,7 @@ public:
 	class SpriteObject* baseSpritePtr_01;
 	class SpriteObject* baseSpritePtr_02;
 	class SpriteObject* baseSpritePtr_03;
-	vector<GameObject*> enemiesToInitialise;
-	vector<GameObject*> basesToInitialise;
+	vector<Base*> basesToInitialise;
 
 	// File path variables
 	const char* playerShipFileName;
