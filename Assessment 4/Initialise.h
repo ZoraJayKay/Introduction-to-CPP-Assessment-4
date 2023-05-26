@@ -45,7 +45,6 @@ public:
 	// ENEMIES
 	class Enemy* enemyPtr;
 	class SpriteObject* enemySpritePtr;
-	vector<Enemy*> enemies;
 
 	// BASE
 	class Base* basePtr_01;
@@ -54,7 +53,8 @@ public:
 	class SpriteObject* baseSpritePtr_01;
 	class SpriteObject* baseSpritePtr_02;
 	class SpriteObject* baseSpritePtr_03;
-	vector<Base*> bases;
+	vector<GameObject*> enemiesToInitialise;
+	vector<GameObject*> basesToInitialise;
 
 	// File path variables
 	const char* playerShipFileName;
@@ -79,5 +79,6 @@ public:
 
 			// A function to create a new base
 			void CreateBase();
+
 };
 

@@ -13,8 +13,8 @@ GameObject::GameObject()
 // member function for destructor
 GameObject::~GameObject() {
 	// Delete parent object pointer
-	delete parent;
-	parent = nullptr;
+	/*delete parent;
+	parent = nullptr;*/
 
 	// Delete controller object pointer
 	delete ctrlr;

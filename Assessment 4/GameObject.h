@@ -30,6 +30,7 @@ protected:
 	// Pointer for use with enemies
 	class Enemy* enemyPtr;
 
+
 public:
 	//	*** PUBLIC GAME PARAMETERS	***
 	// object type
