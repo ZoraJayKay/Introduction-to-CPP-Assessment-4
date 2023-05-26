@@ -43,12 +43,14 @@ Game::Game()
 	// 1.1: Initialise a game session
 	// Initialise a pointer to a new instance of the Initialise class.
 	// The Initialise class instance (init) will in turn set all of the parameters that constitute the starting conditions of the game.	
-	init = new Initialise();
+	init = new Initialise(screenWidth, screenHeight);
 
 	// 1.2: Add the objects from initialisation to the scene as root objects
 	AddRootObject(*(init->playerObjectPtr));
 	AddRootObject(*(init->enemyPtr));
-	// AddRootObject(*(init(base objects));
+	AddRootObject(*(init->basePtr_01));
+	AddRootObject(*(init->basePtr_02));
+	AddRootObject(*(init->basePtr_03));
 
 	// 1.3: Initialise a pointer to a new instance of the Controller class.
 	cntrlr = new Controller();
@@ -117,7 +119,7 @@ void Game::Update()
 			UpdateCalculations();
 
 			// 2.2.3: Debug if necessary
-			//Debug();
+			Debug();
 
 			// 2.2.4: Draw the game scene
 			Draw();			
@@ -250,18 +252,51 @@ void Game::Debug() {
 	int enemyAttackCount = 0;
 	int friendlyAttackCount = 0;
 
+
 	// Player object global x location
 	float playerX = init->playerObjectPtr->GlobalTransform().m02;
 	std::string plyrX = to_string(playerX);
-	const char* x = plyrX.c_str();
+	const char* pX = plyrX.c_str();
+
+	// Player object global y location
+	float playerY = init->playerObjectPtr->GlobalTransform().m12;
+	std::string plyrY = to_string(playerY);
+	const char* pY = plyrY.c_str();
+
 
 	// Player sprite global x location
 	float spriteX = init->playerSpritePtr->GlobalTransform().m02;
-	std::string sprtX = to_string(playerX);
+	std::string sprtX = to_string(spriteX);
 	const char* sX = sprtX.c_str();
 
-	DrawText(x, 50, 40, 20, LIGHTGRAY);
-	DrawText(sX, 50, 80, 20, LIGHTGRAY);
+	// Player sprite global y location
+	float spriteY = init->playerSpritePtr->GlobalTransform().m12;
+	std::string sprtY = to_string(spriteY);
+	const char* sY = sprtY.c_str();
+
+	// Player printouts
+	// Player x and y
+	DrawText(pX, 50, 340, 20, LIGHTGRAY);
+	DrawText(pY, 50, 380, 20, LIGHTGRAY);
+
+	// Player sprite x and y
+	DrawText(sX, 50, 420, 20, LIGHTGRAY);
+	DrawText(sY, 50, 460, 20, LIGHTGRAY);
+
+
+	// Player base 1 global x location
+	float base_01_x = init->basePtr_01->GlobalTransform().m02;
+	std::string baseX = to_string(base_01_x);
+	const char* bX = baseX.c_str();
+
+	// Player base 1 global y location
+	float base_01_y = init->basePtr_01->GlobalTransform().m12;
+	std::string baseY = to_string(base_01_y);
+	const char* bY = baseY.c_str();
+
+	// Base printouts
+	DrawText(bX, 50, 550, 20, LIGHTGRAY);
+	DrawText(bY, 50, 600, 20, LIGHTGRAY);
 
 
 	// CONSOLE DEBUG: COUNT THE PLAYER OBJECTS

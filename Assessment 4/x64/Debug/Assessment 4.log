@@ -1,24 +1,9 @@
-﻿  Assessment 4.cpp
-  Controller.cpp
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Controller.cpp(45,12): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Controller.cpp(60,12): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Controller.cpp(68,3): warning C4552: '!': result of expression not used
-  Enemy.cpp
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Enemy.cpp(57,9): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Enemy.cpp(71,9): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Game.cpp
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(165,14): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
-  GameObject.cpp
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\GameObject.cpp(24,2): warning C4150: deletion of pointer to incomplete type 'Enemy'; no destructor called
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\GameObject.h(31): message : see declaration of 'Enemy'
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\GameObject.cpp(85,30): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-  Initialise.cpp
-  Matrix3.cpp
-  Player.cpp
-  SpriteObject.cpp
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\SpriteObject.cpp(33,16): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\SpriteObject.cpp(38,16): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-  Weapon.cpp
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Weapon.cpp(62,9): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Generating Code...
+﻿  Initialise.cpp
+D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Initialise.cpp(50,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Initialise.cpp(80,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Initialise.cpp(80,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Initialise.cpp(81,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Initialise.cpp(81,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Initialise.cpp(82,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Initialise.cpp(82,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   Assessment 4.vcxproj -> D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\x64\Debug\Assessment 4.exe

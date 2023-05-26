@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "SpriteObject.h"
+#include "Base.h"
 
 using namespace std;
 
@@ -20,24 +21,11 @@ protected:
 	
 
 public: 
-	// public pointers that other classes can access
-	Player* playerObjectPtr;
-	SpriteObject* playerSpritePtr;
-
-	Enemy* enemyPtr;
-	SpriteObject* enemySpritePtr;
-	vector<Enemy*> enemyPtrs;
-
-	// File path variables
-	const char* playerShipFileName;
-	const char* enemyShipFileName;
-	const char* baseFileName;
-	const char* backgroundFileName;
-
-	Initialise();
-		/* 1: GAME PARAMETERS
+	/* 1: GAME PARAMETERS
 		1.1: Starting conditions
 		Set the parameters for the game to run after starting and before ending
+			// Screen Width
+			// Screen height
 
 		1.2: Win/loss conditions
 			1.2.1: Win if enemy lives = 0
@@ -49,7 +37,48 @@ public:
 			1.3.3: Instantiate the base
 				*/
 
+	// Public pointers that other classes can access
+	// PLAYER
+	class Player* playerObjectPtr;
+	class SpriteObject* playerSpritePtr;
+
+	// ENEMIES
+	class Enemy* enemyPtr;
+	class SpriteObject* enemySpritePtr;
+	vector<Enemy*> enemyPtrs;
+
+	// BASE
+	class Base* basePtr_01;
+	class Base* basePtr_02;
+	class Base* basePtr_03;
+	class SpriteObject* baseSpritePtr_01;
+	class SpriteObject* baseSpritePtr_02;
+	class SpriteObject* baseSpritePtr_03;
+
+	vector<Base*> basePtrs;
+
+	// File path variables
+	const char* playerShipFileName;
+	const char* enemyShipFileName;
+	const char* baseFileName;
+	const char* backgroundFileName;
+
+	Initialise();
+	Initialise(int screenWidth, int screenheight);
+
 	// default destructor function
 	~Initialise();
+
+
+	//	***	---	INSTANTIATION FUNCTIONS	---	***
+		// Implement eventually rather than doing it manually 
+			// A function to create a new player
+			void CreatePlayer();
+
+			// A function to create a new enemy
+			void CreateEnemy();
+
+			// A function to create a new base
+			void CreateBase();
 };
 
