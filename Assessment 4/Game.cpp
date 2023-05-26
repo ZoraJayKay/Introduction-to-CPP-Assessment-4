@@ -10,14 +10,6 @@
 #include "Controller.h"
 #include <string>
 
-//// Program screen size
-//int screenWidth = 1080;
-//int screenHeight = 720;
-//
-//// Play area variables
-//int playWidth = 1000;
-//int playHeight = 660;
-
 // Timer variables
 float targetFps = 60.0f;
 float elapsedTime = 0.0f;

@@ -131,9 +131,14 @@ Initialise::~Initialise() {
 	delete playerSpritePtr;
 	playerSpritePtr = nullptr;
 
-	for (Enemy* enemy : enemyPtrs) {
+	for (Enemy* enemy : enemies) {
 		delete enemy;
 		enemy = nullptr;
+	}
+
+	for (Base* base : bases) {
+		delete base;
+		base = nullptr;
 	}
 }
 //	***	---	INSTANTIATION FUNCTIONS	---	***
