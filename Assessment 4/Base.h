@@ -14,15 +14,15 @@ public:
 
 	// Base object variables for a 256 x 256 objects
 	// Array row and column volumes
-	static const int ROWS = 8;
-	static const int COLS = 8;
+	static const int ROWS = 6;
+	static const int COLS = 6;
 
 	// Base array
 	int tiles[ROWS * COLS];
 
 	// Array individual tile sizes
-	int tileWidth = 32;
-	int tileHeight = 32;
+	int tileWidth = 14;
+	int tileHeight = 14;
 
 	// Object for iterating through the memory allocation of the array
 	size_t arraySize;

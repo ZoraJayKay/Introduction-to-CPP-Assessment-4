@@ -10,7 +10,7 @@
 Initialise::Initialise() {};
 
 // Overloaded member function constructor with screen height and width
-Initialise::Initialise(int screenWidth, int screenHeight)
+Initialise::Initialise(int windowWidth, int windowHeight)
 {
 	std::cout << "---Initialise constructor---" << endl;
 
@@ -47,7 +47,7 @@ Initialise::Initialise(int screenWidth, int screenHeight)
 	//	1.3.1.4: Make the player sprite the child of the player object
 	playerObjectPtr->AddChild(*playerSpritePtr);
 	//	1.3.1.5: Set the initial position for the playerObject (and thus child as well)
-	playerObjectPtr->SetPosition(screenWidth / 2, screenHeight * 0.8f);
+	playerObjectPtr->SetPosition(windowWidth / 2, windowHeight * 0.8f);
 
 	// vvv		NOT YET IMPLEMENTED		vvv
 	//	1.3.1.1: Set initial position
@@ -71,16 +71,16 @@ Initialise::Initialise(int screenWidth, int screenHeight)
 	//	1.3.2.4: Make the sprite the child of the parent object
 	enemyPtr->AddChild(*enemySpritePtr);
 	//	1.3.2.5: Set the initial position for the object (and thus child as well)
-	enemyPtr->SetPosition(screenWidth / 2.0f, screenHeight * 0.05f);
+	enemyPtr->SetPosition(windowWidth / 2.0f, windowHeight * 0.05f);
 	//	1.3.2.6: Add the new enemy to the list of enemies to initialise
 	enemiesToInitialise.push_back(enemyPtr);
 
 	// 1.3.3	*** |||	BASES ||| ***
 	//		***		BASE OBJECT	***
 	//	1.3.3.1: Set pointers of the bases and their sprites to their objects
-	basePtr_01 = new Base(screenWidth, screenHeight);
-	basePtr_02 = new Base(screenWidth, screenHeight);
-	basePtr_03 = new Base(screenWidth, screenHeight);
+	basePtr_01 = new Base(windowWidth, windowHeight);
+	basePtr_02 = new Base(windowWidth, windowHeight);
+	basePtr_03 = new Base(windowWidth, windowHeight);
 	/*baseSpritePtr_01 = new SpriteObject;
 	baseSpritePtr_02 = new SpriteObject;
 	baseSpritePtr_03 = new SpriteObject;*/
@@ -97,9 +97,9 @@ Initialise::Initialise(int screenWidth, int screenHeight)
 	baseSpritePtr_03->SetPosition(-baseSpritePtr_03->Width() / 2.0f, baseSpritePtr_03->Height() / 2.0f);*/
 
 	//	1.3.3.5: Set the initial position for the object (and thus child as well)
-	basePtr_01->SetPosition((screenWidth / 4.0f) * 1, screenHeight * 0.75f);
-	basePtr_02->SetPosition((screenWidth / 4.0f) * 2, screenHeight * 0.75f);
-	basePtr_03->SetPosition((screenWidth / 4.0f) * 3, screenHeight * 0.75f);
+	basePtr_01->SetPosition((windowWidth / 4.0f) * 1, windowHeight * 0.75f);
+	basePtr_02->SetPosition((windowWidth / 4.0f) * 2, windowHeight * 0.75f);
+	basePtr_03->SetPosition((windowWidth / 4.0f) * 3, windowHeight * 0.75f);
 
 	//	1.3.3.4: Make the sprite the child of the parent object
 	/*baseSpritePtr_01->AddChild(*basePtr_01);

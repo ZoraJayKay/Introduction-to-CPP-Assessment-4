@@ -21,46 +21,49 @@ Game::Game()
 	std::cout << "---Game constructor---" << endl;
 	
 	// Program screen size
-	screenWidth = 1080;
-	screenHeight = 720;
+	windowWidth = 1080;
+	windowHeight = 720;
 
 	// Play area variables
 	playWidth = 1000;
 	playHeight = 660;
 
+	isPaused = false;
+
+	// Initialise the window
 	// Print message in program banner at top of screen
 	// NOTE TO SELF: InitWindow needs to be done BEFORE loading any textures
-	InitWindow(screenWidth, screenHeight, "Zora Jane Kerr: Introduction to C++ (Assessment 4 - Retro Game) Space Invaders (AIE, 2023 [student year 1])");
+	InitWindow(windowWidth, windowHeight, "Zora Jane Kerr: Introduction to C++ (Assessment 4 - Retro Game) Space Invaders (AIE, 2023 [student year 1])");
+
+	// Initialise the audio device
+	InitAudioDevice();
 
 	// 0.1: Initialise a game session
 		// Initialise a pointer to a new instance of the Initialise class.
 		// The Initialise class instance (init) will in turn set all of the parameters that constitute the starting conditions of the game.	
-		init = new Initialise(screenWidth, screenHeight);
-		// Add number of enemies
-		// Add number of bases
+		init = new Initialise(windowWidth, windowHeight);
+		// Add number of enemies to instantiate
+		// Add number of bases to instantiate
 		// Add difficulty that sets the above etc?
 
 	// 0.2: Add the objects from initialisation to the scene as root, enemy and base objects
 		// 0.2.1: Add the player
 		AddRootObject(*(init->playerObjectPtr));
-		//AddRootObject(*(init->enemyPtr));
-		//AddRootObject(*(init->basePtr_01));
-		//AddRootObject(*(init->basePtr_02));
-		//AddRootObject(*(init->basePtr_03));
-
 
 		// 0.2.2: Add the vector of enemies from initialisation
-			// This adds the enemies WAITING to be put on the master vector of enemies because at this point in time, initialise has run but Update() *has not* and so they have not been moved out of the pending list yet
 			for (Enemy* enemy : init->enemiesToInitialise) {
-					AddRootObject(*enemy);
-					AddEnemyObject(*enemy);
+				// Add enemies as root objects of the scene...	
+				AddRootObject(*enemy);
+				// ... and to their own vector of enemies
+				AddEnemyObject(*enemy);
 				}
 
 		// 0.2.3: Add the vector of bases from initialisation
-			// This adds the bases WAITING to be put on the master vector of bases because at this point in time, initialise has run but Update() *has not* and so they have not been moved out of the pending list yet
 			for (Base* base : init->basesToInitialise) {
-					AddRootObject(*base);
-					AddBaseObject(*base);
+				// Add bases as root objects of the scene...	
+				AddRootObject(*base);
+				// ... and to their own vector of bases
+				AddBaseObject(*base);
 				}
 
 
@@ -86,23 +89,32 @@ void Game::Update()
 		gameTimer->Reset();
 		// 1.1.4: Increment the timer with delta time
 		elapsedTime += gameTimer->DeltaTime();
-			// Increment the frames (may or may not be using a frame counter)
-			frames++;
+		// Increment the frames (may or may not be using a frame counter)
+		frames++;
 
 	// 1.2: Update the game
 		if (elapsedTime >= gameTimer->DeltaTime()) {
-			// vvv		these are just a few time-based metrics that may or may not be in use printing to the console	vvv
-			// print framerate
-			// std::cout << frames / elapsedTime << endl;	
-
-			// 1.2.1: Update the object hierarchy including adding and removing parent / child relationships
+			//if (elapsedTime >= gameTimer->DeltaTime() && gameTimer->GetTimeScale() == 1.0f) {
+				// 1.2.1: Update the object hierarchy including adding and removing parent / child relationships
 			UpdateRelationships();
 			// 1.2.2: Update the arithmetic underlying movement and drawing
 			UpdateCalculations();
 			// 1.2.3: Debug if necessary
 			Debug();
 			// 1.2.4: Draw the game scene
-			Draw();			
+			Draw();
+		}
+
+	// 1.3: Pause and unpause the game if the 'p' key is pressed
+		if (IsKeyPressed(KEY_P)) {
+			if (isPaused == false) {
+				gameTimer->TimeScale(0.0f);
+				isPaused = true;
+			}
+			else {
+				gameTimer->TimeScale(1.0f);
+				isPaused = false;
+			}
 		}
 }
 
@@ -185,9 +197,9 @@ void Game::UpdateRelationships()
 		for (GameObject* obj : rootObjects) {
 			if (
 				// if x axis is off the width, or...
-				(obj->GlobalTransform().m02 < 0 || obj->GlobalTransform().m02 > screenWidth) ||
+				(obj->GlobalTransform().m02 < 0 || obj->GlobalTransform().m02 > windowWidth) ||
 				// if y axis is off the height...
-				(obj->GlobalTransform().m12 < 0 || obj->GlobalTransform().m12 > screenHeight))
+				(obj->GlobalTransform().m12 < 0 || obj->GlobalTransform().m12 > windowHeight))
 			{
 				// Add the object to the list of objects to remove
 				RemoveRootObject(*obj);
@@ -269,7 +281,7 @@ void Game::UpdateCalculations()
 	// Update the calculations for all root objects (and thus their children)
 	for (GameObject* obj : rootObjects) {
 		// Call the Update function that is defined in the GameObject class
-		obj->Update(gameTimer->DeltaTime(), *cntrlr);
+		obj->Update(gameTimer->DeltaTime() * gameTimer->GetTimeScale(), *cntrlr);
 	}
 }
 
@@ -429,10 +441,7 @@ void Game::Debug() {
 			}
 		}
 
-	// DEBUG PRINTOUTS
-		// Root object printouts
-			// 
-			
+	// DEBUG PRINTOUTS			
 		// Player printouts
 			// Debug print the player object global x location
 			string playerXPositionString = to_string(init->playerObjectPtr->GlobalTransform().m02);
@@ -484,32 +493,14 @@ void Game::Debug() {
 			const char* numBases_02 = basesString.c_str();
 			DrawText(numBases_02, 20, 330, 20, RED);
 	
+		// Root object printouts
+			// Debug print the total number of root objects
+			string rootObjectString = to_string(rootObjects.size());
+			string rootString = "Total root objects:	" + rootObjectString;
+			const char* rootS = rootString.c_str();
+			DrawText(rootS, 20, 360, 20, RED);
 
-
-	//// Player base 1 global x location
-	//float base_01_x = init->basePtr_01->GlobalTransform().m02;
-	//std::string baseX = to_string(base_01_x);
-	//const char* bX = baseX.c_str();
-
-	//// Player base 1 global y location
-	//float base_01_y = init->basePtr_01->GlobalTransform().m12;
-	//std::string baseY = to_string(base_01_y);
-	//const char* bY = baseY.c_str();
-
-	//// Base printouts
-	//DrawText(bX, 50, 250, 20, LIGHTGRAY);
-	//DrawText(bY, 50, 300, 20, LIGHTGRAY);
-
-
-	
-	
-
-	//std::cout << "Number of Root objects: " << rootObjects.size() << std::endl;
-	//std::cout << "Number of Player objects: " << playerCount << std::endl;
-	//std::cout << "Number of Enemy objects: " << enemyCount << std::endl;
-	//std::cout << "Number of Base objects: " << baseCount << std::endl;
-	//std::cout << "Number of Weapon objects: " << enemyAttackCount << std::endl;
-	//std::cout << "Number of Weapon objects: " << friendlyAttackCount << std::endl;
+				
 	//std::cout << "Player weapon equipped: " << init->playerObjectPtr->GetWeapon() << std::endl;
 	//DebugCheckWeapon();
 }

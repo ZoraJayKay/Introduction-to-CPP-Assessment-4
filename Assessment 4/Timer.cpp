@@ -45,7 +45,7 @@ namespace Utilities {
 	}
 
 	// return the timescale
-	float Timer::TimeScale() {
+	float Timer::GetTimeScale() {
 		return mTimeScale;
 	}
 

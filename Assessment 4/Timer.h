@@ -23,8 +23,8 @@ namespace Utilities {
 		static void Release();		// Function to delete timer pointer
 		void Reset();				// Function to set 'start' time
 		float DeltaTime();			// Function to return the delta time
-		void TimeScale(float t = 1.0f);	// set time scale
-		float TimeScale();			// return the timescale
+		void TimeScale(float t);	// set time scale
+		float GetTimeScale();		// return the timescale
 		void Tick();				// move the timer forward
 
 	private:

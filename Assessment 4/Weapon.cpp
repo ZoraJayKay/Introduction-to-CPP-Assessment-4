@@ -15,12 +15,6 @@ Weapon::Weapon(GameObject::weaponType weaponEquipped, GameObject::objectType sho
 	// Set whether or not the weapon was fired by the player or an enemy, eg Friendly_Projectile_Type or Enemy_Projectile_Type
 	this->objType = shooter;
 	
-	// file paths for new attacks to load textures
-	playerLaserAttackFileName = "x64/Images/laserBlue07.png";
-	enemyLaserAttackFileName = "x64/Images/laserRed07.png";
-	// option 2
-	// option 3
-
 	// use an integer switch case to determine weapon attack speed
 	switch (weaponEquipped) {
 	case 0:	// Laser fire
@@ -48,6 +42,8 @@ Weapon::~Weapon() {
 	delete enemyLaserAttackFileName;
 	enemyLaserAttackFileName = nullptr;
 
+	UnloadSound(laser_01);
+	UnloadSound(laser_02);
 };
 
 void Weapon::OnUpdate(float deltaTime, Controller& ctrlr) {

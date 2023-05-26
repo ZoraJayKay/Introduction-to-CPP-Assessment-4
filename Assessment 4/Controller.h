@@ -12,6 +12,8 @@ public:
 	// Variables for tracking movement
 	bool isMoving;
 
+	// 
+
 	Controller();
 	Controller(Game& gme);
 	~Controller();

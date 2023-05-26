@@ -50,12 +50,14 @@ public:
 	class Timer* gameTimer;
 
 	// Program screen size
-	int screenWidth;
-	int screenHeight;
+	int windowWidth;
+	int windowHeight;
 
 	// Play area variables
 	int playWidth;
 	int playHeight;
+
+	bool isPaused;
 
 	// 0: Initialise a game session (default constructor)
 	Game();

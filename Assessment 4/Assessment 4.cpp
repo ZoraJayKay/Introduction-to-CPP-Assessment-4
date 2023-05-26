@@ -28,15 +28,18 @@ int main()
     }        
 
     // 3: Shutdown
-    // 3.1: Destroy the game class instance
-    delete game;
-    game = nullptr;
+        // 3.1: Destroy the timer
+        Utilities::Timer::Release();
 
-    // 3.2: Destroy the timer
-    Utilities::Timer::Release();
+        // 3.2: Close the audio device started in Game
+        CloseAudioDevice();
 
-    // 3.3: Close the program
-    CloseWindow();
+        // 3.3: Destroy the game class instance
+        delete game;
+        game = nullptr;
+
+        // 3.4: Close the program
+        CloseWindow();
 
     return 0;
 }

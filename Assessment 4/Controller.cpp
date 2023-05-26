@@ -93,6 +93,8 @@ void Controller::ShootRandomly(GameObject& enemy, GameObject::weaponType weaponE
 void Controller::InstantiatePlayerAttack(GameObject& player, GameObject::weaponType weaponEquipped) {
 	// Instantiate a new object of the type of weapon equipped and tag the weapon as a friendly shot
 	Weapon* newAttack = new Weapon(weaponEquipped, player.Friendly_Projectile_Type);
+	// Play a sound
+	PlaySound(newAttack->laser_01);
 	// Create the new attack a sprite
 	SpriteObject* weaponSpritePtr = new SpriteObject();
 	// Load the attack sprite a texture
@@ -111,6 +113,8 @@ void Controller::InstantiatePlayerAttack(GameObject& player, GameObject::weaponT
 void Controller::InstantiateEnemyAttack(GameObject& enemy, GameObject::weaponType weaponEquipped) {
 	// Instantiate a new object of the type of weapon equipped and tag the weapon as an enemy shot
 	Weapon* newAttack = new Weapon(weaponEquipped, enemy.Enemy_Projectile_Type);
+	// Play a sound
+	PlaySound(newAttack->laser_02);
 	// Create the new attack a sprite
 	SpriteObject* weaponSpritePtr = new SpriteObject();
 	// Load the attack sprite a texture

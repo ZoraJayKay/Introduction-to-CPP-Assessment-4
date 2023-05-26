@@ -57,6 +57,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="..\..\..\..\..\Assets\kenney_space-shooter-redux\Bonus\sfx_laser2.ogg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\..\..\..\Assets\kenney_space-shooter-redux\Bonus\sfx_laser1.ogg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\..\..\..\Assets\kenney_space-shooter-redux\Bonus\sfx_twoTone.ogg">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">

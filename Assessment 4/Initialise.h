@@ -63,7 +63,7 @@ public:
 	const char* backgroundFileName;
 
 	Initialise();
-	Initialise(int screenWidth, int screenheight);
+	Initialise(int windowWidth, int windowHeight);
 
 	// default destructor function
 	~Initialise();

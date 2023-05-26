@@ -143,6 +143,9 @@
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\..\Assets\kenney_space-shooter-redux\Bonus\sfx_laser1.ogg" />
+    <None Include="..\..\..\..\..\Assets\kenney_space-shooter-redux\Bonus\sfx_laser2.ogg" />
+    <None Include="..\..\..\..\..\Assets\kenney_space-shooter-redux\Bonus\sfx_twoTone.ogg" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

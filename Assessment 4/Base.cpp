@@ -55,8 +55,8 @@ void Base::OnDraw() {
 			Color colour = GetTileColour(tiles[indexCounter]);
 			// ... and draw that element's tile at its position in the world
 			DrawRectangle(
-				this->GlobalTransform().m02,	// Global x coordinate
-				this->GlobalTransform().m12,	// Global y coordinate
+				this->GlobalTransform().m02 + xPos,	// Draw each rectangle at the base's global x coordinate PLUS this tile
+				this->GlobalTransform().m12 + yPos,	// Draw each rectangle at the base's global y coordinate PLUS this tile
 				tileWidth,						// Width of 1 tile
 				tileHeight,						// Height of 1 tile
 				colour);						// Colour of this tile

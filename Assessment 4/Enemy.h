@@ -8,6 +8,8 @@ protected:
 
 public:
 	int shotTimer;
+	int advanceTracker;
+	bool reachedEarth;
 
 	Enemy();
 	Enemy(int _moveSpeed, GameObject::weaponType startingWeapon);
@@ -20,5 +22,6 @@ public:
 	void MoveSideways(float deltaTime);
 	void MoveRight(float deltaTime);
 	void MoveLeft(float deltaTime);
+	void Advance(float deltaTime);
 };
 
