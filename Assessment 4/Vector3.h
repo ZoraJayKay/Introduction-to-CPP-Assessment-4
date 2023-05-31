@@ -11,7 +11,7 @@ public:
 
 	// *** ---	GAME OBJECT MOVEMENT RELEVANT FUNCTIONS  --- ***
 		// TRANSFORM: VECTOR ADDITION
-		MyVector3 operator + (MyVector3&);
+		MyVector3 operator + (MyVector3& rhs);
 
 		// TRANSFORM: VECTOR SUBTRACTION
 		MyVector3 operator - (MyVector3&);
@@ -19,6 +19,9 @@ public:
 		// TRANSFORM: VECTOR SCALE (Float - multiply)    overloaded operator (accept one Vector3 and multiply it by a float)
 		MyVector3 operator * (float rhs);
 
+		// EQUALITY 
+		MyVector3 operator = (MyVector3& rhs);
+		
 		// DOT PRODUCT
 		float Dot(MyVector3&);
 
@@ -29,13 +32,16 @@ public:
 	// *** ---	COLLISION DETECTION RELEVANT FUNCTIONS  --- ***
 		// Minimum Vector3
 		// A function to create the smallest vector possible from the combination of two other vectors
-		MyVector3 Min(MyVector3& v1, MyVector3& v2);
+		static MyVector3 Min(MyVector3& v1, MyVector3& v2);
 
 		// Maximum Vector3
 		// A function to create the largest vector possible from the combination of two other vectors
-		MyVector3 Max(MyVector3& v1, MyVector3& v2);
+		static MyVector3 Max(MyVector3& v1, MyVector3& v2);
 
 		// Clamp vector3
 		// A function to create a vector3 that is always the largest 3 given vector3's
-		MyVector3 Clamp(MyVector3& t, MyVector3& v1, MyVector3& v2);
+		MyVector3 Clamp(MyVector3& t, MyVector3& vMinimum, MyVector3& vMaximum);
+
+		// Extents
+		MyVector3 Extents();
 };

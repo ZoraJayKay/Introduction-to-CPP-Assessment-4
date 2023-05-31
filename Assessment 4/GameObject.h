@@ -56,6 +56,9 @@ public:
 
 	// Movement speed of the object
 	int moveSpeed;
+	int moveAcceleration;
+	int moveDrag;
+	int maxSpeed;
 
 	// Does this object have a weapon, true or false?
 	bool hasWeapon;

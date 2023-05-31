@@ -7,7 +7,7 @@ class Player : public GameObject
 {
 public:
 	//class Controller* ctrlr;
-
+	
 	//	***		CONSTRUCTOR & DESTRUCTOR	***
 	// default constructor function
 	Player();

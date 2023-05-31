@@ -35,23 +35,52 @@ Controller::~Controller() {
 void Controller::MoveSideways(GameObject& player, float deltaTime) {
 	// If the player presses D or the right arrow key...
 	if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {
-		// Set the player to be moving
-		isMoving;
-		MyVector3 facing = MyVector3(
-			player.LocalTransform().m00,
-			player.LocalTransform().m10,
-			0)		
-			* deltaTime
-			* player.moveSpeed;
+		isMoving = true;
+		// Increase accelerate to the right
+		player.moveSpeed += player.moveAcceleration * deltaTime;
 
-		// Move the object forward to the extent set by the facing vector
-		player.Translate(facing.x, facing.y);
+		if (player.moveSpeed > player.maxSpeed) {
+			player.moveSpeed = player.maxSpeed;
+		};
 	}
 
 	// If the player presses A or the left arrow key...
 	if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)) {
-		// Set the player to be moving
-		isMoving;
+		isMoving = true;
+		// Increase accelerate to the left
+		player.moveSpeed -= player.moveAcceleration * deltaTime;
+
+		if (player.moveSpeed < -player.maxSpeed) {
+			player.moveSpeed = -player.maxSpeed;
+		};
+	}
+
+	// If the player hasn't pressed anything, start them decelerating
+	if (!IsKeyDown(KEY_D) && !IsKeyDown(KEY_A) && !IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT)){
+		// Set not moving
+		isMoving = false;
+
+		// Decelerate if player was moving right
+		if (player.moveSpeed > 0) {
+			player.moveSpeed += player.moveDrag * deltaTime;
+
+			if (player.moveSpeed < 0) {
+				player.moveSpeed = 0;
+			}
+		}
+
+		// Decelerate if player was moving left
+		if (player.moveSpeed < 0){
+			player.moveSpeed -= player.moveDrag * deltaTime;
+
+			if (player.moveSpeed > 0) {
+				player.moveSpeed = 0;
+			}
+		}
+	}
+
+	// Move the player each frame according to its current acceleration
+	if (isMoving = true) {
 		MyVector3 facing = MyVector3(
 			player.LocalTransform().m00,
 			player.LocalTransform().m10,
@@ -60,12 +89,7 @@ void Controller::MoveSideways(GameObject& player, float deltaTime) {
 			* player.moveSpeed;
 
 		// Move the object forward to the extent set by the facing vector
-		player.Translate(-facing.x, facing.y);
-	}
-
-	// Make sure that if the player has not pressed either left or right, I have a trigger that they are not moving
-	if (!IsKeyDown(KEY_D) && !IsKeyDown(KEY_A) && !IsKeyDown(KEY_RIGHT) && !IsKeyDown(KEY_LEFT)){
-		!isMoving;
+		player.Translate(facing.x, facing.y);
 	}
 };
 

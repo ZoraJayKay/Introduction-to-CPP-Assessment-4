@@ -26,14 +26,14 @@ void Player::OnUpdate(float deltaTime, Controller& ctrlr){
 Player::Player(int _lives, bool _hasWeapon, int _score, GameObject::weaponType startingWeapon)
 {
 	std::cout << "---Overloaded Player constructor---" << endl;
-
+	moveAcceleration = 550;
+	moveDrag = -800;
+	maxSpeed = 500;
+	moveSpeed = 0;
 	lives = _lives;	
 	hasWeapon = _hasWeapon;
 	score = _score;
 	this->SetWeapon(startingWeapon); // Laser by default
 
 	objType = Player_Type;
-
-	// Set movement speed to standard
-	moveSpeed = 250;
 }

@@ -11,6 +11,7 @@ Weapon::Weapon() {};
 Weapon::Weapon(GameObject::weaponType weaponEquipped, GameObject::objectType shooter){
 	std::cout << "---Weapon constructor---" << std::endl;
 	weaponSpeed = 0;
+	drag = 0;
 	
 	// Set whether or not the weapon was fired by the player or an enemy, eg Friendly_Projectile_Type or Enemy_Projectile_Type
 	this->objType = shooter;
@@ -18,7 +19,10 @@ Weapon::Weapon(GameObject::weaponType weaponEquipped, GameObject::objectType sho
 	// use an integer switch case to determine weapon attack speed
 	switch (weaponEquipped) {
 	case 0:	// Laser fire
-		weaponSpeed = 400;
+		weaponSpeed = 0;
+		acceleration = 2000;
+		maxWeaponSpeed = 1000;
+		drag = 0;
 		break;
 
 	case 1:	// name of weapon
@@ -49,6 +53,9 @@ Weapon::~Weapon() {
 void Weapon::OnUpdate(float deltaTime, Controller& ctrlr) {
 	// Create a new vector whose elements are the x, y, z of the firing object's X axis (its forward axis) and multiply that by time and speed (set its magnitude in the direction of its forward axis).
 	// This override function goes to the SceneObject, not the SpriteObject, so there's no problem that I rotated the Sprite by 90 degrees in its constructor, because the SceneObject is still facing the right way.
+	
+	// Acceleration effect to calculate the new speed
+	this->weaponSpeed += this->acceleration * deltaTime;
 
 	MyVector3 facing = MyVector3(
 		this->LocalTransform().m01,

@@ -14,6 +14,9 @@ protected:
 public:
 	//enum WeaponType;	
 	int weaponSpeed;
+	int maxWeaponSpeed;
+	int acceleration;
+	int drag;
 
 	// file paths for new attacks to load textures
 	const char* playerLaserAttackFileName = "x64/Images/laserBlue07.png";

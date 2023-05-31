@@ -1,7 +1,5 @@
 #include "Vector3.h"
 #include <algorithm>
-//#include <iostream>
-//#include <string>
 
 // Default constructor (should not be in use)
 MyVector3::MyVector3() {};
@@ -14,10 +12,24 @@ MyVector3::MyVector3(float _x, float _y, float _z) {
 };
 
 // *** ---	GAME OBJECT MOVEMENT RELEVANT FUNCTIONS  --- ***
+	// TRANSFORM: VECTOR ADDITION
+	MyVector3 MyVector3::operator +(MyVector3& rhs) {
+		return MyVector3(this->x + rhs.x, this->y + rhs.y, this->z + rhs.z);
+	};
+
 	// TRANSFORM: VECTOR SCALE (Float - multiply)    overloaded operator (accept one Vector3 and multiply it by a float)
 	MyVector3 MyVector3::operator *(float rhs)
 	{
 		return MyVector3(this->x * rhs, this->y * rhs, this->z * rhs);
+	}
+
+
+	MyVector3 MyVector3::operator =(MyVector3& rhs)
+	{
+		return MyVector3(
+			this->x = rhs.x, 
+			this->y = rhs.y, 
+			this->z = rhs.z);
 	}
 
 
@@ -63,18 +75,35 @@ MyVector3::MyVector3(float _x, float _y, float _z) {
 	};
 
 	// Clamp vector3
-	 //A function to create a vector3 that is always the largest 3 given vector3's
-	MyVector3 MyVector3::Clamp(MyVector3& t, MyVector3& v1, MyVector3& v2) {
-		// Calculate the minimum of the 2nd and 1st vectors
-		MyVector3 minVector3 = Min(v2, t);
-		// Create a pointer to the minimum of the 2nd and 1st vectors
+	// A function that clamps a specified value t within a range specified by minimum and maximum values.
+	// If t is smaller than the other two vectors, 
+	MyVector3 MyVector3::Clamp(MyVector3& t, MyVector3& vMinimum, MyVector3& vMaximum) {
+		// Return the smaller of t or the maximum allowed vector.
+		// This returns t if it is an allowable size, or else it returns the max 'clamp', the largest maximum vector.
+		MyVector3 minVector3 = Min(vMaximum, t);
+
+		// Create a pointer to the smaller of t or the maximum allowed vector.
 		MyVector3* minVector3Ptr = &minVector3;
-		// Create the clamp vector that is the largest of all 3 vectors
-		MyVector3 vector3Clamp = Max(v1, *minVector3Ptr);
-		// Destroy the pointer to the minimum of the 2nd and 1st vectors
+
+		// Return the clamped vector that lies imbetween the min and max, aka return the larger of: 
+		// a) the smallest permissible vector;
+		// b) the smaller of t and the maximum permissible vector.
+		MyVector3 vector3Clamp = Max(vMinimum, *minVector3Ptr);
+
+		// Destroy the pointer to the minimum of the 2nd and t vectors
 		delete minVector3Ptr;
 		minVector3Ptr = nullptr;
 
 		// Return the clamp vector3 that is the largest of all 3 vectors
 		return vector3Clamp;
 	};
+
+	//// Extents
+	//// Calculate the half-extents by subtracting the min point from the max point and thenhalving the absolute value for each vector component
+	//MyVector3 MyVector3::Extents() {
+	//	return MyVector3(
+	//		abs(this->),
+	//		abs(),
+	//		abs())
+	//	);
+	//};
