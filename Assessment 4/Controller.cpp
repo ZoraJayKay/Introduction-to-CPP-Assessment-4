@@ -22,6 +22,7 @@ Controller::Controller() {
 Controller::Controller(Game& gme) {
 	std::cout << "---Overloaded Controller constructor---" << endl;
 	*g = gme;
+	weaponReloaded = true;
 };
 
 // Destructor
@@ -93,11 +94,14 @@ void Controller::MoveSideways(GameObject& player, float deltaTime) {
 	}
 };
 
-
+// Shoot the weapon if the spacebar or left mouse button is pressed and the weapon is ready to fire
 void Controller::Shoot(GameObject& player, GameObject::weaponType weaponEquipped) {
 	if (IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(0)) {
-		// Shoot the weapon if the spacebar or left mouse button is pressed
-		InstantiatePlayerAttack(player, weaponEquipped);
+		if (weaponReloaded == true) {
+			InstantiatePlayerAttack(player, weaponEquipped);
+			shotTimer = 0;
+			weaponReloaded = false;
+		}
 	}
 }
 

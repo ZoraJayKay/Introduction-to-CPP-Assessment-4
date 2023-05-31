@@ -12,6 +12,9 @@ public:
 	// Variables for tracking movement
 	bool isMoving;
 
+	bool weaponReloaded;
+	int shotTimer;
+
 	// 
 
 	Controller();

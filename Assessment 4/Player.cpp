@@ -19,6 +19,14 @@ void Player::OnUpdate(float deltaTime, Controller& ctrlr){
 
 	// Call a function that can shoot if a key is pressed
 	ctrlr.Shoot(*this, this->weaponEquipped);
+
+	// progress the reload cycle by 1 frame
+	ctrlr.shotTimer++;
+	// If 60 frames have passed (approx 1 second)...
+	if (ctrlr.shotTimer > 45) {
+		ctrlr.shotTimer = 45;
+		ctrlr.weaponReloaded = true;
+	}
 };
 
 
@@ -34,6 +42,5 @@ Player::Player(int _lives, bool _hasWeapon, int _score, GameObject::weaponType s
 	hasWeapon = _hasWeapon;
 	score = _score;
 	this->SetWeapon(startingWeapon); // Laser by default
-
 	objType = Player_Type;
 }
