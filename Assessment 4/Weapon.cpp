@@ -3,6 +3,7 @@
 #include "Weapon.h"
 #include "Vector3.h"
 #include <iostream>
+#include "Game.h"
 
 // Default, unused constructor
 Weapon::Weapon() {};
@@ -46,31 +47,43 @@ Weapon::~Weapon() {
 	delete enemyLaserAttackFileName;
 	enemyLaserAttackFileName = nullptr;
 
+	delete laserSound_01FileName;
+	laserSound_01FileName = nullptr;
+
+	delete laserSound_02FileName;
+	laserSound_02FileName = nullptr;
+
 	UnloadSound(laser_01);
 	UnloadSound(laser_02);
 };
 
 void Weapon::OnUpdate(float deltaTime, Controller& ctrlr) {
-	// Create a new vector whose elements are the x, y, z of the firing object's X axis (its forward axis) and multiply that by time and speed (set its magnitude in the direction of its forward axis).
-	// This override function goes to the SceneObject, not the SpriteObject, so there's no problem that I rotated the Sprite by 90 degrees in its constructor, because the SceneObject is still facing the right way.
+	// *** --- MOVEMENT --- ***
+		// Create a new vector whose elements are the x, y, z of the firing object's X axis (its forward axis) and multiply that by time and speed (set its magnitude in the direction of its forward axis).
+		// This override function goes to the SceneObject, not the SpriteObject, so there's no problem that I rotated the Sprite by 90 degrees in its constructor, because the SceneObject is still facing the right way.
 	
-	// Acceleration effect to calculate the new speed
-	this->weaponSpeed += this->acceleration * deltaTime;
+		// Acceleration effect to calculate the new speed
+		this->weaponSpeed += this->acceleration * deltaTime;
 
-	MyVector3 facing = MyVector3(
-		this->LocalTransform().m01,
-		this->LocalTransform().m11,
-		0)
-		* deltaTime
-		* this->weaponSpeed;
+		MyVector3 facing = MyVector3(
+			this->LocalTransform().m01,
+			this->LocalTransform().m11,
+			0)
+			* deltaTime
+			* this->weaponSpeed;
 
-	if (this->objType == Friendly_Projectile_Type) {
-		// Shoot from the bottom of the screen to the top
-		this->Translate(facing.x, -facing.y);
-	}
+		if (this->objType == Friendly_Projectile_Type) {
+			// Shoot from the bottom of the screen to the top
+			this->Translate(facing.x, -facing.y);
+		}
 
-	if (this->objType == Enemy_Projectile_Type) {
-		// Shoot from the top of the screen to the bottom
-		this->Translate(facing.x, facing.y);
-	}
+		if (this->objType == Enemy_Projectile_Type) {
+			// Shoot from the top of the screen to the bottom
+			this->Translate(facing.x, facing.y);
+		}
+
+	// *** --- COLLISION DETECTION --- ***
+		/*for (GameObject* collider : Game::rootObject) {
+			if ()
+		}*/
 };

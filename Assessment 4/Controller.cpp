@@ -91,6 +91,21 @@ void Controller::MoveSideways(GameObject& player, float deltaTime) {
 
 		// Move the object forward to the extent set by the facing vector
 		player.Translate(facing.x, facing.y);
+
+		// Constrain movement to the play area
+		if (player.GlobalTransform().m02 > g->playWidth) {
+			player.SetPosition(g->playWidth, player.LocalTransform().m12);
+
+			// Bring the player to a halt
+			player.moveSpeed = 0;
+		}
+
+		if (player.GlobalTransform().m02 < (g->windowWidth - g->playWidth)) {
+			player.SetPosition((g->windowWidth - g->playWidth), player.LocalTransform().m12);
+
+			// Bring the player to a halt
+			player.moveSpeed = 0;
+		}
 	}
 };
 
@@ -123,10 +138,8 @@ void Controller::InstantiatePlayerAttack(GameObject& player, GameObject::weaponT
 	Weapon* newAttack = new Weapon(weaponEquipped, player.Friendly_Projectile_Type);
 	// Play a sound
 	PlaySound(newAttack->laser_01);
-	// Create the new attack a sprite
-	SpriteObject* weaponSpritePtr = new SpriteObject();
-	// Load the attack sprite a texture
-	weaponSpritePtr->Load(newAttack->playerLaserAttackFileName);
+	// Create the new attack a sprite and load it a texture
+	SpriteObject* weaponSpritePtr = new SpriteObject(newAttack->playerLaserAttackFileName);
 	// Set the start position of the attack in the centre of the attacker's width and in front of their ship
 	weaponSpritePtr->SetPosition(-weaponSpritePtr->Width() / 2, -weaponSpritePtr->Height() / 4);
 	// Parent the attack object to its sprite object
@@ -143,10 +156,8 @@ void Controller::InstantiateEnemyAttack(GameObject& enemy, GameObject::weaponTyp
 	Weapon* newAttack = new Weapon(weaponEquipped, enemy.Enemy_Projectile_Type);
 	// Play a sound
 	PlaySound(newAttack->laser_02);
-	// Create the new attack a sprite
-	SpriteObject* weaponSpritePtr = new SpriteObject();
-	// Load the attack sprite a texture
-	weaponSpritePtr->Load(newAttack->enemyLaserAttackFileName);
+	// Create the new attack a sprite and load it a texture
+	SpriteObject* weaponSpritePtr = new SpriteObject(newAttack->enemyLaserAttackFileName);
 	// Rotate the texture 180 degrees
 	weaponSpritePtr->SetRotate(PI);
 	// Set the start position of the attack in the centre of the attacker's width and in front of their ship

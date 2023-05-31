@@ -10,11 +10,14 @@
 
 //	*** CONSTRUCTOR AND DESTRUCTOR
 // default constructor function
-SpriteObject::SpriteObject() {
+
+SpriteObject::SpriteObject(const char* fileName) {
 	std::cout << "---SpriteObject constructor---" << endl;
 
 	// Set the type of game object as being a weapon
 	objType = Sprite_Type;
+
+	Load(fileName);
 };
 
 // default destructor function
@@ -49,25 +52,6 @@ void SpriteObject::Load(const char* fileName)
 	cout << Width() << endl;
 }
 
-//void SpriteObject::OnUpdate(float deltaTime, Controller& ctrlr) {
-//	if (GetParent().objType == Player_Type) {
-//		if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {
-//			// Rotate right a little
-//			if (parent->moveSpeed > 0) {
-//				this->Rotate(-deltaTime);
-//			}
-//		}
-//		
-//		if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)) {
-//			if (parent->moveSpeed < 0) {
-//				this->Rotate(deltaTime);
-//			}
-//		}
-//
-//			SetRotate((float)(PI / 180.0f));
-//	}	
-//};
-
  //a virtual override method for implementing specific derived drawing behaviours
 void SpriteObject::OnDraw()
 {
@@ -80,6 +64,7 @@ void SpriteObject::OnDraw()
 	// Draw the texture
 	DrawTextureEx(texture, v, rotation * (float)(180 / PI), 1, WHITE);
 }
+
 
 // *** BOUNDING BOX FUNCTIONS ***
 	// Return the centre of the collision hitbox (the point halfway between the miximum and maximum)
@@ -134,7 +119,6 @@ void SpriteObject::OnDraw()
 		// Second, find the min and max of the passed-in points. I already know that any AABB this program uses will have a 4-element point array (it's a rectangle)
 		// Create a size_t type because it's a safe way to iterate through the array of points, which is a collection of pointers, being memory addresses
 		size_t numberOfPoints = sizeof(points) / sizeof(points[0]);
-
 
 		// For each vector pointer (memory address) in the array called points (the rectangular set of points passed-in for the bounding box), find the min and max.
 		// This will find the bounding box for this one sprite.

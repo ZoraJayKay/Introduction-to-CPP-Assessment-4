@@ -29,104 +29,72 @@ Initialise::Initialise(int windowWidth, int windowHeight)
 
 	   //1.3: Objects
 		   //	1.3.1	*** |||	PLAYER ||| ***
-			   //		***		PLAYER OBJECT	***
-			   //	1.3.1.1: Set pointers of the player and its sprite to their objects
-			   //playerObjectPtr = new Player(1, true, 0, (GameObject::weaponType)0);
-	playerObjectPtr = new Player(1, true, 0, playerObjectPtr->Laser);
-	playerSpritePtr = new SpriteObject();
-	// Lives = 1.
-	// Has weapon = true.
-	// Score = 0.
-	// Weapon = laser
+		   //			***		PLAYER OBJECT & SPRITE	***
+				//	1.3.1.1: Set pointers of the player and its sprite to their objects
+				playerObjectPtr = new Player(1, true, 0, playerObjectPtr->Laser);
+				//	1.3.1.2: Load the sprite a texture
+				playerSpritePtr = new SpriteObject(playerShipFileName);
+					// Lives = 1.
+					// Has weapon = true.
+					// Score = 0.
+					// Weapon = laser
 
-//		***		PLAYER SPRITE	***
-//	1.3.1.2: Load the sprite a texture
-	playerSpritePtr->Load(playerShipFileName);
-	//	1.3.1.3: Make the 'position' of the sprite object at its centre to give it a central point of rotation
-	playerSpritePtr->SetPosition(-playerSpritePtr->Width() / 2.0f, playerSpritePtr->Height() / 2.0f);
-	//	1.3.1.4: Make the player sprite the child of the player object
-	playerObjectPtr->AddChild(*playerSpritePtr);
-	//	1.3.1.5: Set the initial position for the playerObject (and thus child as well)
-	playerObjectPtr->SetPosition(windowWidth / 2, windowHeight * 0.8f);
-
-	// vvv		NOT YET IMPLEMENTED		vvv
-	//	1.3.1.1: Set initial position
-	//	1.3.1.2: Offset the player object to the middle of its object rather than top left
-	//	1.3.1.3: set size of the offset for collision detection?
+				//	1.3.1.3: Make the 'position' of the sprite object at its centre to give it a central point of rotation
+				playerSpritePtr->SetPosition(-playerSpritePtr->Width() / 2.0f, playerSpritePtr->Height() / 2.0f);
+				//	1.3.1.4: Make the player sprite the child of the player object
+				playerObjectPtr->AddChild(*playerSpritePtr);
+				//	1.3.1.5: Set the initial position for the playerObject (and thus child as well)
+				playerObjectPtr->SetPosition(windowWidth / 2, windowHeight * 0.8f);
 
 
-// 1.3.2	*** |||	ENEMIES ||| ***
-	//		***		ENEMY OBJECT	***
-	//	1.3.2.1: Set pointers of the enemy and its sprite to their objects
-	enemyPtr = new Enemy(250, enemyPtr->Laser);
-	enemySpritePtr = new SpriteObject;
-	// Move speed = 250.
-	// Weapon = laser
+			// 1.3.2	*** |||	ENEMIES ||| ***
+				//		***		ENEMY OBJECT	***
+				//	1.3.2.1: Set pointers of the enemy and its sprite to their objects
+				enemyPtr = new Enemy(250, enemyPtr->Laser);
+					// Move speed = 250.
+					// Weapon = laser
+				//	1.3.2.2: Load the sprite a texture
+				enemySpritePtr = new SpriteObject(enemyShipFileName);
+	
+				//	1.3.2.3: Make the 'position' of the sprite object at its centre to give it a central point of rotation
+				enemySpritePtr->SetPosition(-enemySpritePtr->Width() / 2.0f, enemySpritePtr->Height() / 2.0f);
+				//	1.3.2.4: Make the sprite the child of the parent object
+				enemyPtr->AddChild(*enemySpritePtr);
+				//	1.3.2.5: Set the initial position for the object (and thus child as well)
+				enemyPtr->SetPosition(windowWidth / 2.0f, windowHeight * 0.05f);
+				//	1.3.2.6: Add the new enemy to the list of enemies to initialise
+				enemiesToInitialise.push_back(enemyPtr);
 
-//		***		ENEMY SPRITE	***
-//	1.3.2.2: Load the sprite a texture
-	enemySpritePtr->Load(enemyShipFileName);
-	//	1.3.2.3: Make the 'position' of the sprite object at its centre to give it a central point of rotation
-	enemySpritePtr->SetPosition(-enemySpritePtr->Width() / 2.0f, enemySpritePtr->Height() / 2.0f);
-	//	1.3.2.4: Make the sprite the child of the parent object
-	enemyPtr->AddChild(*enemySpritePtr);
-	//	1.3.2.5: Set the initial position for the object (and thus child as well)
-	enemyPtr->SetPosition(windowWidth / 2.0f, windowHeight * 0.05f);
-	//	1.3.2.6: Add the new enemy to the list of enemies to initialise
-	enemiesToInitialise.push_back(enemyPtr);
+			// 1.3.3	*** |||	BASES ||| ***
+				//		***		BASE OBJECT	***
+				//	1.3.3.1: Set pointers of the bases and their sprites to their objects
+				basePtr_01 = new Base(windowWidth, windowHeight);
+				basePtr_02 = new Base(windowWidth, windowHeight);
+				basePtr_03 = new Base(windowWidth, windowHeight);
+				/*//	1.3.3.2: Load the sprite a texture
+				baseSpritePtr_01 = new SpriteObject(baseFileName);
+				baseSpritePtr_02 = new SpriteObject(baseFileName);
+				baseSpritePtr_03 = new SpriteObject(baseFileName);*/
 
-	// 1.3.3	*** |||	BASES ||| ***
-	//		***		BASE OBJECT	***
-	//	1.3.3.1: Set pointers of the bases and their sprites to their objects
-	basePtr_01 = new Base(windowWidth, windowHeight);
-	basePtr_02 = new Base(windowWidth, windowHeight);
-	basePtr_03 = new Base(windowWidth, windowHeight);
-	/*baseSpritePtr_01 = new SpriteObject;
-	baseSpritePtr_02 = new SpriteObject;
-	baseSpritePtr_03 = new SpriteObject;*/
+				//	1.3.3.3: Make the 'position' of the sprite object at its centre to give it a central point of rotation
+				/*baseSpritePtr_01->SetPosition(-baseSpritePtr_01->Width() / 2.0f, baseSpritePtr_01->Height() / 2.0f);
+				baseSpritePtr_02->SetPosition(-baseSpritePtr_02->Width() / 2.0f, baseSpritePtr_02->Height() / 2.0f);
+				baseSpritePtr_03->SetPosition(-baseSpritePtr_03->Width() / 2.0f, baseSpritePtr_03->Height() / 2.0f);*/
 
-	//		***		BASE SPRITES	***
-	//	1.3.3.2: Load the sprite a texture
-	/*baseSpritePtr_01->Load(baseFileName);
-	baseSpritePtr_02->Load(baseFileName);
-	baseSpritePtr_03->Load(baseFileName);*/
+				//	1.3.3.5: Set the initial position for the object (and thus child as well)
+				basePtr_01->SetPosition((windowWidth / 4.0f) * 1, windowHeight * 0.7f);
+				basePtr_02->SetPosition((windowWidth / 4.0f) * 2, windowHeight * 0.7f);
+				basePtr_03->SetPosition((windowWidth / 4.0f) * 3, windowHeight * 0.7f);
 
-	//	1.3.3.3: Make the 'position' of the sprite object at its centre to give it a central point of rotation
-	/*baseSpritePtr_01->SetPosition(-baseSpritePtr_01->Width() / 2.0f, baseSpritePtr_01->Height() / 2.0f);
-	baseSpritePtr_02->SetPosition(-baseSpritePtr_02->Width() / 2.0f, baseSpritePtr_02->Height() / 2.0f);
-	baseSpritePtr_03->SetPosition(-baseSpritePtr_03->Width() / 2.0f, baseSpritePtr_03->Height() / 2.0f);*/
+				//	1.3.3.4: Make the sprite the child of the parent object
+				/*baseSpritePtr_01->AddChild(*basePtr_01);
+				baseSpritePtr_02->AddChild(*basePtr_02);
+				baseSpritePtr_03->AddChild(*basePtr_03);*/
 
-	//	1.3.3.5: Set the initial position for the object (and thus child as well)
-	basePtr_01->SetPosition((windowWidth / 4.0f) * 1, windowHeight * 0.75f);
-	basePtr_02->SetPosition((windowWidth / 4.0f) * 2, windowHeight * 0.75f);
-	basePtr_03->SetPosition((windowWidth / 4.0f) * 3, windowHeight * 0.75f);
-
-	//	1.3.3.4: Make the sprite the child of the parent object
-	/*baseSpritePtr_01->AddChild(*basePtr_01);
-	baseSpritePtr_02->AddChild(*basePtr_02);
-	baseSpritePtr_03->AddChild(*basePtr_03);*/
-
-	//	1.3.3.6: Add the new bases to the list of bases to initialise
-	basesToInitialise.push_back(basePtr_01);
-	basesToInitialise.push_back(basePtr_02);
-	basesToInitialise.push_back(basePtr_03);
-
-
-		/* 1.3.2.1: Set initial position
-		*
-		//	1.3.3:	Rotate the sprite to be facing forward
-		//playerSprite->SetRotate(-90 * (float)(PI / 180.0f));
-
-			1.3.2.2: Offset the enemy object to the middle of its object rather than top left
-			1.3.2.3: set size of the offset for collision detection?
-
-		1.3.3: Instantiate the base
-			1.3.3.1: Set position
-			1.3.3.2: Set lives = 1
-			1.3.3.3: Set position
-			1.3.3.4: Instantiate sprites
-
-*/
+				//	1.3.3.6: Add the new bases to the list of bases to initialise
+				basesToInitialise.push_back(basePtr_01);
+				basesToInitialise.push_back(basePtr_02);
+				basesToInitialise.push_back(basePtr_03);
 }
 
 // member function for destructor
@@ -139,7 +107,7 @@ Initialise::~Initialise() {
 }
 
 //	***	---	INSTANTIATION FUNCTIONS	---	***
-	// Implement eventually rather than doing it manually 
+	// Implement these eventually rather than doing it manually 
 		// A function to create a new player
 		void Initialise::CreatePlayer() {};
 

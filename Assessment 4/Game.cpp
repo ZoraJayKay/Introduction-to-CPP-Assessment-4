@@ -35,16 +35,17 @@ Game::Game()
 	// NOTE TO SELF: InitWindow needs to be done BEFORE loading any textures
 	InitWindow(windowWidth, windowHeight, "Zora Jane Kerr: Introduction to C++ (Assessment 4 - Retro Game) Space Invaders (AIE, 2023 [student year 1])");
 
-	// Initialise the audio device
-	InitAudioDevice();
-
 	// 0.1: Initialise a game session
+		// Initialise the audio device
+		InitAudioDevice();
+			
 		// Initialise a pointer to a new instance of the Initialise class.
 		// The Initialise class instance (init) will in turn set all of the parameters that constitute the starting conditions of the game.	
 		init = new Initialise(windowWidth, windowHeight);
-		// Add number of enemies to instantiate
-		// Add number of bases to instantiate
-		// Add difficulty that sets the above etc?
+			// EXTRA WORK: SET DIFFICULTY LEVELS THROUGH OVERLOADED INIT
+				// Add number of enemies to instantiate
+				// Add number of bases to instantiate
+				// Add difficulty that sets the above etc?
 
 	// 0.2: Add the objects from initialisation to the scene as root, enemy and base objects
 		// 0.2.1: Add the player
@@ -83,21 +84,20 @@ void Game::Update()
 	// 1.1: Update the game timer
 		// 1.1.1: Instantiate a timer if one doesn't already exist
 		gameTimer = Timer::Instance();
-		// 1.1.2: Update delta time
+		// 1.1.2: Increment delta time
 		gameTimer->Tick();
 		// 1.1.3: Reset the clock's 'start' timer
 		gameTimer->Reset();
 		// 1.1.4: Increment the timer with delta time
 		elapsedTime += gameTimer->DeltaTime();
-		// Increment the frames (may or may not be using a frame counter)
+		// Increment the frames (may or may not be using a frame counter - not currently)
 		frames++;
 
 	// 1.2: Update the game
 		if (elapsedTime >= gameTimer->DeltaTime()) {
-			//if (elapsedTime >= gameTimer->DeltaTime() && gameTimer->GetTimeScale() == 1.0f) {
-				// 1.2.1: Update the object hierarchy including adding and removing parent / child relationships
+			// 1.2.1: Update the object hierarchy including adding and removing parent / child relationships
 			UpdateRelationships();
-			// 1.2.2: Update the arithmetic underlying movement and drawing
+			// 1.2.2: Update the arithmetic underlying movement and drawing for all objects
 			UpdateCalculations();
 			// 1.2.3: Debug if necessary
 			Debug();
@@ -122,6 +122,9 @@ void Game::Update()
 // 1.2.1: Update the object hierarchy including adding and removing parent / child relationships
 void Game::UpdateRelationships()
 {
+	//***	CALCULATE COLLISIONS	***
+		//CalculateCollisions(rootObjects);
+
 	//***	ADDING ROOT OBJECTS		***
 		// for each pointer in the vector of objects to add...
 		for (GameObject* obj : rootObjectsToAdd) {
@@ -190,7 +193,6 @@ void Game::UpdateRelationships()
 
 	//***	REMOVING ROOT OBJECTS		***		
 		// A: Add any objects destroyed by projectiles to the list to delete
-		// FILL
 
 		// B: Add any objects that have left the play area to the list to delete
 		// for each pointer in the vector of objects to remove...
@@ -224,6 +226,26 @@ void Game::UpdateRelationships()
 }
 
 // Functions to facilitate the update of relationships
+// 1.2.1.0: Calculate collisions
+//void Game::CalculateCollisions(vector<GameObject*> rootObjs) {
+//	// For every root game object...
+//	for (GameObject* obj1 : rootObjs) {
+//		//  That is a projectile...
+//		if (obj1->Friendly_Projectile_Type || obj1->Enemy_Projectile_Type) {
+//			// Check the full list of objects and...
+//			for (GameObject* obj2 : rootObjs) {
+//				// if the projectile overlaps the other game object...
+//				if (obj1->Overlaps(*obj2)) {
+//					// Delete the projectile and the other game object (when figured out how)
+//					std::cout << "Collision" << std::endl;
+//				}
+//			}
+//		}
+//	}
+//};
+
+// 
+// 
 // 1.2.1.1: Add objects created since last update to the list of root objects
 void Game::AddRootObject(GameObject& obj) {
 	// Create a pointer of the object reference passed in 

@@ -12,6 +12,10 @@ public:
 	//	*** CONSTRUCTOR & DESTRUCTOR
 		// default constructor function
 		SpriteObject();
+
+		// Overloaded
+		SpriteObject(const char* fileName);
+
 		// default destructor function
 		~SpriteObject();
 
@@ -24,9 +28,9 @@ public:
 
 		// *** BOUNDING BOX ***
 		// Axis-Aligned Bounding Box minimum vector3
-		MyVector3* minVector3AABB; /*= new MyVector3(negative, negative, negative);*/
+		MyVector3* minVector3AABB = new MyVector3(negative, negative, negative);
 		// Axis-Aligned Bounding Box maximum vector3
-		MyVector3* maxVector3AABB; /*= new MyVector3(positive, positive, positive);*/
+		MyVector3* maxVector3AABB = new MyVector3(positive, positive, positive);
 
 
 	//	*** FUNCTIONS	***
@@ -64,7 +68,5 @@ public:
 	bool Overlaps(MyVector3& point);
 
 	bool Overlaps(SpriteObject& otherSprite);
-
-	//bool Overlaps(GameObject& otherSprite);
 };
 

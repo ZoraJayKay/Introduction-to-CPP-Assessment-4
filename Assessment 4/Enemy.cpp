@@ -88,8 +88,8 @@ void Enemy::MoveLeft(float deltaTime) {
 void Enemy::MoveSideways(float deltaTime) {
 	// Program screen size
 	// Set these as a shared pointer for all classes to use!
-	static const int leftSideOfScreen = 0;
-	static const int rightSideOfScreen = 1080;
+	static const int leftSideOfScreen = 80;
+	static const int rightSideOfScreen = 1000;
 
 	int screenHeight = 720;
 

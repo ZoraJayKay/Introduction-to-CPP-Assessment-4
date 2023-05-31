@@ -1,2 +1,9 @@
-﻿  Player.cpp
+﻿  Initialise.cpp
+F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\Initialise.cpp(47,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\Initialise.cpp(71,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\Initialise.cpp(71,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\Initialise.cpp(72,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\Initialise.cpp(72,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\Initialise.cpp(73,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\Initialise.cpp(73,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   Assessment 4.vcxproj -> F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\x64\Debug\Assessment 4.exe

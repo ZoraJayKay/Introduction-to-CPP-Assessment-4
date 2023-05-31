@@ -9,14 +9,13 @@
 class Weapon : public GameObject
 {
 protected:
-	class SpriteObject* attackSpritePtr;
 
 public:
 	//enum WeaponType;	
-	int weaponSpeed;
-	int maxWeaponSpeed;
-	int acceleration;
-	int drag;
+	int weaponSpeed = 0;
+	int maxWeaponSpeed = 0;
+	int acceleration = 0;
+	int drag = 0;
 
 	// file paths for new attacks to load textures
 	const char* playerLaserAttackFileName = "x64/Images/laserBlue07.png";
@@ -34,7 +33,6 @@ public:
 
 	Weapon();
 	Weapon(GameObject::weaponType weaponEquipped, GameObject::objectType shooter);
-	// Weapon(int weaponEquipped, int shooter);
 	~Weapon();
 
 	void OnUpdate(float deltaTime, Controller& ctrlr) override;
