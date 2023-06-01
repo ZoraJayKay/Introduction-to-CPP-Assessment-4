@@ -70,7 +70,7 @@ public:
 		// 1.2.1: Update object relationships
 		void UpdateRelationships();
 			// 1.2.1.0: Calculate collisions
-			void CalculateCollisions(vector<GameObject*> rootObjs);
+			/*void UpdateCollisions(vector<GameObject*> rootObjs);*/
 			// 1.2.1.1: Add objects created since last update to the list of root objects
 			void AddRootObject(GameObject& obj);
 			// 1.2.1.2: Add objects targeted for removal since last update to a list

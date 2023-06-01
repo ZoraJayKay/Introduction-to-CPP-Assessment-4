@@ -13,7 +13,6 @@ using namespace std;
 class GameObject
 {
 protected: 
-	//	*** PROTECTED GAME PARAMETERS***
 	// declare a pointer to a GameObject called parent
 	GameObject* parent;
 
@@ -32,51 +31,6 @@ protected:
 
 
 public:
-	//	*** PUBLIC GAME PARAMETERS	***
-	// object type
-	enum objectType	{
-		Default_Type,
-		Sprite_Type,
-		Player_Type,
-		Enemy_Type,
-		Friendly_Projectile_Type,
-		Enemy_Projectile_Type,
-		Base_Type
-	};
-	
-	// The type of game object
-	objectType objType;
-	
-	enum weaponType {
-		Laser,
-		DoubleLaser,
-	};
-
-	weaponType weaponEquipped;
-
-	// Movement speed of the object
-	int moveSpeed;
-	int moveAcceleration;
-	int moveDrag;
-	int maxSpeed;
-
-	// Does this object have a weapon, true or false?
-	bool hasWeapon;
-
-	// How many lives does this object have?
-	unsigned int lives;
-
-	// The player's score
-	unsigned int score;
-
-	// *** BOUNDING BOX VARIABLES ***
-		//float positive = 1;
-		//float negative = -1;
-		//// Axis-Aligned Bounding Box minimum vector3
-		//MyVector3* minVector3AABB;
-		//// Axis-Aligned Bounding Box maximum vector3
-		//MyVector3* maxVector3AABB;
-
 	//	*** CONSTRUCTOR & DESTRUCTOR	***
 		// default constructor function
 		GameObject();
@@ -84,14 +38,62 @@ public:
 		// default destructor function
 		~GameObject();
 
+
+	//	*** --- CONTROLLER	--- ***
+		// Movement speed of the object
+		int moveSpeed;
+		int moveAcceleration;
+		int moveDrag;
+		int maxSpeed;
+
+		// Does this object have a weapon, true or false? (not curently in use)
+		bool hasWeapon;
+
+		// object type
+		enum objectType {
+			Default_Type,
+			Sprite_Type,
+			Player_Type,
+			Enemy_Type,
+			Friendly_Projectile_Type,
+			Enemy_Projectile_Type,
+			Base_Type
+		};
+
+		// The type of game object
+		objectType objType;
+
+		// The type of weapon the game object has
+		enum weaponType {
+			Laser,
+			DoubleLaser,
+		};
+
+		// The current weapon in use by the game object
+		weaponType weaponEquipped;
+
+	// Other
+	// How many lives does this object have?
+	unsigned int lives;
+	// The player's score
+	unsigned int score;
+
+	// *** --- COLLIDER --- ***
+	class AABB* colliderPtr;
+	MyVector3* tempV1;
+	MyVector3* tempV2;
+
 	//	*** FUNCTIONS	***
 		// Return the equipped weapon of a game object as an integer
 		int GetWeapon();
 		// behaviour determined by derivative class, eg enemy, player, base
 
+		// Choose the equipped weapon
 		void SetWeapon(weaponType chosenWeapon);
 
+		// Designate this game object as the player, an enemy, a base, , projectile, etc
 		void SetObjectType(int choice);
+
 
 	// ***	RELATIONSHIP FUNCTIONS	***
 		// A method to set the parent of the object that calls this function equal to an object that is passed in (by reference to it)
@@ -121,8 +123,7 @@ public:
 			// a non-virtual method that first calls OnUpdate() on itself, then calls Update() on all children
 			void Update(float deltaTime, Controller& ctrlr);
 
-		// ***	DRAW FUNCTIONS		***
-			// ON-SCREEN GRAPHICS
+		// DRAWING
 			// a virtual method for implementing specific derived drawing behaviours
 			virtual void OnDraw();
 	
@@ -156,23 +157,7 @@ public:
 		// Call the Matrix3 class so a child may inherit its parent's global position
 		void CopyTransform(GameObject& prnt);
 
-
-	//// *** BOUNDING BOX FUNCTIONS ***
-	//// Return the centre of the collision hitbox
-	//	MyVector3 ReturnCenter();
-	//	void SetAABB(MyVector3& min, MyVector3& max);
-
-	//	// Extents
-	//	MyVector3 Extents();
-
-	//	// Return the corners of the AABB, using min and max. In 2D we would return 4 corners, and in 3D we would return 8 corners.
-	//	MyVector3* Corners();
-
-	//	// Calculate the bounding box for this sprite object
-	//	void Fit(MyVector3* points[4]);
-
-	//	/* Test if a point is contained within an AABB by checking if the point is within the range of the min and max corners. */
-	//	bool Overlaps(MyVector3& point);
-
-	//	bool Overlaps(GameObject& otherObject);
+	//	*** COLLISION DETECTION	***
+		// Update the boundaries of this game object
+		void UpdateColliderBoundaries();
 };

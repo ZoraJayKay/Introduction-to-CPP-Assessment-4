@@ -30,20 +30,23 @@ Initialise::Initialise(int windowWidth, int windowHeight)
 	   //1.3: Objects
 		   //	1.3.1	*** |||	PLAYER ||| ***
 		   //			***		PLAYER OBJECT & SPRITE	***
-				//	1.3.1.1: Set pointers of the player and its sprite to their objects
+				//	1.3.1.1: Set the pointer of the player to its instantiated object
 				playerObjectPtr = new Player(1, true, 0, playerObjectPtr->Laser);
-				//	1.3.1.2: Load the sprite a texture
-				playerSpritePtr = new SpriteObject(playerShipFileName);
-					// Lives = 1.
+				// Lives = 1.
 					// Has weapon = true.
 					// Score = 0.
 					// Weapon = laser
 
-				//	1.3.1.3: Make the 'position' of the sprite object at its centre to give it a central point of rotation
+				//	1.3.1.2: Set the pointer of the player to its instantiated object and load the sprite a texture
+				playerSpritePtr = new SpriteObject(playerShipFileName);
+				//	1.3.1.3: Set the pointer of the player's collider
+				//playerCollider = new AABB(/* min and max */);
+
+				//	1.3.1.4: Make the 'position' of the sprite object at its centre to give it a central point of rotation
 				playerSpritePtr->SetPosition(-playerSpritePtr->Width() / 2.0f, playerSpritePtr->Height() / 2.0f);
-				//	1.3.1.4: Make the player sprite the child of the player object
+				//	1.3.1.5: Make the player sprite the child of the player object
 				playerObjectPtr->AddChild(*playerSpritePtr);
-				//	1.3.1.5: Set the initial position for the playerObject (and thus child as well)
+				//	1.3.1.6: Set the initial position for the playerObject (and thus child as well)
 				playerObjectPtr->SetPosition(windowWidth / 2, windowHeight * 0.8f);
 
 
@@ -55,12 +58,14 @@ Initialise::Initialise(int windowWidth, int windowHeight)
 					// Weapon = laser
 				//	1.3.2.2: Load the sprite a texture
 				enemySpritePtr = new SpriteObject(enemyShipFileName);
-	
-				//	1.3.2.3: Make the 'position' of the sprite object at its centre to give it a central point of rotation
+				//	1.3.2.3: Set the pointer of the enemy's collider
+				//enemyCollider = new AABB(/* min and max */);
+
+				//	1.3.2.4: Make the 'position' of the sprite object at its centre to give it a central point of rotation
 				enemySpritePtr->SetPosition(-enemySpritePtr->Width() / 2.0f, enemySpritePtr->Height() / 2.0f);
-				//	1.3.2.4: Make the sprite the child of the parent object
+				//	1.3.2.5: Make the sprite the child of the parent object
 				enemyPtr->AddChild(*enemySpritePtr);
-				//	1.3.2.5: Set the initial position for the object (and thus child as well)
+				//	1.3.2.6: Set the initial position for the object (and thus child as well)
 				enemyPtr->SetPosition(windowWidth / 2.0f, windowHeight * 0.05f);
 				//	1.3.2.6: Add the new enemy to the list of enemies to initialise
 				enemiesToInitialise.push_back(enemyPtr);

@@ -127,68 +127,68 @@ void Game::UpdateRelationships()
 
 	//***	ADDING ROOT OBJECTS		***
 		// for each pointer in the vector of objects to add...
-		for (GameObject* obj : rootObjectsToAdd) {
-			// add the pointer to the object to the back of the vector of root objects
-			rootObjects.push_back(obj);
-		}
-	
-		// clear the add-pending objects vector
-		rootObjectsToAdd.clear();
+	for (GameObject* obj : rootObjectsToAdd) {
+		// add the pointer to the object to the back of the vector of root objects
+		rootObjects.push_back(obj);
+	}
+
+	// clear the add-pending objects vector
+	rootObjectsToAdd.clear();
 
 	//***	ADDING ENEMY OBJECTS		***
 		// for each pointer in the vector of enemies to add...
-		for (Enemy* enemy : enemiesToAdd) {
-			// add the pointer to the object to the back of the vector of enemy objects
-			enemies.push_back(enemy);
-		}
+	for (Enemy* enemy : enemiesToAdd) {
+		// add the pointer to the object to the back of the vector of enemy objects
+		enemies.push_back(enemy);
+	}
 
-		// clear the add-pending objects vector
-		enemiesToAdd.clear();
+	// clear the add-pending objects vector
+	enemiesToAdd.clear();
 
 	//***	ADDING BASE OBJECTS		***
 		// for each pointer in the vector of bases to add...
-		for (Base* base : basesToAdd) {
-			// add the pointer to the object to the back of the vector of enemy objects
-			bases.push_back(base);
-		}
+	for (Base* base : basesToAdd) {
+		// add the pointer to the object to the back of the vector of enemy objects
+		bases.push_back(base);
+	}
 
-		// clear the add-pending objects vector
-		basesToAdd.clear();
+	// clear the add-pending objects vector
+	basesToAdd.clear();
 
 
 	//***	REMOVING ENEMY OBJECTS		***		
 		// BEFORE deleting the root object, remove enemies from the list of enemies
 		// for each pointer in the vector of enemies to remove...
-		for (Enemy* enemy : enemiesToRemove) {
-			// create an iterator which will find the pointer to remove in the enemies vector
-			vector<Enemy*>::iterator itr_01 = find(enemies.begin(), enemies.end(), enemy);
+	for (Enemy* enemy : enemiesToRemove) {
+		// create an iterator which will find the pointer to remove in the enemies vector
+		vector<Enemy*>::iterator itr_01 = find(enemies.begin(), enemies.end(), enemy);
 
-			// save the position between index 0 and the found pointer
-			int index = distance(enemies.begin(), itr_01);
+		// save the position between index 0 and the found pointer
+		int index = distance(enemies.begin(), itr_01);
 
-			// erase the found pointer from the vector
-			enemies.erase(enemies.begin() + index);
-		}
+		// erase the found pointer from the vector
+		enemies.erase(enemies.begin() + index);
+	}
 
-		// clear the remove-pending objects vector
-		enemiesToRemove.clear();
+	// clear the remove-pending objects vector
+	enemiesToRemove.clear();
 
 	//***	REMOVING BASE OBJECTS		***		
 		// BEFORE deleting the root object, remove enemies from the list of enemies
 		// for each pointer in the vector of enemies to remove...
-		for (Base* base : basesToRemove) {
-			// create an iterator which will find the pointer to remove in the enemies vector
-			vector<Base*>::iterator itr_01 = find(bases.begin(), bases.end(), base);
+	for (Base* base : basesToRemove) {
+		// create an iterator which will find the pointer to remove in the enemies vector
+		vector<Base*>::iterator itr_01 = find(bases.begin(), bases.end(), base);
 
-			// save the position between index 0 and the found pointer
-			int index = distance(bases.begin(), itr_01);
+		// save the position between index 0 and the found pointer
+		int index = distance(bases.begin(), itr_01);
 
-			// erase the found pointer from the vector
-			bases.erase(bases.begin() + index);
-		}
+		// erase the found pointer from the vector
+		bases.erase(bases.begin() + index);
+	}
 
-		// clear the remove-pending objects vector
-		basesToRemove.clear();
+	// clear the remove-pending objects vector
+	basesToRemove.clear();
 
 
 	//***	REMOVING ROOT OBJECTS		***		
@@ -196,33 +196,66 @@ void Game::UpdateRelationships()
 
 		// B: Add any objects that have left the play area to the list to delete
 		// for each pointer in the vector of objects to remove...
-		for (GameObject* obj : rootObjects) {
-			if (
-				// if x axis is off the width, or...
-				(obj->GlobalTransform().m02 < 0 || obj->GlobalTransform().m02 > windowWidth) ||
-				// if y axis is off the height...
-				(obj->GlobalTransform().m12 < 0 || obj->GlobalTransform().m12 > windowHeight))
-			{
-				// Add the object to the list of objects to remove
-				RemoveRootObject(*obj);
-			}
-		};
-
-		// C: Delete A + B
-		// for each pointer in the vector of objects to remove...
-		for (GameObject* obj : rootObjectsToRemove) {
-			// create an iterator which will find the pointer to remove in the rootObjects vector
-			vector<GameObject*>::iterator itr_02 = find(rootObjects.begin(), rootObjects.end(), obj);
-		
-			// save the position between index 0 and the found pointer
-			int index = distance(rootObjects.begin(), itr_02);
-
-			// erase the found pointer from the vector
-			rootObjects.erase(rootObjects.begin() + index);
+	for (GameObject* obj : rootObjects) {
+		if (
+			// if x axis is off the width, or...
+			(obj->GlobalTransform().m02 < 0 || obj->GlobalTransform().m02 > windowWidth) ||
+			// if y axis is off the height...
+			(obj->GlobalTransform().m12 < 0 || obj->GlobalTransform().m12 > windowHeight))
+		{
+			// Add the object to the list of objects to remove
+			RemoveRootObject(*obj);
 		}
+	};
 
-		// clear the remove-pending objects vector
-		rootObjectsToRemove.clear();
+	// C: Delete A + B
+	// for each pointer in the vector of objects to remove...
+	for (GameObject* obj : rootObjectsToRemove) {
+		// create an iterator which will find the pointer to remove in the rootObjects vector
+		vector<GameObject*>::iterator itr_02 = find(rootObjects.begin(), rootObjects.end(), obj);
+
+		// save the position between index 0 and the found pointer
+		int index = distance(rootObjects.begin(), itr_02);
+
+		// erase the found pointer from the vector
+		rootObjects.erase(rootObjects.begin() + index);
+	}
+
+	// clear the remove-pending objects vector
+	rootObjectsToRemove.clear();
+}
+
+
+// 1.2.2: Update the arithmetic underlying movement and drawing
+void Game::UpdateCalculations()
+{
+	// Update the calculations for all root objects (and thus their children)
+	for (GameObject* obj : rootObjects) {
+		// Call the Update function that is defined in the GameObject class
+		obj->Update(gameTimer->DeltaTime() * gameTimer->GetTimeScale(), *cntrlr);
+	}
+}
+
+
+// 1.2.3: Draw the game scene
+void Game::Draw()
+{
+	BeginDrawing();
+
+	ClearBackground(RAYWHITE);
+
+	// 1.2.3.1 Print the player score to the screen
+	PrintPlayerScore();
+	// 1.2.3.2 Print the player's lives to the screen
+	PrintPlayerLives();
+
+	// 1.2.3.3: Draw all root objects (and thus their children)
+	for (GameObject* obj : rootObjects) {
+		// Call the Draw function that is defined in the GameObject class
+		obj->Draw();
+	}
+
+	EndDrawing();
 }
 
 // Functions to facilitate the update of relationships
@@ -297,36 +330,7 @@ void Game::RemoveBaseObject(Base& base) {
 
 
 
-// 1.2.2: Update the arithmetic underlying movement and drawing
-void Game::UpdateCalculations() 
-{
-	// Update the calculations for all root objects (and thus their children)
-	for (GameObject* obj : rootObjects) {
-		// Call the Update function that is defined in the GameObject class
-		obj->Update(gameTimer->DeltaTime() * gameTimer->GetTimeScale(), *cntrlr);
-	}
-}
 
-// 1.2.3: Draw the game scene
-void Game::Draw() 
-{
-	BeginDrawing();
-
-	ClearBackground(RAYWHITE);
-
-	// 1.2.3.1 Print the player score to the screen
-	PrintPlayerScore();
-	// 1.2.3.2 Print the player's lives to the screen
-	PrintPlayerLives();
-
-	// 1.2.3.3: Draw all root objects (and thus their children)
-	for (GameObject* obj : rootObjects) {
-		// Call the Draw function that is defined in the GameObject class
-		obj->Draw();
-	}
-
-	EndDrawing();
-}
 
 void Game::PrintPlayerScore() {
 	string playerScoreString = to_string(init->playerObjectPtr->score);

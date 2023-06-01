@@ -9,6 +9,21 @@ Player::Player() {
 	std::cout << "---Empty Player constructor---" << endl;
 };
 
+// overloaded constructor
+Player::Player(int _lives, bool _hasWeapon, int _score, GameObject::weaponType startingWeapon)
+{
+	std::cout << "---Overloaded Player constructor---" << endl;
+	moveAcceleration = 550;
+	moveDrag = -800;
+	maxSpeed = 500;
+	moveSpeed = 0;
+	lives = _lives;
+	hasWeapon = _hasWeapon;
+	score = _score;
+	this->SetWeapon(startingWeapon); // Laser by default
+	objType = Player_Type;
+}
+
 
 // default destructor
 Player::~Player() {}
@@ -28,19 +43,3 @@ void Player::OnUpdate(float deltaTime, Controller& ctrlr){
 		ctrlr.weaponReloaded = true;
 	}
 };
-
-
-// overloaded constructor
-Player::Player(int _lives, bool _hasWeapon, int _score, GameObject::weaponType startingWeapon)
-{
-	std::cout << "---Overloaded Player constructor---" << endl;
-	moveAcceleration = 550;
-	moveDrag = -800;
-	maxSpeed = 500;
-	moveSpeed = 0;
-	lives = _lives;	
-	hasWeapon = _hasWeapon;
-	score = _score;
-	this->SetWeapon(startingWeapon); // Laser by default
-	objType = Player_Type;
-}

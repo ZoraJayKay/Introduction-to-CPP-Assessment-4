@@ -6,6 +6,7 @@
 #include "Enemy.h"
 #include "SpriteObject.h"
 #include "Base.h"
+#include "AABB.h"
 
 using namespace std;
 
