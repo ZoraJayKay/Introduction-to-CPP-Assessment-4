@@ -112,7 +112,7 @@ void AABB::debugBox2D(Color c) { // draw debug box
 	DrawRectangle(
 		minVector3AABB->x, 						// x
 		minVector3AABB->y, 						// y
-		maxVector3AABB->x - minVector3AABB->y,	// width
+		maxVector3AABB->x - minVector3AABB->x,	// width
 		maxVector3AABB->y - minVector3AABB->y,	// height
 		c);										// colour
 }

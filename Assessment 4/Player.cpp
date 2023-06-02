@@ -3,6 +3,7 @@
 #include "Player.h"
 #include <iostream>
 #include "Controller.h"
+#include "AABB.h"
 
 // default constructor
 Player::Player() {
@@ -22,6 +23,7 @@ Player::Player(int _lives, bool _hasWeapon, int _score, GameObject::weaponType s
 	score = _score;
 	this->SetWeapon(startingWeapon); // Laser by default
 	objType = Player_Type;
+	colliderPtr->ownerObject = this;
 }
 
 

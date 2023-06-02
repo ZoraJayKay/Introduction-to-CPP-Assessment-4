@@ -48,7 +48,7 @@ Initialise::Initialise(int windowWidth, int windowHeight)
 				playerObjectPtr->AddChild(*playerSpritePtr);
 				//	1.3.1.6: Set the initial position for the playerObject (and thus child as well)
 				playerObjectPtr->SetPosition(windowWidth / 2, windowHeight * 0.8f);
-
+				AABBsToInitialise.push_back(playerSpritePtr->colliderPtr);
 
 			// 1.3.2	*** |||	ENEMIES ||| ***
 				//		***		ENEMY OBJECT	***
@@ -69,6 +69,7 @@ Initialise::Initialise(int windowWidth, int windowHeight)
 				enemyPtr->SetPosition(windowWidth / 2.0f, windowHeight * 0.05f);
 				//	1.3.2.6: Add the new enemy to the list of enemies to initialise
 				enemiesToInitialise.push_back(enemyPtr);
+				AABBsToInitialise.push_back(enemySpritePtr->colliderPtr);
 
 			// 1.3.3	*** |||	BASES ||| ***
 				//		***		BASE OBJECT	***

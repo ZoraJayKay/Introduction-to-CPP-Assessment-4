@@ -19,7 +19,7 @@ public:
 
 	// file paths for new attacks to load textures
 	const char* playerLaserAttackFileName = "x64/Images/laserBlue07.png";
-	const char* enemyLaserAttackFileName = "x64/Images/laserRed07.png";
+	const char* enemyLaserAttackFileName = "x64/Images/laserRed07rotated.png";
 	// other weapon 2 file name
 	// other weapon 3 file name
 

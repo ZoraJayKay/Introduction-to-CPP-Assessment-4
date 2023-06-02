@@ -8,6 +8,7 @@
 #include <iostream>
 #include "Vector3.h"
 #include "Controller.h"
+#include "AABB.h"
 
 // default constructor
 Enemy::Enemy() {};
@@ -30,6 +31,7 @@ Enemy::Enemy(int _moveSpeed, GameObject::weaponType startingWeapon)
 	shotTimer = 0;
 	advanceTracker = 0;
 	!reachedEarth;
+	colliderPtr->ownerObject = this;
 }
 
 // This OnUpdate() overrides the one in the GameObject class

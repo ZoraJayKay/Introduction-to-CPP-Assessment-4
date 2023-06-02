@@ -15,7 +15,7 @@ float targetFps = 60.0f;
 float elapsedTime = 0.0f;
 int frames = 0;
 
-// 0: Initialise a game session (default constructor)
+// 0: Initialise a game session (constructor)
 Game::Game() 
 {
 	std::cout << "---Game constructor---" << endl;
@@ -39,13 +39,13 @@ Game::Game()
 		// Initialise the audio device
 		InitAudioDevice();
 			
-		// Initialise a pointer to a new instance of the Initialise class.
-		// The Initialise class instance (init) will in turn set all of the parameters that constitute the starting conditions of the game.	
+		// Initialise a pointer to a new instance of the Initialise class. The Initialise class instance (init) will in turn set all of the parameters that constitute the starting conditions of the game.	
 		init = new Initialise(windowWidth, windowHeight);
 			// EXTRA WORK: SET DIFFICULTY LEVELS THROUGH OVERLOADED INIT
 				// Add number of enemies to instantiate
 				// Add number of bases to instantiate
-				// Add difficulty that sets the above etc?
+				// Set up functions that do the above instead of manually doing each one god damn
+				// Add difficulty level that sets all of the above etc?
 
 	// 0.2: Add the objects from initialisation to the scene as root, enemy and base objects
 		// 0.2.1: Add the player
@@ -66,6 +66,12 @@ Game::Game()
 				// ... and to their own vector of bases
 				AddBaseObject(*base);
 				}
+
+		// 0.2.4: Add the vector of AABBs from initialisation
+			for (AABB* aabb: init->AABBsToInitialise) {
+				// Add AABBs as collider objects of the scene.
+				AddAABBObject(*aabb);
+			}
 
 
 	// 0.3: Initialise a pointer to a new instance of the Controller class.
@@ -93,7 +99,7 @@ void Game::Update()
 		// Increment the frames (may or may not be using a frame counter - not currently)
 		frames++;
 
-	// 1.2: Update the game
+	// 1.2: Update the game (if unpaused)
 		if (elapsedTime >= gameTimer->DeltaTime()) {
 			// 1.2.1: Update the object hierarchy including adding and removing parent / child relationships
 			UpdateRelationships();
@@ -105,7 +111,7 @@ void Game::Update()
 			Draw();
 		}
 
-	// 1.3: Pause and unpause the game if the 'p' key is pressed
+	// 1.3: Pause and unpause the game
 		if (IsKeyPressed(KEY_P)) {
 			if (isPaused == false) {
 				gameTimer->TimeScale(0.0f);
@@ -155,6 +161,16 @@ void Game::UpdateRelationships()
 	// clear the add-pending objects vector
 	basesToAdd.clear();
 
+	//***	ADDING AABB OBJECTS		***
+		// for each pointer in the vector of AABBs to add...
+	for (AABB* aabb : AABBsToAdd) {
+		// add the pointer to the object to the back of the vector of AABB objects
+		AABBs.push_back(aabb);
+	}
+
+	// clear the add-pending objects vector
+	AABBsToAdd.clear();
+
 
 	//***	REMOVING ENEMY OBJECTS		***		
 		// BEFORE deleting the root object, remove enemies from the list of enemies
@@ -190,40 +206,199 @@ void Game::UpdateRelationships()
 	// clear the remove-pending objects vector
 	basesToRemove.clear();
 
-
-	//***	REMOVING ROOT OBJECTS		***		
-		// A: Add any objects destroyed by projectiles to the list to delete
-
-		// B: Add any objects that have left the play area to the list to delete
-		// for each pointer in the vector of objects to remove...
-	for (GameObject* obj : rootObjects) {
-		if (
-			// if x axis is off the width, or...
-			(obj->GlobalTransform().m02 < 0 || obj->GlobalTransform().m02 > windowWidth) ||
-			// if y axis is off the height...
-			(obj->GlobalTransform().m12 < 0 || obj->GlobalTransform().m12 > windowHeight))
-		{
-			// Add the object to the list of objects to remove
-			RemoveRootObject(*obj);
-		}
-	};
-
-	// C: Delete A + B
-	// for each pointer in the vector of objects to remove...
-	for (GameObject* obj : rootObjectsToRemove) {
-		// create an iterator which will find the pointer to remove in the rootObjects vector
-		vector<GameObject*>::iterator itr_02 = find(rootObjects.begin(), rootObjects.end(), obj);
+	//***	REMOVING AABB OBJECTS		***		
+		// BEFORE deleting the root object, remove AABBs from the list of AABBs
+		// for each pointer in the vector of AABBs to remove...
+	for (AABB* aabb : AABBsToRemove) {
+		// create an iterator which will find the pointer to remove in the enemies vector
+		vector<AABB*>::iterator itr_01 = find(AABBs.begin(), AABBs.end(), aabb);
 
 		// save the position between index 0 and the found pointer
-		int index = distance(rootObjects.begin(), itr_02);
+		int index = distance(AABBs.begin(), itr_01);
 
 		// erase the found pointer from the vector
-		rootObjects.erase(rootObjects.begin() + index);
+		AABBs.erase(AABBs.begin() + index);
 	}
 
 	// clear the remove-pending objects vector
-	rootObjectsToRemove.clear();
-}
+	AABBsToRemove.clear();
+
+
+
+	//***	REMOVING ROOT OBJECTS		***		
+		// A: Add any objects which collide with other AABBs to the list to delete
+	for (AABB* attack : AABBs) {
+		//	PLAYER PROJECTILE COLLISION DETECTION
+		if (attack->ownerObject->objType == GameObject::Friendly_Projectile_Type) {
+			// Detect enemy ship objects
+			for (Enemy* enemy : enemies) {
+				if (attack->Overlaps(*enemy->colliderPtr)) {
+					enemy->colliderPtr->debugBox2D(GREEN);
+					//RemoveRootObject(*attack->ownerObject);
+					//RemoveRootObject(*enemy->colliderPtr->ownerObject);
+					//RemoveAABBObject(*attack);
+					//RemoveAABBObject(*enemy->colliderPtr);
+					//enemy->colliderPtr->debugBox2D(GREEN);
+					//return;
+				};
+			};
+
+			// Detect enemy projectiles in the AABB vector
+			for (AABB* enemyBullet : AABBs) {
+				if (enemyBullet->ownerObject->objType == GameObject::Enemy_Projectile_Type) {
+					if (attack->Overlaps(*enemyBullet)) {
+						RemoveRootObject(*attack->ownerObject);
+						RemoveRootObject(*enemyBullet->ownerObject);
+						RemoveAABBObject(*attack);
+						RemoveAABBObject(*enemyBullet);
+						return;
+					};
+				};
+			};
+
+			//for (Base* base : bases) {};
+		};
+
+		// ENEMY PROJECTILE COLLISION DETECTION
+		if (attack->ownerObject->objType == GameObject::Enemy_Projectile_Type) {
+			// Detect the player ship
+			if (attack->Overlaps(*init->playerObjectPtr->colliderPtr)) {
+				// Deduct a player life
+				init->playerObjectPtr->lives--;
+
+				// Destroy the projectile
+				RemoveRootObject(*attack->ownerObject);
+				RemoveAABBObject(*attack);
+				return;
+			}
+
+			// Detect player projectiles in the AABB vector
+			for (AABB* playerBullet : AABBs) {
+				if (playerBullet->ownerObject->objType == GameObject::Friendly_Projectile_Type) {
+					if (attack->Overlaps(*playerBullet)) {
+						RemoveRootObject(*attack->ownerObject);
+						RemoveRootObject(*playerBullet->ownerObject);
+						RemoveAABBObject(*attack);
+						RemoveAABBObject(*playerBullet);
+						return;
+					};
+				};
+			};
+		};
+	};
+
+
+
+
+
+		
+			// For every individual AABB in the whole group...
+			// Iterate through the whole group of AABBs...
+			// If the the individual != the iterator (ignore itself)...
+			// Check if the individual AABB overlaps the iterator
+			// If they overlap, add this AABB to the list to remove and its owning object to the list of root objects to remove
+			// If they don't overlap, increase the iterator
+			// Repeat
+			// Exit the loop aka move to the next individual AABB
+
+
+
+
+			//// For every game object...
+			//for (GameObject* obj : rootObjects) {
+			//	// Set the iterator at the start of the list of AABBs...
+			//	AABBiterator = *AABBs.begin();
+			//	// ... and iterate until reaching the end of the AABBs...
+			//	while (AABBiterator <= *AABBs.end()) {
+			//		// ... and for all of the AABBs other than itself...
+			//		if (AABBiterator != obj->colliderPtr) {
+			//			// ... if the two overlap...
+			//			if (obj->colliderPtr->Overlaps(*AABBiterator) == true) {
+			//				// ... remove this collider...
+			//				RemoveAABBObject(*obj->colliderPtr);
+
+			//				// ... remove this root object...
+			//				RemoveRootObject(*obj);
+			//				return;
+			//			};
+
+			//			// ... if they don't overlap...
+			//			if (obj->colliderPtr->Overlaps(*AABBiterator) == false) {
+			//				// Look at the next AABB
+			//				AABBiterator++;
+			//			};
+			//		};
+			//	};				
+			//};
+
+
+			//
+
+
+
+
+	//vector<AABB*>::iterator iterator = AABBs.begin();
+	//		// For every collider in the vector of colliders...
+	//		for (AABB* collider_01 : AABBs) {
+	//			// Create an iterator at the start of the list of AABBs...
+	//			/*vector<AABB*>::iterator iterator = AABBs.begin();*/
+	//			int index = distance(AABBs.begin(), iterator);
+
+	//			// If the AABB of the iterator equals the collider...
+	//			if (AABBs[index] == collider_01) {
+	//				// Ignore itself and move to the next AABB
+	//				iterator++;
+	//			}
+
+	//			// If the AABB of the iterator and collider differ...
+	//			if (AABBs[index] != collider_01) {
+
+	//				// Check if they overlap...
+	//				if (collider_01->Overlaps(*AABBs[index])) {
+	//					// remove both colliders and finish this iteration of the loop.
+	//					RemoveAABBObject(*collider_01);
+	//					RemoveAABBObject(*AABBs[index]);
+	//					//RemoveRootObject(*collider_01->ownerObject);
+	//					return;
+	//				};
+	//			};
+	//		};
+
+
+
+		// B: Add any objects that have left the play area to the list to delete
+			// for each pointer in the vector of objects to remove...
+			for (GameObject* obj : rootObjects) {
+				if (
+					// I removed x-axis destruction because the controller prevents ships moving off the x-axis; unnecessary calculation.
+					//// if x axis is off the width, or...
+					//(obj->GlobalTransform().m02 < 0 || obj->GlobalTransform().m02 > windowWidth) ||
+					// if y axis is off the height...
+					(obj->GlobalTransform().m12 < 0 || obj->GlobalTransform().m12 > windowHeight))
+				{					
+					// Add the object to the list of objects to remove
+					RemoveRootObject(*obj);
+					// Add the object's collider to the list of AABBs to remove
+					RemoveAABBObject(*obj->colliderPtr);
+				}
+			};
+
+		// C: Delete A + B
+			// for each pointer in the vector of objects to remove...
+			for (GameObject* obj : rootObjectsToRemove) {
+				// create an iterator which will find the pointer to remove in the rootObjects vector
+				vector<GameObject*>::iterator itr_02 = find(rootObjects.begin(), rootObjects.end(), obj);
+
+				// save the position between index 0 and the found pointer
+				int index = distance(rootObjects.begin(), itr_02);
+
+				// erase the found pointer from the vector
+				rootObjects.erase(rootObjects.begin() + index);
+			}
+
+			// clear the remove-pending objects vector
+			rootObjectsToRemove.clear();
+};
 
 
 // 1.2.2: Update the arithmetic underlying movement and drawing
@@ -234,51 +409,32 @@ void Game::UpdateCalculations()
 		// Call the Update function that is defined in the GameObject class
 		obj->Update(gameTimer->DeltaTime() * gameTimer->GetTimeScale(), *cntrlr);
 	}
-}
+};
 
 
-// 1.2.3: Draw the game scene
+// 1.2.4: Draw the game scene
 void Game::Draw()
 {
 	BeginDrawing();
 
 	ClearBackground(RAYWHITE);
 
-	// 1.2.3.1 Print the player score to the screen
-	PrintPlayerScore();
-	// 1.2.3.2 Print the player's lives to the screen
-	PrintPlayerLives();
-
-	// 1.2.3.3: Draw all root objects (and thus their children)
+	// 1.2.4.1: Draw all root objects (and thus their children)
 	for (GameObject* obj : rootObjects) {
 		// Call the Draw function that is defined in the GameObject class
 		obj->Draw();
 	}
 
+	// 1.2.4.2 Print the player score to the screen
+	PrintPlayerScore();
+	// 1.2.4.3 Print the player's lives to the screen
+	PrintPlayerLives();
+
 	EndDrawing();
-}
+};
 
-// Functions to facilitate the update of relationships
-// 1.2.1.0: Calculate collisions
-//void Game::CalculateCollisions(vector<GameObject*> rootObjs) {
-//	// For every root game object...
-//	for (GameObject* obj1 : rootObjs) {
-//		//  That is a projectile...
-//		if (obj1->Friendly_Projectile_Type || obj1->Enemy_Projectile_Type) {
-//			// Check the full list of objects and...
-//			for (GameObject* obj2 : rootObjs) {
-//				// if the projectile overlaps the other game object...
-//				if (obj1->Overlaps(*obj2)) {
-//					// Delete the projectile and the other game object (when figured out how)
-//					std::cout << "Collision" << std::endl;
-//				}
-//			}
-//		}
-//	}
-//};
 
-// 
-// 
+
 // 1.2.1.1: Add objects created since last update to the list of root objects
 void Game::AddRootObject(GameObject& obj) {
 	// Create a pointer of the object reference passed in 
@@ -327,6 +483,21 @@ void Game::RemoveBaseObject(Base& base) {
 	basesToRemove.push_back(basePtr);
 };
 
+// 1.2.1.6: Add collider objects created since last update to the list of collider objects
+void Game::AddAABBObject(AABB& aabb) {
+	// Create a pointer of the object reference passed in 
+	AABB* AABBPtr = &aabb;
+	// Add the new pointer to the object passed in to the vector
+	AABBsToAdd.push_back(AABBPtr);
+};
+
+// 1.2.1.7: Add collider objects targeted for removal since last update to a list
+void Game::RemoveAABBObject(AABB& aabb) {
+	// Create a pointer of the object reference passed in 
+	AABB* AABBPtr = &aabb;
+	// Add the new pointer to the object passed in to the vector
+	AABBsToRemove.push_back(AABBPtr);
+};
 
 
 
@@ -346,9 +517,11 @@ void Game::PrintPlayerLives() {
 	DrawText(lives, 20, 70, 20, RED);
 };
 
-
+// 9: Destructor
 Game::~Game()
 {
+	// The timer is destroyed by the Main function after the Game class is destroyed.
+
 	// Delete all of the vectors of enemy pointers
 	for (Enemy* enemy : enemiesToAdd) {
 		delete enemy;
@@ -381,6 +554,22 @@ Game::~Game()
 		base = nullptr;
 	}
 
+	// Delete all of the vectors of collider pointers
+	for (AABB* aabb : AABBsToAdd) {
+		delete aabb;
+		aabb = nullptr;
+	}
+
+	for (AABB* aabb : AABBsToRemove) {
+		delete aabb;
+		aabb = nullptr;
+	}
+
+	for (AABB* aabb : AABBs) {
+		delete aabb;
+		aabb = nullptr;
+	}
+
 	// Delete all of the vectors of game object pointers for the game actors
 	for (GameObject* obj : rootObjectsToAdd) {
 		delete obj;
@@ -409,13 +598,13 @@ Game::~Game()
 
 
 
-
-
 void Game::Debug() {
 	// Variables for tallying debug printouts
 	int playerCount = 0;
 	int enemyCount = 0;
 	int baseCount = 0;
+	int AABB_Count = 0;
+	int AABB_Friendly_Count = 0;
 	int enemyAttackCount = 0;
 	int friendlyAttackCount = 0;
 	int enemyVectorCount = 0;
@@ -453,6 +642,11 @@ void Game::Debug() {
 			baseVectorCount++;
 		}
 
+		// CONSOLE DEBUG: COUNT THE AABB OBJECTS IN THEIR OWN VECTOR
+		for (AABB* aabb : AABBs) {
+			AABB_Count++;
+		}
+
 		// CONSOLE DEBUG: COUNT THE ENEMY PROJECTILE OBJECTS
 		for (GameObject* obj : rootObjects) {
 			if (obj->objType == GameObject::Enemy_Projectile_Type) {
@@ -466,6 +660,14 @@ void Game::Debug() {
 				friendlyAttackCount++;
 			}
 		}
+
+		// CONSOLE DEBUG: COUNT THE FRIENDLY PROJECTILE OBJECTS IN AABBS
+		for (AABB* aabb : AABBs) {
+			if (aabb->ownerObject->objType == GameObject::Friendly_Projectile_Type) {
+				AABB_Friendly_Count++;
+			}
+		}
+
 
 	// DEBUG PRINTOUTS			
 		// Player printouts
@@ -526,30 +728,35 @@ void Game::Debug() {
 			const char* rootS = rootString.c_str();
 			DrawText(rootS, 20, 360, 20, RED);
 
-				
-	//std::cout << "Player weapon equipped: " << init->playerObjectPtr->GetWeapon() << std::endl;
-	//DebugCheckWeapon();
+		// Debug print the number of AABBs in their own vector
+			string AABBObjectsString = to_string(AABBs.size());
+			string AABBsString = "AABB list AABBs:	" + AABBObjectsString;
+			const char* numAABBs = AABBsString.c_str();
+			DrawText(numAABBs, 20, 390, 20, RED);
+
+		// Debug print the number of friendly fire AABBs in their own vector
+			string friendlyAABBObjectsString = to_string(AABB_Friendly_Count);
+			string friendlyAABBsString = "AABB listfriendly AABBs:	" + friendlyAABBObjectsString;
+			const char* friendlyNumAABBs = friendlyAABBsString.c_str();
+			DrawText(friendlyNumAABBs, 20, 420, 20, RED);
+
 }
 
 void Game::DebugCheckWeapon() {
 	switch (init->playerObjectPtr->GetWeapon()) {
-	case 0:	// Laser fire
-		// Load laser attack texture
-		//spritePtr->Load(laserAttackFileName);
-		// set spawn point to the end of the barrel of the weapon
-		//spritePtr->SetPosition(spritePtr->Height() * 2.5f, -spritePtr->Width() / 2);
+	case 0:	
 		std::cout << "Laser equipped" << std::endl;
 		break;
 
-	case 1:	// name of weapon
+	case 1:
 		std::cout << "Double laser equipped" << std::endl;
 		break;
 
-	case 2:	// name of weapon
+	case 2:
 		std::cout << "Weapon not equipped" << std::endl;
 		break;
 
-	case 3:	// name of weapon
+	case 3:
 		std::cout << "Weapon not equipped" << std::endl;
 		break;
 	}

@@ -57,6 +57,9 @@ public:
 	class SpriteObject* baseSpritePtr_03;
 	vector<Base*> basesToInitialise;
 
+	// AABBs
+	vector<AABB*> AABBsToInitialise;
+
 	// File path variables
 	const char* playerShipFileName;
 	const char* enemyShipFileName;

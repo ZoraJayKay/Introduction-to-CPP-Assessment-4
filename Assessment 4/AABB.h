@@ -12,6 +12,8 @@ public:
 	// Destructor
 	~AABB();
 
+	class GameObject* ownerObject;
+
 	// *** BOUNDING BOX VARIABLES ***
 	float positive = 1;
 	float negative = -1;

@@ -10,6 +10,7 @@ GameObject::GameObject()
 {
 	std::cout << "---GameObject constructor---" << endl;
 	colliderPtr = new AABB;
+	colliderPtr->ownerObject = this;
 };
 
 // member function for destructor
@@ -121,9 +122,11 @@ void GameObject::OnUpdate(float deltaTime) {};
 
 // Update for objects that need time and the controller
 void GameObject::Update(float deltaTime, Controller& ctrlr) {
-	UpdateColliderBoundaries();
-	// temporary debug
-	this->colliderPtr->debugBox2D(RED);
+	// Collision detection
+		UpdateColliderBoundaries();
+		// temporary debug
+		//this->colliderPtr->debugBox2D(RED);
+
 
 	OnUpdate(deltaTime, ctrlr);
 	for (GameObject* child : children) {
@@ -223,14 +226,14 @@ void GameObject::CopyTransform(GameObject& prnt) {
 		// Overwrite temporary vector3's for updating AABB outer boundaries each update
 		// AABB min:
 		MyVector3* tempV1 = new MyVector3(
-			(this->globalTransform->m02 - (colliderPtr->AABBtextureWidth / 2)),
-			(this->globalTransform->m12 - (colliderPtr->AABBtextureHeight / 2)),
+			(this->globalTransform->m02 /*- (colliderPtr->AABBtextureWidth / 2)*/),
+			(this->globalTransform->m12 /*- (colliderPtr->AABBtextureHeight / 2)*/),
 			0.0f);
 
 		// AABB max:
 		MyVector3* tempV2 = new MyVector3(
-			(this->globalTransform->m02 + (colliderPtr->AABBtextureWidth / 2)),
-			(this->globalTransform->m12 + (colliderPtr->AABBtextureHeight / 2)),
+			(this->globalTransform->m02 + (colliderPtr->AABBtextureWidth/* / 2)*/)),
+			(this->globalTransform->m12 + (colliderPtr->AABBtextureHeight/* / 2*/)),
 			0.0f);
 
 		// Update using AABB min and max

@@ -4,6 +4,7 @@
 #include "Vector3.h"
 #include <iostream>
 #include "Game.h"
+#include "AABB.h"
 
 // Default, unused constructor
 Weapon::Weapon() {};
@@ -13,6 +14,7 @@ Weapon::Weapon(GameObject::weaponType weaponEquipped, GameObject::objectType sho
 	std::cout << "---Weapon constructor---" << std::endl;
 	weaponSpeed = 0;
 	drag = 0;
+	colliderPtr->ownerObject = this;
 	
 	// Set whether or not the weapon was fired by the player or an enemy, eg Friendly_Projectile_Type or Enemy_Projectile_Type
 	this->objType = shooter;

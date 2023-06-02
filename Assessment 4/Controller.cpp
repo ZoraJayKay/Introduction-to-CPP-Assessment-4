@@ -148,6 +148,8 @@ void Controller::InstantiatePlayerAttack(GameObject& player, GameObject::weaponT
 	newAttack->CopyTransform(player);
 	// Make the new attack a root object of the game class instance
 	g->AddRootObject(*newAttack);
+	// Make the new attack an AABB object of the game class instance
+	g->AddAABBObject(*newAttack->colliderPtr);
 };
 
 
@@ -158,8 +160,6 @@ void Controller::InstantiateEnemyAttack(GameObject& enemy, GameObject::weaponTyp
 	PlaySound(newAttack->laser_02);
 	// Create the new attack a sprite and load it a texture
 	SpriteObject* weaponSpritePtr = new SpriteObject(newAttack->enemyLaserAttackFileName);
-	// Rotate the texture 180 degrees
-	weaponSpritePtr->SetRotate(PI);
 	// Set the start position of the attack in the centre of the attacker's width and in front of their ship
 	weaponSpritePtr->SetPosition(-weaponSpritePtr->Width() / 2, weaponSpritePtr->Height() * 4);
 	// Parent the attack object to its sprite object
@@ -168,4 +168,6 @@ void Controller::InstantiateEnemyAttack(GameObject& enemy, GameObject::weaponTyp
 	newAttack->CopyTransform(enemy);
 	// Make the new attack a root object of the game class instance
 	g->AddRootObject(*newAttack);
+	// Make the new attack an AABB object of the game class instance
+	g->AddAABBObject(*newAttack->colliderPtr);
 };

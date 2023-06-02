@@ -1,11 +1,6 @@
-﻿  AABB.cpp
-F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\AABB.cpp(116,21): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\AABB.cpp(115,21): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\AABB.cpp(114,17): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\AABB.cpp(113,17): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  Player.cpp
-F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\Player.cpp(25,2): warning C4150: deletion of pointer to incomplete type 'AABB'; no destructor called
-F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\GameObject.h(82,8): message : see declaration of 'AABB'
-  Generating Code...
-F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\AABB.cpp(67): warning C4172: returning address of local variable or temporary: corners
-  Assessment 4.vcxproj -> F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\x64\Debug\Assessment 4.exe
+﻿  Game.cpp
+D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(183,13): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(200,13): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(217,13): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(393,15): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+  Assessment 4.vcxproj -> D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\x64\Debug\Assessment 4.exe
