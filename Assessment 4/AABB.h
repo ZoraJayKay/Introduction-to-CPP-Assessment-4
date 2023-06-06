@@ -46,6 +46,8 @@ public:
 
 	bool Overlaps(AABB& otherObject);
 
+	bool Overlaps(GameObject& otherObject);
+
 	void debugBox2D(Color c);
 };
 

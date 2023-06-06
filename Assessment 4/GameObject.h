@@ -53,6 +53,8 @@ public:
 		enum objectType {
 			Default_Type,
 			Sprite_Type,
+			Friendly_Sprite_Type,
+			Enemy_Sprite_Type,
 			Player_Type,
 			Enemy_Type,
 			Friendly_Projectile_Type,

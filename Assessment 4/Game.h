@@ -95,6 +95,11 @@ public:
 		// 1.2: Update the game (if unpaused)
 			// 1.2.1: Update the object hierarchy including adding and removing parent / child relationships
 				void UpdateRelationships();
+				void UpdateObjectAdditions();
+				void UpdateObjectRemovals();
+				void UpdateBaseObjects();
+				void UpdateAABBObjects();
+
 				// 1.2.1.1: Add objects created since last update to the list of root objects
 				void AddRootObject(GameObject& obj);
 				// 1.2.1.2: Add objects targeted for removal since last update to a list

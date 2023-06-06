@@ -22,8 +22,8 @@ Player::Player(int _lives, bool _hasWeapon, int _score, GameObject::weaponType s
 	hasWeapon = _hasWeapon;
 	score = _score;
 	this->SetWeapon(startingWeapon); // Laser by default
-	objType = Player_Type;
 	colliderPtr->ownerObject = this;
+	this->objType = GameObject::Player_Type;
 }
 
 

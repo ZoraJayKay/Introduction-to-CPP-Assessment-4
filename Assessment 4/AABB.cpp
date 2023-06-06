@@ -3,6 +3,7 @@
 #include "raylib.h"
 
 #include "AABB.h"
+#include "GameObject.h"
 
 // Default constructor (should not be in use)
 AABB::AABB() {};
@@ -107,6 +108,16 @@ bool AABB::Overlaps(AABB& otherObject) {
 		this->minVector3AABB->x > otherObject.maxVector3AABB->x ||	// Is my left side NOT touching their right?
 		this->minVector3AABB->y > otherObject.maxVector3AABB->y);	// Is my bottom side NOT touching their top?
 };
+
+bool AABB::Overlaps(GameObject& otherObject) {
+	// Test for NOT being overlapped (faster)
+	return !(
+		this->maxVector3AABB->x < otherObject.colliderPtr->minVector3AABB->x ||	// Is my right side NOT touching their left side?
+		this->maxVector3AABB->y < otherObject.colliderPtr->minVector3AABB->y ||	// Is my top side NOT touching their bottom?
+		this->minVector3AABB->x > otherObject.colliderPtr->maxVector3AABB->x ||	// Is my left side NOT touching their right?
+		this->minVector3AABB->y > otherObject.colliderPtr->maxVector3AABB->y);	// Is my bottom side NOT touching their top?
+};
+
 
 void AABB::debugBox2D(Color c) { // draw debug box
 	DrawRectangle(

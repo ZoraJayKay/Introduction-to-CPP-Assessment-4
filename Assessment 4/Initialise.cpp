@@ -38,7 +38,7 @@ Initialise::Initialise(int windowWidth, int windowHeight)
 					// Weapon = laser
 
 				//	1.3.1.2: Set the pointer of the player to its instantiated object and load the sprite a texture
-				playerSpritePtr = new SpriteObject(playerShipFileName);
+				playerSpritePtr = new SpriteObject(playerShipFileName, playerSpritePtr->Friendly_Sprite_Type);
 				//	1.3.1.3: Set the pointer of the player's collider
 				//playerCollider = new AABB(/* min and max */);
 
@@ -48,6 +48,7 @@ Initialise::Initialise(int windowWidth, int windowHeight)
 				playerObjectPtr->AddChild(*playerSpritePtr);
 				//	1.3.1.6: Set the initial position for the playerObject (and thus child as well)
 				playerObjectPtr->SetPosition(windowWidth / 2, windowHeight * 0.8f);
+				//	1.3.1.7: Only initialise the AABB of the sprite 
 				AABBsToInitialise.push_back(playerSpritePtr->colliderPtr);
 
 			// 1.3.2	*** |||	ENEMIES ||| ***
@@ -57,7 +58,7 @@ Initialise::Initialise(int windowWidth, int windowHeight)
 					// Move speed = 250.
 					// Weapon = laser
 				//	1.3.2.2: Load the sprite a texture
-				enemySpritePtr = new SpriteObject(enemyShipFileName);
+				enemySpritePtr = new SpriteObject(enemyShipFileName, enemySpritePtr->Enemy_Sprite_Type);
 				//	1.3.2.3: Set the pointer of the enemy's collider
 				//enemyCollider = new AABB(/* min and max */);
 

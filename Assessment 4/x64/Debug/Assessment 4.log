@@ -1,6 +1,6 @@
 ﻿  Game.cpp
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(183,13): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(200,13): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(217,13): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(393,15): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
-  Assessment 4.vcxproj -> D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\x64\Debug\Assessment 4.exe
+F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(189,13): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(204,13): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(220,13): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(298,15): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+  Assessment 4.vcxproj -> F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\x64\Debug\Assessment 4.exe

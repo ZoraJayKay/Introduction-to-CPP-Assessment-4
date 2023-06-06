@@ -24,7 +24,6 @@ Enemy::~Enemy()
 Enemy::Enemy(int _moveSpeed, GameObject::weaponType startingWeapon)
 {		
 	std::cout << "---Enemy constructor---" << std::endl;
-	objType = Enemy_Type;
 	moveSpeed = _moveSpeed;
 	movingRight = true;
 	this->SetWeapon(startingWeapon); // Laser by default
@@ -32,6 +31,7 @@ Enemy::Enemy(int _moveSpeed, GameObject::weaponType startingWeapon)
 	advanceTracker = 0;
 	!reachedEarth;
 	colliderPtr->ownerObject = this;
+	this->objType = Enemy_Type;
 }
 
 // This OnUpdate() overrides the one in the GameObject class

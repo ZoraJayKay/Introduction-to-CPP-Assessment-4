@@ -14,7 +14,7 @@ public:
 		SpriteObject();
 
 		// Overloaded
-		SpriteObject(const char* fileName);
+		SpriteObject(const char* fileName, GameObject::objectType spriteType);
 
 		// default destructor function
 		~SpriteObject();

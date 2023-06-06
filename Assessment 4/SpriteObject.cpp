@@ -11,12 +11,13 @@
 
 //	*** CONSTRUCTOR AND DESTRUCTOR
 // default constructor function
+SpriteObject::SpriteObject() {};
 
-SpriteObject::SpriteObject(const char* fileName) {
+SpriteObject::SpriteObject(const char* fileName, GameObject::objectType spriteType) {
 	std::cout << "---SpriteObject constructor---" << endl;
 
 	// Set the type of game object as being a weapon
-	objType = Sprite_Type;
+	objType = spriteType;
 
 	Load(fileName);
 
