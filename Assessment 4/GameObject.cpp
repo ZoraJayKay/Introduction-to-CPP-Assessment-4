@@ -123,9 +123,9 @@ void GameObject::OnUpdate(float deltaTime) {};
 // Update for objects that need time and the controller
 void GameObject::Update(float deltaTime, Controller& ctrlr) {
 	// Collision detection
-		UpdateColliderBoundaries();
-		// temporary debug
-		//this->colliderPtr->debugBox2D(RED);
+	UpdateColliderBoundaries();
+	// temporary debug
+	this->colliderPtr->debugBox2D(RED);
 
 
 	OnUpdate(deltaTime, ctrlr);

@@ -83,9 +83,4 @@ void Weapon::OnUpdate(float deltaTime, Controller& ctrlr) {
 			// Shoot from the top of the screen to the bottom
 			this->Translate(facing.x, facing.y);
 		}
-
-	// *** --- COLLISION DETECTION --- ***
-		/*for (GameObject* collider : Game::rootObject) {
-			if ()
-		}*/
 };

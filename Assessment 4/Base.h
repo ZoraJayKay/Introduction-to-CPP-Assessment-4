@@ -19,6 +19,9 @@ public:
 
 	// Base array
 	int tiles[ROWS * COLS];
+	vector<AABB*> tileColliders;
+	vector<AABB*> tileCollidersToAdd;
+	vector<AABB*> tileCollidersToRemove;
 
 	// Array individual tile sizes
 	int tileWidth = 14;
@@ -35,5 +38,13 @@ public:
 	void OnDraw() override;
 
 	Color GetTileColour(int tileValue);
-};
 
+	//	*** COLLISION DETECTION	***
+	void AddAABBObject(AABB& baseCollider);
+	void RemoveAABBObject(AABB& baseCollider);
+
+	void OnUpdate(float deltaTime, Controller& ctrlr) override;
+	void UpdateColliderBoundaries() override;
+
+	void Debug();
+};

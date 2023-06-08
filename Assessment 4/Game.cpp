@@ -124,6 +124,7 @@ void Game::Update()
 		}
 }
 
+
 void Game::UpdateObjectAdditions() {
 //***	ADDING ROOT OBJECTS		***
 	// for each pointer in the vector of objects to add...
@@ -162,23 +163,8 @@ void Game::UpdateObjectAdditions() {
 	AABBsToAdd.clear();
 };
 
-void Game::UpdateObjectRemovals() {};
-
-
-void Game::UpdateBaseObjects() {};
-
-void Game::UpdateAABBObjects() {};
-
-
-// 1.2.1: Update the object hierarchy including adding and removing parent / child relationships
-void Game::UpdateRelationships()
-{
-	UpdateObjectAdditions();
-	UpdateObjectRemovals();
-	
-
-
-//***	REMOVING ENEMY OBJECTS		***		
+void Game::UpdateObjectRemovals() {
+	//***	REMOVING ENEMY OBJECTS		***		
 	// BEFORE deleting the root object, remove enemies from the list of enemies
 	// for each pointer in the vector of enemies to remove...
 	for (Enemy* enemy : enemiesToRemove) {
@@ -194,9 +180,9 @@ void Game::UpdateRelationships()
 	// clear the remove-pending objects vector
 	enemiesToRemove.clear();
 
-//***	REMOVING BASE OBJECTS		***		
-	// BEFORE deleting the root object, remove enemies from the list of enemies
-	// for each pointer in the vector of enemies to remove...
+	//***	REMOVING BASE OBJECTS		***		
+		// BEFORE deleting the root object, remove enemies from the list of enemies
+		// for each pointer in the vector of enemies to remove...
 	for (Base* base : basesToRemove) {
 		// create an iterator which will find the pointer to remove in the enemies vector
 		vector<Base*>::iterator itr_01 = find(bases.begin(), bases.end(), base);
@@ -209,9 +195,9 @@ void Game::UpdateRelationships()
 	// clear the remove-pending objects vector
 	basesToRemove.clear();
 
-//***	REMOVING AABB OBJECTS		***		
-	// BEFORE deleting the root object, remove AABBs from the list of AABBs
-	// for each pointer in the vector of AABBs to remove...
+	//***	REMOVING AABB OBJECTS		***		
+		// BEFORE deleting the root object, remove AABBs from the list of AABBs
+		// for each pointer in the vector of AABBs to remove...
 	for (AABB* aabb : AABBsToRemove) {
 		// create an iterator which will find the pointer to remove in the enemies vector
 		vector<AABB*>::iterator itr_01 = find(AABBs.begin(), AABBs.end(), aabb);
@@ -225,9 +211,9 @@ void Game::UpdateRelationships()
 	// clear the remove-pending objects vector
 	AABBsToRemove.clear();
 
-// ***	REMOVING ROOT OBJECTS		***		
-	// *** COLLISIONS ***
-	// For every collision box in the vector of collision boxes... 
+	// ***	REMOVING ROOT OBJECTS		***		
+		// *** COLLISIONS ***
+		// For every collision box in the vector of collision boxes... 
 	for (AABB* collider : AABBs) {
 		// ... if a given collider is a friendly projectile...
 		if (collider->ownerObject->objType == GameObject::Friendly_Projectile_Type) {
@@ -271,38 +257,46 @@ void Game::UpdateRelationships()
 		}
 	};
 
-		// B: Add any objects that have left the play area to the list to delete
-			// for each pointer in the vector of objects to remove...
-			for (GameObject* obj : rootObjects) {
-				if (
-					// I removed x-axis destruction because the controller prevents ships moving off the x-axis; unnecessary calculation.
-					//// if x axis is off the width, or...
-					//(obj->GlobalTransform().m02 < 0 || obj->GlobalTransform().m02 > windowWidth) ||
-					// if y axis is off the height...
-					(obj->GlobalTransform().m12 < 0 || obj->GlobalTransform().m12 > windowHeight))
-				{					
-					// Add the object to the list of objects to remove
-					RemoveRootObject(*obj);
-					// Add the object's collider to the list of AABBs to remove
-					RemoveAABBObject(*obj->colliderPtr);
-				}
-			};
+	// B: Add any objects that have left the play area to the list to delete
+		// for each pointer in the vector of objects to remove...
+	for (GameObject* obj : rootObjects) {
+		if (
+			// I removed x-axis destruction because the controller prevents ships moving off the x-axis; unnecessary calculation.
+			//// if x axis is off the width, or...
+			//(obj->GlobalTransform().m02 < 0 || obj->GlobalTransform().m02 > windowWidth) ||
+			// if y axis is off the height...
+			(obj->GlobalTransform().m12 < 0 || obj->GlobalTransform().m12 > windowHeight))
+		{
+			// Add the object to the list of objects to remove
+			RemoveRootObject(*obj);
+			// Add the object's collider to the list of AABBs to remove
+			RemoveAABBObject(*obj->colliderPtr);
+		}
+	};
 
-		// C: Delete A + B
-			// for each pointer in the vector of objects to remove...
-			for (GameObject* obj : rootObjectsToRemove) {
-				// create an iterator which will find the pointer to remove in the rootObjects vector
-				vector<GameObject*>::iterator itr_02 = find(rootObjects.begin(), rootObjects.end(), obj);
+	// C: Delete A + B
+		// for each pointer in the vector of objects to remove...
+	for (GameObject* obj : rootObjectsToRemove) {
+		// create an iterator which will find the pointer to remove in the rootObjects vector
+		vector<GameObject*>::iterator itr_02 = find(rootObjects.begin(), rootObjects.end(), obj);
 
-				// save the position between index 0 and the found pointer
-				int index = distance(rootObjects.begin(), itr_02);
+		// save the position between index 0 and the found pointer
+		int index = distance(rootObjects.begin(), itr_02);
 
-				// erase the found pointer from the vector
-				rootObjects.erase(rootObjects.begin() + index);
-			}
+		// erase the found pointer from the vector
+		rootObjects.erase(rootObjects.begin() + index);
+	}
 
-			// clear the remove-pending objects vector
-			rootObjectsToRemove.clear();
+	// clear the remove-pending objects vector
+	rootObjectsToRemove.clear();
+};
+
+
+// 1.2.1: Update the object hierarchy including adding and removing parent / child relationships
+void Game::UpdateRelationships()
+{
+	UpdateObjectAdditions();
+	UpdateObjectRemovals();
 };
 
 
@@ -337,7 +331,6 @@ void Game::Draw()
 
 	EndDrawing();
 };
-
 
 
 // 1.2.1.1: Add objects created since last update to the list of root objects
@@ -403,9 +396,6 @@ void Game::RemoveAABBObject(AABB& aabb) {
 	// Add the new pointer to the object passed in to the vector
 	AABBsToRemove.push_back(AABBPtr);
 };
-
-
-
 
 
 void Game::PrintPlayerScore() {

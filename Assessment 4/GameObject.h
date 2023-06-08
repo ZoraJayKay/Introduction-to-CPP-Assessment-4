@@ -161,5 +161,5 @@ public:
 
 	//	*** COLLISION DETECTION	***
 		// Update the boundaries of this game object
-		void UpdateColliderBoundaries();
+		virtual void UpdateColliderBoundaries();
 };
