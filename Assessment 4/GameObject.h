@@ -59,7 +59,8 @@ public:
 			Enemy_Type,
 			Friendly_Projectile_Type,
 			Enemy_Projectile_Type,
-			Base_Type
+			Base_Type,
+			Base_Block_Type
 		};
 
 		// The type of game object
@@ -112,6 +113,12 @@ public:
 
 		// A method to remove a child from this object
 		void RemoveChild(GameObject& child);
+
+		// A method to remove all children from this object
+		void RemoveChildren();
+
+		// A method to return the whole vector of children
+		vector<GameObject*> GetChildren();
 
 
 	// ***	UPDATE FUNCTIONS	***

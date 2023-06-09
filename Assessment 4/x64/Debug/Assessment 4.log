@@ -1,7 +1,6 @@
-﻿  Base.cpp
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Base.cpp(55,13): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Base.cpp(56,13): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Base.cpp(65,33): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Base.cpp(64,33): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Base.cpp(142,13): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+﻿  Game.cpp
+D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(198,13): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(215,13): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(233,13): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(354,13): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
   Assessment 4.vcxproj -> D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\x64\Debug\Assessment 4.exe

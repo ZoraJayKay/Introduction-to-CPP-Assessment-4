@@ -95,10 +95,27 @@ public:
 		// 1.2: Update the game (if unpaused)
 			// 1.2.1: Update the object hierarchy including adding and removing parent / child relationships
 				void UpdateRelationships();
-				void UpdateObjectAdditions();
-				void UpdateObjectRemovals();
-				void UpdateBaseObjects();
-				void UpdateAABBObjects();
+				// 1.2.1.1: Add objects to the hierarchy
+					void UpdateObjectAdditions();
+						// 1.2.1.1.1: Update root object additions
+						void UpdateRootObjectAdditions();
+						// 1.2.1.1.2: Update enemy object additions
+						void UpdateEnemyObjectAdditions();
+						// 1.2.1.1.3: Update base object additions
+						void UpdateBaseObjectAdditions();
+						// 1.2.1.1.4: Update AABB object additions
+						void UpdateAABBObjectAdditions();
+
+				// 1.2.1.2: Remove objects from the hierarchy
+					void UpdateObjectRemovals();
+						// 1.2.1.2.1 Update root object removals
+						void UpdateRootObjectRemovals();
+						// 1.2.1.2.2 Update enemy object removals
+						void UpdateEnemyObjectRemovals();
+						// 1.2.1.2.3 Update base object removals
+						void UpdateBaseObjectRemovals();
+						// 1.2.1.2.4 Update AABB object removals
+						void UpdateAABBObjectRemovals();
 
 				// 1.2.1.1: Add objects created since last update to the list of root objects
 				void AddRootObject(GameObject& obj);

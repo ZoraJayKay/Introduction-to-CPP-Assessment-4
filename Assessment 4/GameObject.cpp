@@ -108,7 +108,19 @@ void GameObject::AddChild(GameObject& child) {
 
 // A method to remove a child from this object
 void GameObject::RemoveChild(GameObject& child) {
-	// implement
+	// Implement
+};
+
+// A method to remove all children from this object
+void GameObject::RemoveChildren() {
+	for (GameObject* child : GetChildren()) {
+		delete child;
+		child = nullptr;
+	}
+};
+
+vector<GameObject*> GameObject::GetChildren() {
+	return this->children;
 };
 
 
@@ -127,8 +139,8 @@ void GameObject::Update(float deltaTime, Controller& ctrlr) {
 	// temporary debug
 	this->colliderPtr->debugBox2D(RED);
 
-
 	OnUpdate(deltaTime, ctrlr);
+
 	for (GameObject* child : children) {
 		child->Update(deltaTime, ctrlr);
 	}
@@ -222,7 +234,9 @@ void GameObject::CopyTransform(GameObject& prnt) {
 
 //	*** COLLISION DETECTION	***
 	// Update the collision detection boundaries of this game object
-	void GameObject::UpdateColliderBoundaries() {
+void GameObject::UpdateColliderBoundaries() {
+	if (colliderPtr->ownerObject->objType != Base_Type && 
+		colliderPtr->ownerObject->objType != Base_Block_Type) {
 		// Overwrite temporary vector3's for updating AABB outer boundaries each update
 		// AABB min:
 		MyVector3* tempV1 = new MyVector3(
@@ -239,3 +253,4 @@ void GameObject::CopyTransform(GameObject& prnt) {
 		// Update using AABB min and max
 		colliderPtr->UpdateBoxBoundries(*tempV1, *tempV2);
 	};
+}

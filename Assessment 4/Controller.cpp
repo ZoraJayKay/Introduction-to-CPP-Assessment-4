@@ -31,7 +31,6 @@ Controller::~Controller() {
 	g = nullptr;
 };
 
-
 // A function to conditionally move the player based on keystrokes
 void Controller::MoveSideways(GameObject& player, float deltaTime) {
 	// If the player presses D or the right arrow key...
@@ -133,7 +132,9 @@ void Controller::ShootRandomly(GameObject& enemy, GameObject::weaponType weaponE
 	}
 };
 
+// A function for firing player attacks
 void Controller::InstantiatePlayerAttack(GameObject& player, GameObject::weaponType weaponEquipped) {
+//	***	INSTANTIATION, RELATIONSHIPS AND POSITION ***
 	// Instantiate a new object of the type of weapon equipped and tag the weapon as a friendly shot
 	Weapon* newAttack = new Weapon(weaponEquipped, player.Friendly_Projectile_Type);
 	// Play a sound
@@ -148,12 +149,20 @@ void Controller::InstantiatePlayerAttack(GameObject& player, GameObject::weaponT
 	newAttack->CopyTransform(player);
 	// Make the new attack a root object of the game class instance
 	g->AddRootObject(*newAttack);
-	// Make the new attack's AABB an object of the game class instance
-	g->AddAABBObject(*newAttack->colliderPtr);
+
+	// *** COLLISION DETECTION SETUP ***
+		// Projectile AABB'S are owned by the Weapon class object, whereas ship AABB's are owned by the Sprite class object. I could switch this around but it seems like unnecessary fiddling now that it works this way. The Weapon class object is the root object for addition to, and removal from, the screen.
+
+	// 1: Make the new attack the owning object of the Sprite's collider 
+	weaponSpritePtr->colliderPtr->ownerObject = newAttack;
+
+	// 2: The Sprite pointer collider needs to be the one in the list of collision detectors because it has the texture variables which determine collider size. 
+	g->AddAABBObject(*weaponSpritePtr->colliderPtr);
 };
 
-
+// A function for firing enemy attacks
 void Controller::InstantiateEnemyAttack(GameObject& enemy, GameObject::weaponType weaponEquipped) {
+//	***	INSTANTIATION, RELATIONSHIPS AND POSITION ***
 	// Instantiate a new object of the type of weapon equipped and tag the weapon as an enemy shot
 	Weapon* newAttack = new Weapon(weaponEquipped, enemy.Enemy_Projectile_Type);
 	// Play a sound
@@ -168,8 +177,13 @@ void Controller::InstantiateEnemyAttack(GameObject& enemy, GameObject::weaponTyp
 	newAttack->CopyTransform(enemy);
 	// Make the new attack a root object of the game class instance
 	g->AddRootObject(*newAttack);
-	// Make the new attack's AABB an object of the game class instance
-	g->AddAABBObject(*newAttack->colliderPtr);
 
-	// WEAPON AABB'S HAVE THE WEAPON CLASS FOR THE OWNER, SHIPS HAVE THEIR SPRITE AS THE OWNER
+// *** COLLISION DETECTION SETUP ***
+	// Projectile AABB'S are owned by the Weapon class object, whereas ship AABB's are owned by the Sprite classobject. I could switch this around but it seems like unnecessary fiddling now that it works this way. The Weapo class object is the root object for addition to, and removal from, the screen.
+	
+	// 1: Make the new attack the owning object of the Sprite's collider 
+	weaponSpritePtr->colliderPtr->ownerObject = newAttack;
+
+	// 2: The Sprite pointer collider needs to be the one in the list of collision detectors because it has thetexture variables which determine collider size. 
+	g->AddAABBObject(*weaponSpritePtr->colliderPtr);
 };

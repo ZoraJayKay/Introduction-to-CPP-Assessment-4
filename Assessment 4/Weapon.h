@@ -22,6 +22,8 @@ public:
 	const char* enemyLaserAttackFileName = "x64/Images/laserRed07rotated.png";
 	// other weapon 2 file name
 	// other weapon 3 file name
+	// DEBUG WEAPON NAME
+	const char* debugFilePath = "x64/Images/spaceBuilding_009.png";
 
 	// Sound file paths
 	const char* laserSound_01FileName = "x64/Sounds/laserLarge_003.ogg";

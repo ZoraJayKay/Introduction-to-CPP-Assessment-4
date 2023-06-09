@@ -44,4 +44,10 @@ void Player::OnUpdate(float deltaTime, Controller& ctrlr){
 		ctrlr.shotTimer = 45;
 		ctrlr.weaponReloaded = true;
 	}
+
+	// Don't let lives regress to maximum value as a result of lives decrementing through collision detection (unsigned int will wrap-around to 4294967295)
+	// Max lives set at 5, but player shouldn't be able to accidentally die if they exceed 5 lives through a pick-up, as actual collectable lives will be set to 3
+	if (this->lives > 5) {
+		this->lives = 0;
+	}
 };

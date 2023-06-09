@@ -30,8 +30,7 @@ Game::Game()
 
 	isPaused = false;
 
-	// Initialise the window
-	// Print message in program banner at top of screen
+	// Initialise the window and print a message in the program banner at the top of the screen
 	// NOTE TO SELF: InitWindow needs to be done BEFORE loading any textures
 	InitWindow(windowWidth, windowHeight, "Zora Jane Kerr: Introduction to C++ (Assessment 4 - Retro Game) Space Invaders (AIE, 2023 [student year 1])");
 
@@ -48,8 +47,8 @@ Game::Game()
 				// Add difficulty level that sets all of the above etc?
 
 	// 0.2: Add the objects from initialisation to the scene as root, enemy and base objects
-		// 0.2.1: Add the player
-		AddRootObject(*(init->playerObjectPtr));
+		// 0.2.1: Add the player object
+			AddRootObject(*(init->playerObjectPtr));
 
 		// 0.2.2: Add the vector of enemies from initialisation
 			for (Enemy* enemy : init->enemiesToInitialise) {
@@ -61,9 +60,16 @@ Game::Game()
 
 		// 0.2.3: Add the vector of bases from initialisation
 			for (Base* base : init->basesToInitialise) {
-				// Add bases as root objects of the scene...	
+				// ^^ For each base in the initialisation bases vector, get the full list of child GameObjects (the individual blocks that make up the base)
+				for (GameObject* block : (base->GetChildren())) {
+					// ... and make each block a root object
+					AddRootObject(*block);
+					// ... and make the AABB of each block a collider object of the scene.
+					AddAABBObject(*block->colliderPtr);
+				}
+				// Add the base object as a root object of the scene...	
 				AddRootObject(*base);
-				// ... and to their own vector of bases
+				// ... and to the vector of bases
 				AddBaseObject(*base);
 				}
 
@@ -124,9 +130,8 @@ void Game::Update()
 		}
 }
 
-
-void Game::UpdateObjectAdditions() {
-//***	ADDING ROOT OBJECTS		***
+void Game::UpdateRootObjectAdditions() {
+	//***	ADDING ROOT OBJECTS		***
 	// for each pointer in the vector of objects to add...
 	for (GameObject* obj : rootObjectsToAdd) {
 		// add the pointer to the object to the back of the vector of root objects
@@ -134,8 +139,10 @@ void Game::UpdateObjectAdditions() {
 	}
 	// clear the add-pending objects vector
 	rootObjectsToAdd.clear();
+};
 
-//***	ADDING ENEMY OBJECTS		***
+void Game::UpdateEnemyObjectAdditions() {
+	//***	ADDING ENEMY OBJECTS		***
 	// for each pointer in the vector of enemies to add...
 	for (Enemy* enemy : enemiesToAdd) {
 		// add the pointer to the object to the back of the vector of enemy objects
@@ -143,8 +150,10 @@ void Game::UpdateObjectAdditions() {
 	}
 	// clear the add-pending objects vector
 	enemiesToAdd.clear();
+};
 
-//***	ADDING BASE OBJECTS		***
+void Game::UpdateBaseObjectAdditions() {
+	//***	ADDING BASE OBJECTS		***
 	// for each pointer in the vector of bases to add...
 	for (Base* base : basesToAdd) {
 		// add the pointer to the object to the back of the vector of enemy objects
@@ -152,8 +161,10 @@ void Game::UpdateObjectAdditions() {
 	}
 	// clear the add-pending objects vector
 	basesToAdd.clear();
+};
 
-//***	ADDING AABB OBJECTS		***
+void Game::UpdateAABBObjectAdditions() {
+	//***	ADDING AABB OBJECTS		***
 	// for each pointer in the vector of AABBs to add...
 	for (AABB* aabb : AABBsToAdd) {
 		// add the pointer to the object to the back of the vector of AABB objects
@@ -163,7 +174,19 @@ void Game::UpdateObjectAdditions() {
 	AABBsToAdd.clear();
 };
 
-void Game::UpdateObjectRemovals() {
+// 1.2.1.1: Add objects to the hierarchy
+void Game::UpdateObjectAdditions() {
+	// 1.2.1.1.1: Update root object additions
+	UpdateRootObjectAdditions();
+	// 1.2.1.1.2: Update enemy object additions
+	UpdateEnemyObjectAdditions();
+	// 1.2.1.1.3: Update base object additions
+	UpdateBaseObjectAdditions();
+	// 1.2.1.1.4: Update AABB object additions
+	UpdateAABBObjectAdditions();
+};
+
+void Game::UpdateEnemyObjectRemovals() {
 	//***	REMOVING ENEMY OBJECTS		***		
 	// BEFORE deleting the root object, remove enemies from the list of enemies
 	// for each pointer in the vector of enemies to remove...
@@ -179,7 +202,9 @@ void Game::UpdateObjectRemovals() {
 	}
 	// clear the remove-pending objects vector
 	enemiesToRemove.clear();
+};
 
+void Game::UpdateBaseObjectRemovals() {
 	//***	REMOVING BASE OBJECTS		***		
 		// BEFORE deleting the root object, remove enemies from the list of enemies
 		// for each pointer in the vector of enemies to remove...
@@ -194,7 +219,9 @@ void Game::UpdateObjectRemovals() {
 	}
 	// clear the remove-pending objects vector
 	basesToRemove.clear();
+};
 
+void Game::UpdateAABBObjectRemovals() {
 	//***	REMOVING AABB OBJECTS		***		
 		// BEFORE deleting the root object, remove AABBs from the list of AABBs
 		// for each pointer in the vector of AABBs to remove...
@@ -210,75 +237,120 @@ void Game::UpdateObjectRemovals() {
 	}
 	// clear the remove-pending objects vector
 	AABBsToRemove.clear();
+};
 
-	// ***	REMOVING ROOT OBJECTS		***		
-		// *** COLLISIONS ***
+void Game::UpdateRootObjectRemovals() {
+
+};
+
+// 1.2.1.2: Remove objects from the hierarchy
+void Game::UpdateObjectRemovals() {
+	// 1.2.1.2.1 Update root object removals
+	UpdateEnemyObjectRemovals();
+	// 1.2.1.2.2 Update enemy object removals
+	UpdateBaseObjectRemovals();	
+	// 1.2.1.2.3 Update base object removals
+	UpdateAABBObjectRemovals();
+	// 1.2.1.2.4 Update AABB object removals
+	//UpdateRootObjectRemovals();
+	
+
+// ***	REMOVING ROOT OBJECTS		***		
+	// *** A: REMOVALS RESULTING FROM AABB COLLISIONS ***
+		// *** ORIGINATING FROM PROJECTILES ***
 		// For every collision box in the vector of collision boxes... 
-	for (AABB* collider : AABBs) {
-		// ... if a given collider is a friendly projectile...
-		if (collider->ownerObject->objType == GameObject::Friendly_Projectile_Type) {
-			// ... then check through the vector of collision boxes...
-			for (AABB* ship : AABBs) {
-				// ... and if a sprite collision box is found (ship AABBs have the ship sprite as their owner)
-				if (ship->ownerObject->objType == GameObject::Enemy_Sprite_Type) {
-					// ... and if the projectile collider overlaps the ship's sprite collider...
-					if (collider->Overlaps(*ship)) {
-						// 1: Delete the AABB of the friendly projectile
-						RemoveAABBObject(*collider);
-						// 2: Delete the AABB of the enemy ship
-						RemoveAABBObject(*ship);
-						// 3: Delete the friendly projectile Weapon class object
-						RemoveRootObject(*collider->ownerObject);
-						// 4: Delete the parent Game Object of the enemy ship sprite
-						RemoveRootObject(ship->ownerObject->GetParent());
-						// Haven't currently implemented removal from Enemy vector; uncertain if I really need it as a collection
-					}
+		for (AABB* collider : AABBs) {
+			// ... check through the vector of collision boxes...
+			for (AABB* enemy : AABBs) {
+				
+				// *** COLLISIONS ORIGINATING FROM FRIENDLY ATTACKS ***
+				if (collider->ownerObject->objType ==GameObject::Friendly_Projectile_Type) {
+					//	---	COLLIDING WITH ENEMY SHIPS ---
+					// ... and if a sprite collision box is found
+					if (enemy->ownerObject->objType ==GameObject::Enemy_Sprite_Type) {
+						// ... and if the projectile collider overlaps theship's sprite collider...
+						if (collider->Overlaps(*enemy)) {
+							std::cout << "projectile-ship collision" <<std::endl;
+							// 1: Delete the AABB of the friendly projectile
+							RemoveAABBObject(*collider);
+							// 2: Delete the AABB of the enemy ship
+							RemoveAABBObject(*enemy);
+							// 3: Delete the friendly projectile Weaponclass object
+							RemoveRootObject(*collider->ownerObject);
+							// 4: Delete the parent Game Object of the enem ship sprite
+							RemoveRootObject(enemy->ownerObject->GetParent());
+							// Haven't currently implemented removal fromEnemy vector; uncertain if I really need it as a collectionof objects
+						}
+					};
+
+					//	---	COLLIDING WITH ENEMY PROJECTILES ---
+					if (enemy->ownerObject->objType ==GameObject::Enemy_Projectile_Type) {
+						// ... and if the projectile collider overlaps theenemy projectile collider...
+						if (collider->Overlaps(*enemy)) {
+							std::cout << "projectile-projectile collision"<< std::endl;
+							// 1: Delete the AABB of the friendly projectile
+							RemoveAABBObject(*collider);
+							// 2: Delete the AABB of the enemy projectile
+							RemoveAABBObject(*enemy);
+							// 3: Delete the friendly projectile Weaponclass object
+							RemoveRootObject(*collider->ownerObject);
+							// 4: Delete the enemy projectile Weapon classobject
+							RemoveRootObject(*enemy->ownerObject);
+						};
+					};
+
+					//	---	COLLIDING WITH BASES ---
+					// implement
+				};
+
+				// *** COLLISIONS ORIGINATING FROM ENEMY ATTACKS ***
+				if (collider->ownerObject->objType ==GameObject::Enemy_Projectile_Type) {
+					//	---	COLLIDING WITH THE PLAYER SHIP ---
+					// ... and if a sprite collision box is found
+					if (enemy->ownerObject->objType ==GameObject::Friendly_Sprite_Type) {
+						// ... and if the projectile collider overlaps theship's sprite collider...
+						if (collider->Overlaps(*enemy)) {
+							// 1: Decrement player lives
+							init->playerObjectPtr->lives--;
+							// 2: Delete the AABB of the enemy projectile
+							RemoveAABBObject(*collider);
+							// 3: Delete the enemy projectile Weapon classobject
+							RemoveRootObject(*collider->ownerObject);
+							// *** Player destruction is handled in the Gam class
+						};
+					};
+
+					//	---	COLLIDING WITH BASES ---
+					// implement
 				};
 			};
 		};
 
-		// ... if a given collider is an enemy projectile...
-		if (collider->ownerObject->objType == GameObject::Enemy_Projectile_Type) {
-			// ... then check through the vector of collision boxes...
-			for (AABB* ship : AABBs) {
-				// ... and if a friendly sprite collision box is found (ship AABBs have the ship sprite as their owner)
-				if (ship->ownerObject->objType == GameObject::Friendly_Sprite_Type) {
-					// ... and if the projectile collider overlaps the ship's sprite collider...
-					if (collider->Overlaps(*ship)) {
-						// 1: Decrement player lives
-						init->playerObjectPtr->lives--;
-						// 2: Delete the AABB of the enemy projectile
-						RemoveAABBObject(*collider);
-						// 3: Delete the enemy projectile Weapon class object
-						RemoveRootObject(*collider->ownerObject);
-					};
-				};
-			};
-		}
-	};
-
-	// B: Add any objects that have left the play area to the list to delete
-		// for each pointer in the vector of objects to remove...
-	for (GameObject* obj : rootObjects) {
+	// *** B: REMOVALS RESULTING FROM LEAVING THE PLAY AREA		***
+	// for each pointer in the vector of objects to remove...
+	
+		// **** FIX FIX FIX ****
+		for (GameObject* obj : rootObjects) {
 		if (
-			// I removed x-axis destruction because the controller prevents ships moving off the x-axis; unnecessary calculation.
+			// I removed x-axis destruction because the controller preventsships moving off the x-axis; unnecessary calculation.
 			//// if x axis is off the width, or...
-			//(obj->GlobalTransform().m02 < 0 || obj->GlobalTransform().m02 > windowWidth) ||
+			//(obj->GlobalTransform().m02 < 0 || obj->GlobalTransform().m02 >windowWidth) ||
 			// if y axis is off the height...
-			(obj->GlobalTransform().m12 < 0 || obj->GlobalTransform().m12 > windowHeight))
-		{
-			// Add the object to the list of objects to remove
-			RemoveRootObject(*obj);
+			(obj->GlobalTransform().m12 < 0 || obj->GlobalTransform().m12 >windowHeight))
+		{			
 			// Add the object's collider to the list of AABBs to remove
 			RemoveAABBObject(*obj->colliderPtr);
+		
+			// Add the object to the list of objects to remove
+			RemoveRootObject(*obj);
 		}
 	};
 
-	// C: Delete A + B
-		// for each pointer in the vector of objects to remove...
+	// *** C: REMOVALS (A - PROJECTILE COLLISIONS) + (B - LEAVING PLAY AREA)
+	// for each pointer in the vector of objects to remove...
 	for (GameObject* obj : rootObjectsToRemove) {
-		// create an iterator which will find the pointer to remove in the rootObjects vector
-		vector<GameObject*>::iterator itr_02 = find(rootObjects.begin(), rootObjects.end(), obj);
+		// create an iterator which will find the pointer to remove in therootObjects vector
+		vector<GameObject*>::iterator itr_02 = find(rootObjects.begin(),rootObjects.end(), obj);
 
 		// save the position between index 0 and the found pointer
 		int index = distance(rootObjects.begin(), itr_02);
@@ -295,6 +367,7 @@ void Game::UpdateObjectRemovals() {
 // 1.2.1: Update the object hierarchy including adding and removing parent / child relationships
 void Game::UpdateRelationships()
 {
+	// 1.2.1.1: 
 	UpdateObjectAdditions();
 	UpdateObjectRemovals();
 };
@@ -495,11 +568,26 @@ Game::~Game()
 
 void Game::Debug() {
 	// Variables for tallying debug printouts
+	// CONSOLE DEBUG: COUNT THE PLAYER OBJECTS
 	int playerCount = 0;
+
+	// CONSOLE DEBUG: COUNT THE ENEMY OBJECTS IN ROOT OBJECTS
 	int enemyCount = 0;
+	// CONSOLE DEBUG: COUNT THE ENEMY OBJECTS IN THEIR OWN VECTOR
+	int enemyVectorCount = 0;
+
+	// CONSOLE DEBUG: COUNT THE BASE OBJECTS IN ROOT OBJECTS
 	int baseCount = 0;
+	// CONSOLE DEBUG: COUNT THE BASE OBJECTS IN THEIR OWN VECTOR
+	int baseVectorCount = 0;
 
 	int AABB_Count = 0;
+
+	int enemyAttackCount = 0;
+	int friendlyAttackCount = 0;
+
+
+	
 	int AABB_Friendly_Count = 0;
 	int AABB_Enemy_Count = 0;
 	int AABB_EnemyShip_Count = 0;
@@ -508,12 +596,12 @@ void Game::Debug() {
 	int AABB_GameObject_Count = 0;
 	int AABB_Default_Count = 0;
 
-	int enemyAttackCount = 0;
-	int friendlyAttackCount = 0;
-	int enemyVectorCount = 0;
-	int baseVectorCount = 0;
+	
+	int weaponSpriteParent = 0;
+	int weaponProjectileParent = 0;
+	int weaponDefaultParent = 0;
 
-	// For statements to tall debug printouts
+	// For statements to all debug printouts
 		// CONSOLE DEBUG: COUNT THE PLAYER OBJECTS
 		for (GameObject* obj : rootObjects) {
 			if (obj->objType == GameObject::Player_Type) {
@@ -613,32 +701,65 @@ void Game::Debug() {
 			}
 		}
 
+		//// CONSOLE DEBUG: PRINT THE NUMBER OF AABB'S WHOSE WEAPON OWNER OBJECT HAS A PARENT THAT IS A PROJECTILE
+		//for (AABB* aabb : AABBs) {
+		//	if (aabb->ownerObject->objType == GameObject::Friendly_Projectile_Type) {
+		//		if (aabb->ownerObject->GetParent().objType == GameObject::Friendly_Projectile_Type) {
+		//			weaponProjectileParent++;
+		//		}					
+		//	}
+		//}
+
+		//// CONSOLE DEBUG: PRINT THE NUMBER OF AABB'S WHOSE WEAPON OWNER OBJECT HAS A PARENT THAT IS A SPRITE
+		//for (AABB* aabb : AABBs) {
+		//	if (aabb->ownerObject->objType == GameObject::Friendly_Projectile_Type) {
+		//		if (aabb->ownerObject->GetParent().objType == GameObject::Friendly_Sprite_Type) {
+		//			weaponSpriteParent++;
+		//		}
+		//	}
+		//}
+
+
+
 
 	// DEBUG PRINTOUTS			
+		// Weapon printouts
+			// Debug print the number of weapons whose owner obect is a sprite
+			string weaponString1 = to_string(weaponProjectileParent);
+			string weaponString_01 = "Player object x:	" + weaponString1;
+			const char* weaponString_0101 = weaponString_01.c_str();
+			DrawText(weaponString_0101, 20, 130, 20, RED);
+
+			// Debug print the number of weapons whose owner obect is a sprite
+			string weaponString2 = to_string(weaponSpriteParent);
+			string weaponString_02 = "Player object x:	" + weaponString2;
+			const char* weaponString_0102 = weaponString_01.c_str();
+			DrawText(weaponString_0102, 20, 160, 20, RED);
+	
 		// Player printouts
 			// Debug print the player object global x location
-			string playerXPositionString = to_string(init->playerObjectPtr->GlobalTransform().m02);
-			string playerXString = "Player object x:	" + playerXPositionString;
-			const char* playerX = playerXString.c_str();
-			DrawText(playerX, 20, 130, 20, RED);
+			//string playerXPositionString = to_string(init->playerObjectPtr->GlobalTransform().m02);
+			//string playerXString = "Player object x:	" + playerXPositionString;
+			//const char* playerX = playerXString.c_str();
+			//DrawText(playerX, 20, 130, 20, RED);
 
-			// Debug print the player object global y location
-			string playerYPositionString = to_string(init->playerObjectPtr->GlobalTransform().m12);
-			string playerYString = "Player object y:	" + playerYPositionString;
-			const char* playerY = playerYString.c_str();
-			DrawText(playerY, 20, 160, 20, RED);
+			//// Debug print the player object global y location
+			//string playerYPositionString = to_string(init->playerObjectPtr->GlobalTransform().m12);
+			//string playerYString = "Player object y:	" + playerYPositionString;
+			//const char* playerY = playerYString.c_str();
+			//DrawText(playerY, 20, 160, 20, RED);
 
-			// Debug print the player sprite global x location
-			string spriteXPositionString = to_string(init->playerSpritePtr->GlobalTransform().m02);
-			string spriteXString = "Player sprite x:	" + spriteXPositionString;
-			const char* spriteX = spriteXString.c_str();
-			DrawText(spriteX, 20, 190, 20, RED);
+			//// Debug print the player sprite global x location
+			//string spriteXPositionString = to_string(init->playerSpritePtr->GlobalTransform().m02);
+			//string spriteXString = "Player sprite x:	" + spriteXPositionString;
+			//const char* spriteX = spriteXString.c_str();
+			//DrawText(spriteX, 20, 190, 20, RED);
 
-			// Debug print the player sprite global y location
-			string spriteYPositionString = to_string(init->playerSpritePtr->GlobalTransform().m12);
-			string spriteYString = "Player sprite y:	" + spriteYPositionString;
-			const char* spriteY = spriteYString.c_str();
-			DrawText(spriteY, 20, 210, 20, RED);
+			//// Debug print the player sprite global y location
+			//string spriteYPositionString = to_string(init->playerSpritePtr->GlobalTransform().m12);
+			//string spriteYString = "Player sprite y:	" + spriteYPositionString;
+			//const char* spriteY = spriteYString.c_str();
+			//DrawText(spriteY, 20, 210, 20, RED);
 
 		// Enemy printouts
 			// Debug print the number of enemies in the root objects

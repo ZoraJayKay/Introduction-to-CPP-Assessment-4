@@ -27,6 +27,8 @@ public:
 	int tileWidth = 14;
 	int tileHeight = 14;
 
+	// Counter for tracking the tile colliders
+
 	// Object for iterating through the memory allocation of the array
 	size_t arraySize;
 
@@ -37,6 +39,7 @@ public:
 	// definition to override the OnDraw from parent GameObject so that the sprite source file can use OnDraw with sprite texture
 	void OnDraw() override;
 
+	// Make tiles visible for debugging
 	Color GetTileColour(int tileValue);
 
 	//	*** COLLISION DETECTION	***
@@ -44,7 +47,8 @@ public:
 	void RemoveAABBObject(AABB& baseCollider);
 
 	void OnUpdate(float deltaTime, Controller& ctrlr) override;
-	void UpdateColliderBoundaries() override;
+	//void UpdateColliderBoundaries() override;
+
 
 	void Debug();
 };
