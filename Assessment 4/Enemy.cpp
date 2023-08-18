@@ -37,7 +37,7 @@ Enemy::Enemy(int _moveSpeed, GameObject::weaponType startingWeapon)
 // This OnUpdate() overrides the one in the GameObject class
 void Enemy::OnUpdate(float deltaTime, Controller& ctrlr) {
 	// Always be sidescrolling, yo
-	//MoveSideways(deltaTime);
+	MoveSideways(deltaTime);
 	
 	// When the shot timer * delta time = 1 (approximately once a second) give the enemy a chance to fire
 	if (shotTimer * deltaTime>= 1) {

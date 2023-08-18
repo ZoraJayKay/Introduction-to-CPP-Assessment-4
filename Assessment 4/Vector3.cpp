@@ -97,13 +97,3 @@ MyVector3::MyVector3(float _x, float _y, float _z) {
 		// Return the clamp vector3 that is the largest of all 3 vectors
 		return vector3Clamp;
 	};
-
-	//// Extents
-	//// Calculate the half-extents by subtracting the min point from the max point and thenhalving the absolute value for each vector component
-	//MyVector3 MyVector3::Extents() {
-	//	return MyVector3(
-	//		abs(this->),
-	//		abs(),
-	//		abs())
-	//	);
-	//};

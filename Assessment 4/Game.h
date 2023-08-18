@@ -46,7 +46,7 @@ protected:
 		// A vector of base objects waiting to be removed from the vector of bases between updates
 		vector<AABB*> AABBsToRemove;
 		// An iterator for collision detection
-		AABB* AABBiterator = new AABB;
+		//AABB* AABBiterator = new AABB;
 
 
 	// Create a forward declaration of an initialisation class for the use of the Game
@@ -108,14 +108,14 @@ public:
 
 				// 1.2.1.2: Remove objects from the hierarchy
 					void UpdateObjectRemovals();
-						// 1.2.1.2.1 Update root object removals
-						void UpdateRootObjectRemovals();
-						// 1.2.1.2.2 Update enemy object removals
+						// 1.2.1.2.1 Update enemy object removals
 						void UpdateEnemyObjectRemovals();
-						// 1.2.1.2.3 Update base object removals
+						// 1.2.1.2.2 Update base object removals
 						void UpdateBaseObjectRemovals();
-						// 1.2.1.2.4 Update AABB object removals
+						// 1.2.1.2.3 Update AABB object removals
 						void UpdateAABBObjectRemovals();
+						// 1.2.1.2.4 Update root object removals
+						void UpdateRootObjectRemovals();
 
 				// 1.2.1.1: Add objects created since last update to the list of root objects
 				void AddRootObject(GameObject& obj);
@@ -157,4 +157,3 @@ public:
 	void Debug();
 	void DebugCheckWeapon();
 };
-

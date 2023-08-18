@@ -83,8 +83,6 @@ public:
 
 	// *** --- COLLIDER --- ***
 	class AABB* colliderPtr;
-	MyVector3* tempV1;
-	MyVector3* tempV2;
 
 	//	*** FUNCTIONS	***
 		// Return the equipped weapon of a game object as an integer

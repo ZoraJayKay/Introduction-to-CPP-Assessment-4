@@ -41,7 +41,4 @@ public:
 		// Clamp vector3
 		// A function to create a vector3 that is always the largest 3 given vector3's
 		MyVector3 Clamp(MyVector3& t, MyVector3& vMinimum, MyVector3& vMaximum);
-
-		// Extents
-		MyVector3 Extents();
 };

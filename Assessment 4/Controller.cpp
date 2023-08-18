@@ -27,8 +27,8 @@ Controller::Controller(Game& gme) {
 
 // Destructor
 Controller::~Controller() {
-	delete g;
-	g = nullptr;
+	/*delete g;
+	g = nullptr;*/
 };
 
 // A function to conditionally move the player based on keystrokes

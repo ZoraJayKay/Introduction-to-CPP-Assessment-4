@@ -15,23 +15,7 @@ GameObject::GameObject()
 
 // member function for destructor
 GameObject::~GameObject() {
-	// Delete controller object pointer
-	delete ctrlr;
-	ctrlr = nullptr;
-
-	// Delete enemy object pointer
-	delete enemyPtr;
-	enemyPtr = nullptr;
-
-	// Delete AABB pointers
-	delete colliderPtr;
-	colliderPtr = nullptr;
-
-	delete tempV1;
-	tempV1 = nullptr;
-
-	delete tempV2;
-	tempV2 = nullptr;
+	// AABB pointers are destroyed within the AABB's own destructor
 
 	// Delete vector of pointers of child objects
 	for (GameObject* obj : children) {
@@ -252,5 +236,11 @@ void GameObject::UpdateColliderBoundaries() {
 
 		// Update using AABB min and max
 		colliderPtr->UpdateBoxBoundries(*tempV1, *tempV2);
+
+		delete tempV1;
+		tempV1 = nullptr;
+
+		delete tempV2;
+		tempV2 = nullptr;
 	};
 }

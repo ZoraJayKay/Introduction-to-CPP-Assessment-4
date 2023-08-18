@@ -17,7 +17,7 @@ AABB::AABB(MyVector3& min, MyVector3& max) {
 // Destructor
 AABB::~AABB() {
 	delete minVector3AABB;
-	minVector3AABB = nullptr;
+	minVector3AABB = nullptr;	
 
 	delete maxVector3AABB;
 	maxVector3AABB = nullptr;
@@ -71,8 +71,15 @@ MyVector3* AABB::Corners() {
 // This function will calculate a bounding region that would encapsulate a set of points (corners) and fit an AABB around the points. In 2D this creates a rectangle of space. To do this we need to find the minimum and maximum components from all the points of the rectangle (the outline of the corners).
 void AABB::Fit(MyVector3* points[4]) {
 	// First, invalidate our current AABB min and max by setting min to the largest value possible, and by setting max to the smallest value possible.
-	minVector3AABB = new MyVector3(positive, positive, positive);
-	maxVector3AABB = new MyVector3(negative, negative, negative);
+	//minVector3AABB = new MyVector3(positive, positive, positive);
+	minVector3AABB->x = { positive };
+	minVector3AABB->y = { positive };
+	minVector3AABB->z = { positive };
+
+	//maxVector3AABB = new MyVector3(negative, negative, negative);
+	maxVector3AABB->x = { negative };
+	maxVector3AABB->y = { negative };
+	maxVector3AABB->z = { negative };
 
 	// Second, find the min and max of the passed-in points. I already know that any AABB this program uses will have a 4-element point array (it's a rectangle)
 	// Create a size_t type because it's a safe way to iterate through the array of points, which is a collection of pointers, being memory addresses
