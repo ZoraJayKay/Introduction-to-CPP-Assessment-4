@@ -111,7 +111,7 @@ void Game::Update()
 			// 1.2.2: Update the arithmetic underlying movement and drawing for all objects
 			UpdateCalculations();
 			// 1.2.3: Debug if necessary
-			Debug();
+			//Debug();
 			// 1.2.4: Draw the game scene
 			Draw();
 		}
@@ -241,11 +241,16 @@ void Game::UpdateAABBObjectRemovals() {
 void Game::UpdateRootObjectRemovals() {
 	// for each pointer in the vector of objects to remove...
 	for (GameObject* obj : rootObjectsToRemove) {
-		// create an iterator which will find the pointer to remove in therootObjects vector
-		vector<GameObject*>::iterator itr_02 = find(rootObjects.begin(), rootObjects.end(), obj);
+		// I need a separate solution for the base blocks because they have a child-parent relationship drawing function which works independently of the global Draw, which draws every root object
+		if (obj->objType == GameObject::Base_Block_Type) {
+			obj->GetParent().RemoveChild(obj);
+		}
+
+		// create an iterator which will find the pointer to remove in the rootObjects vector
+		vector<GameObject*>::iterator itr = find(rootObjects.begin(), rootObjects.end(), obj);
 
 		// save the position between index 0 and the found pointer
-		int index = distance(rootObjects.begin(), itr_02);
+		int index = distance(rootObjects.begin(), itr);
 
 		// erase the found pointer from the vector
 		rootObjects.erase(rootObjects.begin() + index);
@@ -271,55 +276,72 @@ void Game::UpdateObjectRemovals() {
 	// For every collision box in the vector of collision boxes... 
 	for (AABB* collider : AABBs) {
 		// ... check through the vector of collision boxes...
-		for (AABB* enemy : AABBs) {
+		for (AABB* otherCollider : AABBs) {
 			
 			// *** COLLISIONS ORIGINATING FROM FRIENDLY ATTACKS ***
 			if (collider->ownerObject->objType == GameObject::Friendly_Projectile_Type) {
 				//	---	COLLIDING WITH ENEMY SHIPS ---
 				// ... and if a sprite collision box is found
-				if (enemy->ownerObject->objType == GameObject::Enemy_Sprite_Type) {
+				if (otherCollider->ownerObject->objType == GameObject::Enemy_Sprite_Type) {
 					// ... and if the projectile collider overlaps theship's sprite collider...
-					if (collider->Overlaps(*enemy)) {
+					if (collider->Overlaps(*otherCollider)) {
 						std::cout << "projectile-ship collision" <<std::endl;
 						// 1: Delete the AABB of the friendly projectile
 						RemoveAABBObject(*collider);
 						// 2: Delete the AABB of the enemy ship
-						RemoveAABBObject(*enemy);
+						RemoveAABBObject(*otherCollider);
 						// 3: Delete the friendly projectile Weaponclass object
 						RemoveRootObject(*collider->ownerObject);
 						// 4: Delete the parent Game Object of the enem ship sprite
-						RemoveRootObject(enemy->ownerObject->GetParent());
+						RemoveRootObject(otherCollider->ownerObject->GetParent());
 						// Haven't currently implemented removal from Enemy vector; uncertain if I really need it as acollection of objects
 					}
 				};
 
 				//	---	COLLIDING WITH ENEMY PROJECTILES ---
-				if (enemy->ownerObject->objType == GameObject::Enemy_Projectile_Type) {
+				if (otherCollider->ownerObject->objType == GameObject::Enemy_Projectile_Type) {
 					// ... and if the projectile collider overlaps theenemy projectile collider...
-					if (collider->Overlaps(*enemy)) {
+					if (collider->Overlaps(*otherCollider)) {
 						std::cout << "projectile-projectile collision"<< std::endl;
 						// 1: Delete the AABB of the friendly projectile
 						RemoveAABBObject(*collider);
 						// 2: Delete the AABB of the enemy projectile
-						RemoveAABBObject(*enemy);
+						RemoveAABBObject(*otherCollider);
 						// 3: Delete the friendly projectile Weapon class object
 						RemoveRootObject(*collider->ownerObject);
 						// 4: Delete the enemy projectile Weapon class object
-						RemoveRootObject(*enemy->ownerObject);
+						RemoveRootObject(*otherCollider->ownerObject);
 					};
 				};
 
 				//	---	COLLIDING WITH BASES ---
-				// implement
+				if (otherCollider->ownerObject->objType == GameObject::Base_Block_Type) {
+					// ... and if the projectile collider overlaps a base block collider...
+					if (collider->Overlaps(*otherCollider)) {
+						std::cout << "projectile-base collision" << std::endl;
+
+						collider->ownerObject->moveSpeed = 0;
+
+
+						// 1: Delete the AABB of the friendly projectile
+						//RemoveAABBObject(*collider);
+						// 2: Delete the AABB of the other thing
+						RemoveAABBObject(*otherCollider);
+						// 3: Delete the friendly projectile Weapon class object
+						RemoveRootObject(*collider->ownerObject);
+						// 4: Delete the other object
+						RemoveRootObject(*otherCollider->ownerObject);
+					};
+				};
 			};
 
 			// *** COLLISIONS ORIGINATING FROM ENEMY ATTACKS ***
 			if (collider->ownerObject->objType == GameObject::Enemy_Projectile_Type) {
 				//	---	COLLIDING WITH THE PLAYER SHIP ---
 				// ... and if a sprite collision box is found
-				if (enemy->ownerObject->objType == GameObject::Friendly_Sprite_Type) {
+				if (otherCollider->ownerObject->objType == GameObject::Friendly_Sprite_Type) {
 					// ... and if the projectile collider overlaps theship's sprite collider...
-					if (collider->Overlaps(*enemy)) {
+					if (collider->Overlaps(*otherCollider)) {
 						// 1: Decrement player lives
 						init->playerObjectPtr->lives--;
 						// 2: Delete the AABB of the enemy projectile
@@ -522,19 +544,22 @@ Game::~Game()
 		obj_01 = nullptr;
 	}
 
+	/*for (GameObject* obj_03 : rootObjects) {
+		RemoveRootObject(*obj_03);
+		UpdateRootObjectRemovals();
+	}
+
 	for (GameObject* obj_02 : rootObjectsToRemove) {
 		delete obj_02;
 		obj_02 = nullptr;
-	}
-
-	for (GameObject* obj_03 : rootObjects) {
-		delete obj_03;
-		obj_03 = nullptr;
-	}
+	}*/
+	
+	/*delete obj_03;
+	obj_03 = nullptr;*/
 
 	// Delete the pointer for the initialisation process
-	delete init;
-	init = nullptr;
+	/*delete init;
+	init = nullptr;*/
 
 	// Delete the controller pointer
 	delete cntrlr;
@@ -556,6 +581,9 @@ void Game::Debug() {
 
 	// CONSOLE DEBUG: COUNT THE BASE OBJECTS IN ROOT OBJECTS
 	int baseCount = 0;
+
+	int baseBlockCount = 0;
+
 	// CONSOLE DEBUG: COUNT THE BASE OBJECTS IN THEIR OWN VECTOR
 	int baseVectorCount = 0;
 
@@ -572,6 +600,7 @@ void Game::Debug() {
 	int AABB_Player_Count = 0;
 	int AABB_Sprite_Count = 0;
 	int AABB_GameObject_Count = 0;
+	int AABB_BaseBlock_Count = 0;
 	int AABB_Default_Count = 0;
 
 	
@@ -603,6 +632,13 @@ void Game::Debug() {
 		for (GameObject* obj : rootObjects) {
 			if (obj->objType == GameObject::Base_Type) {
 				baseCount++;
+			}
+		}
+
+		// CONSOLE DEBUG: COUNT THE BASE SUB-OBJECTS IN ROOT OBJECTS
+		for (GameObject* obj : rootObjects) {
+			if (obj->objType == GameObject::Base_Block_Type) {
+				baseBlockCount++;
 			}
 		}
 
@@ -665,12 +701,13 @@ void Game::Debug() {
 			}
 		}
 
-		//// CONSOLE DEBUG: COUNT THE GAMEOBJECT OBJECTS IN AABBS
-		//for (AABB* aabb : AABBs) {
-		//	if (aabb->ownerObject->) {
-		//		AABB_Sprite_Count++;
-		//	}
-		//}
+		// CONSOLE DEBUG: COUNT THE BASE BLOCK OBJECTS IN AABBS
+		for (AABB* aabb : AABBs) {
+			if (aabb->ownerObject->objType == GameObject::Base_Block_Type) {
+				AABB_BaseBlock_Count++;
+			}
+		}
+
 
 		// CONSOLE DEBUG: COUNT THE DEFAULT OBJECTS IN AABBS
 		for (AABB* aabb : AABBs) {
@@ -808,11 +845,18 @@ void Game::Debug() {
 			const char* spriteNumAABBs = spriteAABBsString.c_str();
 			DrawText(spriteNumAABBs, 20, 540, 20, RED);
 
+		// Debug print the number of base block AABBs in their own vector
+			string baseBlockAABBObjectsString = to_string(AABB_BaseBlock_Count);
+			string baseBlockAABBsString = "AABB list base block items:	" + baseBlockAABBObjectsString;
+			const char* baseBlockNumAABBs = baseBlockAABBsString.c_str();
+			DrawText(baseBlockNumAABBs, 20, 600, 20, RED);
+
+
 		// Debug print the number of default AABBs in their own vector
 			string defaultAABBObjectsString = to_string(AABB_Default_Count);
 			string defaultAABBsString = "AABB list default items:	" + defaultAABBObjectsString;
 			const char* defaultNumAABBs = defaultAABBsString.c_str();
-			DrawText(defaultNumAABBs, 20, 570, 20, RED);
+			DrawText(defaultNumAABBs, 20, 630, 20, RED);
 }
 
 void Game::DebugCheckWeapon() {

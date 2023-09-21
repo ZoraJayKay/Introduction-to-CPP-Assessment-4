@@ -44,17 +44,16 @@ public:
 	class SpriteObject* playerSpritePtr;
 
 	// ENEMIES
-	class Enemy* enemyPtr;
-	class SpriteObject* enemySpritePtr;
+	int numberOfEnemies;
+
+	// Array row and column volumes for enemy waves
+	/*static const int ROWS = 5;
+	static const int COLS = 5;*/
+
 	vector<Enemy*> enemiesToInitialise;
 
 	// BASE
-	class Base* basePtr_01;
-	class Base* basePtr_02;
-	class Base* basePtr_03;
-	class SpriteObject* baseSpritePtr_01;
-	class SpriteObject* baseSpritePtr_02;
-	class SpriteObject* baseSpritePtr_03;
+	int numberOfBases;
 	vector<Base*> basesToInitialise;
 
 	// AABBs
@@ -76,13 +75,13 @@ public:
 	//	***	---	INSTANTIATION FUNCTIONS	---	***
 		// Implement eventually rather than doing it manually 
 			// A function to create a new player
-			void CreatePlayer();
+			void CreatePlayer(int width, int height);
 
 			// A function to create a new enemy
-			void CreateEnemy();
+			void CreateEnemy(int number, int width, int height);
 
 			// A function to create a new base
-			void CreateBase();
+			void CreateBase(int number, int width, int height);
 
 };
 

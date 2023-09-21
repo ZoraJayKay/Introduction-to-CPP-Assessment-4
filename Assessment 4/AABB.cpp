@@ -134,3 +134,13 @@ void AABB::debugBox2D(Color c) { // draw debug box
 		maxVector3AABB->y - minVector3AABB->y,	// height
 		c);										// colour
 }
+
+// This altered debug box printout is slightly different for bases so that their AABB can be smaller than their visual appearance, to avoid bullets colliding with 2 or more AABBs simultaneously
+void AABB::debugAlteredBox2D(Color c) {
+	DrawRectangle(
+		minVector3AABB->x - 0, 						// x
+		minVector3AABB->y - 0, 						// y
+		maxVector3AABB->x - minVector3AABB->x + 0,	// width
+		maxVector3AABB->y - minVector3AABB->y + 0,	// height
+		c);										// colour
+};

@@ -1,29 +1,6 @@
-﻿  Assessment 4.cpp
-  Game.cpp
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\memory.h(24,77): warning C4311: 'reinterpret_cast': pointer truncation from 'void *const ' to 'unsigned int'
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\memory.h(24,77): warning C4302: 'reinterpret_cast': truncation from 'void *const ' to 'unsigned int'
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\memory.h(104,1): warning C4311: 'reinterpret_cast': pointer truncation from 'void *' to 'unsigned int'
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\memory.h(104,1): warning C4302: 'reinterpret_cast': truncation from 'void *' to 'unsigned int'
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\memory.h(133,124): warning C4311: 'reinterpret_cast': pointer truncation from 'void *' to 'unsigned int'
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\memory.h(133,124): warning C4302: 'reinterpret_cast': truncation from 'void *' to 'unsigned int'
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\GameObject.h(23,28): error C3187: '__func__': is only available within the body of a function
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\GameObject.h(23,26): warning C4291: 'void *operator new(size_t,MemoryDebugger::Memblk)': no matching operator delete found; memory will not be freed if initialization throws an exception
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\memory.h(119): message : see declaration of 'operator new'
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\GameObject.h(24,29): error C3187: '__func__': is only available within the body of a function
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\GameObject.h(24,27): warning C4291: 'void *operator new(size_t,MemoryDebugger::Memblk)': no matching operator delete found; memory will not be freed if initialization throws an exception
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\memory.h(119): message : see declaration of 'operator new'
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\AABB.h(26,30): error C3187: '__func__': is only available within the body of a function
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\AABB.h(26,28): warning C4291: 'void *operator new(size_t,MemoryDebugger::Memblk)': no matching operator delete found; memory will not be freed if initialization throws an exception
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\memory.h(119): message : see declaration of 'operator new'
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\AABB.h(28,30): error C3187: '__func__': is only available within the body of a function
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\AABB.h(28,28): warning C4291: 'void *operator new(size_t,MemoryDebugger::Memblk)': no matching operator delete found; memory will not be freed if initialization throws an exception
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\memory.h(119): message : see declaration of 'operator new'
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(43,50): warning C4291: 'void *operator new(size_t,MemoryDebugger::Memblk)': no matching operator delete found; memory will not be freed if initialization throws an exception
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\memory.h(119): message : see declaration of 'operator new'
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(85,26): warning C4291: 'void *operator new(size_t,MemoryDebugger::Memblk)': no matching operator delete found; memory will not be freed if initialization throws an exception
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\memory.h(119): message : see declaration of 'operator new'
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(199,13): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(216,13): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(234,13): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
-D:\Assessments\C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(250,13): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
-  Generating Code...
+﻿  Game.cpp
+F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(197,13): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(214,13): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(232,13): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\Game.cpp(253,13): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+  Assessment 4.vcxproj -> F:\Programming files\AIE\Diploma\Intro to C++\Introduction-to-CPP-Assessment-4\Assessment 4\x64\Debug\Assessment 4.exe

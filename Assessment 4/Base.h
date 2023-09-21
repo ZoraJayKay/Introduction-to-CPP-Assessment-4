@@ -14,8 +14,8 @@ public:
 
 	// Base object variables for a 256 x 256 objects
 	// Array row and column volumes
-	static const int ROWS = 6;
-	static const int COLS = 6;
+	static const int ROWS = 5;
+	static const int COLS = 5;
 
 	// Base array
 	int tiles[ROWS * COLS];
@@ -24,8 +24,8 @@ public:
 	vector<AABB*> tileCollidersToRemove;
 
 	// Array individual tile sizes
-	int tileWidth = 14;
-	int tileHeight = 14;
+	int tileWidth = 20;
+	int tileHeight = 20;
 
 	// Counter for tracking the tile colliders
 

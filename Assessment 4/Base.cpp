@@ -32,15 +32,16 @@ void Base::LoadBase() {
 	// For each element in the array...
 	for (size_t i = 0; i < arraySize; i++) {
 		// Set colour as green temporarily for debugging
-		tiles[i] = 2;	
+		//tiles[i] = 2;
 		// Create 1 GameObject for each element in the array
 		GameObject* tile = new GameObject;
 		// Make the GameObject of this element the 'base' type
 		tile->objType = Base_Block_Type;
+
+		tile->tileNumber = i;
 		// Make the collider of this GameObject an AABB of the parent base
 		this->AddChild(*tile);
 		this->AddAABBObject(*tile->colliderPtr);
-		
 	}
 };
 
@@ -50,6 +51,17 @@ void Base::OnDraw() {
 	// Set starting position for where the base will be drawn
 	xPos = 0;
 	yPos = 0;
+		
+	// Get the number of children this object has because we only want to draw that many
+	int numberOfBaseBlocks = this->CountChildren();
+
+	// Create an array of the tileNumbers of this object's children
+	vector<int> tileNumbers;
+
+	// Record each of the children's tile numbers, eg 1, 2, 4, 5, 6, 9, 10
+	for (GameObject* obj : children) {
+		tileNumbers.push_back(obj->tileNumber);
+	};
 
 	// For each element in the row (called y) of the array...
 	for (int y = 0; y < ROWS; y++) {
@@ -61,6 +73,54 @@ void Base::OnDraw() {
 
 			// Allocate the element and its tile a number...
 			int indexCounter = (y * ROWS) + x;
+
+			// iterate through the children and see if any of them have a tileNumber that matches the index
+			for (int i = 0; i < numberOfBaseBlocks; i++) {
+				if (indexCounter == tileNumbers[i]) {
+					MyVector3* tempV1 = new MyVector3(
+						(this->GlobalTransform().m02 + xPos),
+						(this->GlobalTransform().m12 + yPos),
+						0.0f);
+
+					// AABB max:
+					MyVector3* tempV2 = new MyVector3(
+						(this->GlobalTransform().m02 + xPos + tileWidth),
+						(this->GlobalTransform().m12 + yPos + tileHeight),
+						0.0f);
+
+					MyVector3* minBuffer = new MyVector3{ 1, 1 , 0 };
+					MyVector3* maxBuffer = new MyVector3{ -1, -1, 0 };
+
+					MyVector3 newMin = *minBuffer + *tempV1;
+					MyVector3 newMax = *maxBuffer + *tempV2;
+
+
+					// Update the AABB of this specific tile using AABB min and max
+					tileColliders[indexCounter]->UpdateBoxBoundries(newMin, newMax);
+
+					delete tempV1;
+					tempV1 = nullptr;
+
+					delete tempV2;
+					tempV2 = nullptr;
+
+					delete minBuffer;
+					minBuffer = nullptr;
+
+					delete maxBuffer;
+					maxBuffer = nullptr;
+
+
+					
+					break;
+				}
+
+				else { continue; }
+			}
+
+			// TEST
+			
+
 			// Colour that element's tile...
 			//Color colour = GetTileColour(tiles[indexCounter]);
 			//// ... and draw that element's tile at its position in the world
@@ -72,24 +132,30 @@ void Base::OnDraw() {
 			//	colour);						// Colour of this tile
 
 
-			//	*** COLLISION DETECTION	***
-			// Update collider boundaries
-			// AABB min:
-			MyVector3* tempV1 = new MyVector3(
-				(this->GlobalTransform().m02 + xPos),
-				(this->GlobalTransform().m12 + yPos),
-				0.0f);
+			////	*** COLLISION DETECTION	***
+			//// Update collider boundaries
+			//// AABB min:
+			//MyVector3* tempV1 = new MyVector3(
+			//	(this->GlobalTransform().m02 + xPos),
+			//	(this->GlobalTransform().m12 + yPos),
+			//	0.0f);
 
-			// AABB max:
-			MyVector3* tempV2 = new MyVector3(
-				(this->GlobalTransform().m02 + xPos + tileWidth),
-				(this->GlobalTransform().m12 + yPos + tileHeight),
-				0.0f);
+			//// AABB max:
+			//MyVector3* tempV2 = new MyVector3(
+			//	(this->GlobalTransform().m02 + xPos + tileWidth - 2),
+			//	(this->GlobalTransform().m12 + yPos + tileHeight - 2),
+			//	0.0f);
 
-			// Update the AABB of this specific tile using AABB min and max
-			tileColliders[indexCounter]->UpdateBoxBoundries(*tempV1, *tempV2);
+			//// Update the AABB of this specific tile using AABB min and max
+			//tileColliders[indexCounter]->UpdateBoxBoundries(*tempV1, *tempV2);
 
-			Debug();
+			//delete tempV1;
+			//tempV1 = nullptr;
+			//
+			//delete tempV2;
+			//tempV2 = nullptr;
+			//
+			//Debug();
 		}
 	}
 };
@@ -159,6 +225,8 @@ void Base::AddAABBObject(AABB& baseCollider) {
 
 // 1.2.1.7: Add collider objects targeted for removal since last update to a list
 void Base::RemoveAABBObject(AABB& baseCollider) {
+	std::cout << "Base tile collider removal triggered" << std::endl;
+
 	// Create a pointer of the object reference passed in 
 	AABB* AABBPtr = &baseCollider;
 	// Add the new pointer to the object passed in to the vector
@@ -193,9 +261,9 @@ void Base::OnUpdate(float deltaTime, Controller& ctrlr) {
 
 
 
-	for (AABB* collider : tileColliders) {
-		this->colliderPtr->debugBox2D(RED);
-	};
+	/*for (AABB* collider : tileColliders) {
+		this->colliderPtr->debugBox2D(GREEN);
+	};*/
 }
 
 

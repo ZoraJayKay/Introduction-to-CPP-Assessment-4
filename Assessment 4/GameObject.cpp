@@ -18,17 +18,17 @@ GameObject::~GameObject() {
 	// AABB pointers are destroyed within the AABB's own destructor
 
 	// Delete vector of pointers of child objects
-	for (GameObject* obj : children) {
+	/*for (GameObject* obj : children) {
 		delete obj;
 		obj = nullptr;
-	}
+	}*/
 
 	// Delete matrices of transforms
-	delete localTransform;
-	localTransform = nullptr;
+	//delete localTransform;
+	//localTransform = nullptr;
 
-	delete globalTransform;
-	globalTransform = nullptr;
+	//delete globalTransform;
+	//globalTransform = nullptr;
 };
 
 // Return the equipped weapon of a game object as an integer
@@ -91,8 +91,17 @@ void GameObject::AddChild(GameObject& child) {
 };
 
 // A method to remove a child from this object
-void GameObject::RemoveChild(GameObject& child) {
+void GameObject::RemoveChild(GameObject* child) {
 	// Implement
+	
+	// create an iterator which will find the pointer to remove in the children vector
+	vector<GameObject*>::iterator itr = find(children.begin(), children.end(), child);
+
+	// save the position between index 0 and the found pointer
+	int index = distance(children.begin(), itr);
+
+	// erase the found pointer from the vector
+	children.erase(children.begin() + index);
 };
 
 // A method to remove all children from this object
@@ -121,7 +130,13 @@ void GameObject::Update(float deltaTime, Controller& ctrlr) {
 	// Collision detection
 	UpdateColliderBoundaries();
 	// temporary debug
-	this->colliderPtr->debugBox2D(RED);
+	if (this->objType == GameObject::Base_Block_Type) {
+		this->colliderPtr->debugAlteredBox2D(RED);
+	}
+	
+	else if (this->objType == GameObject::Base_Type) {
+		this->colliderPtr->debugBox2D(BLUE);
+	}
 
 	OnUpdate(deltaTime, ctrlr);
 
@@ -219,24 +234,45 @@ void GameObject::CopyTransform(GameObject& prnt) {
 //	*** COLLISION DETECTION	***
 	// Update the collision detection boundaries of this game object
 void GameObject::UpdateColliderBoundaries() {
+	// Bases have their own process for updating their boundary boxes in the OnDraw() of Base.cpp
 	if (colliderPtr->ownerObject->objType != Base_Type && 
 		colliderPtr->ownerObject->objType != Base_Block_Type) {
 		// Overwrite temporary vector3's for updating AABB outer boundaries each update
 		// AABB min:
 		MyVector3* tempV1 = new MyVector3(
-			(this->globalTransform->m02 /*- (colliderPtr->AABBtextureWidth / 2)*/),
-			(this->globalTransform->m12 /*- (colliderPtr->AABBtextureHeight / 2)*/),
+			(this->globalTransform->m02),
+			(this->globalTransform->m12),
 			0.0f);
 
 		// AABB max:
 		MyVector3* tempV2 = new MyVector3(
-			(this->globalTransform->m02 + (colliderPtr->AABBtextureWidth/* / 2)*/)),
-			(this->globalTransform->m12 + (colliderPtr->AABBtextureHeight/* / 2*/)),
+			(this->globalTransform->m02 + (colliderPtr->AABBtextureWidth)),
+			(this->globalTransform->m12 + (colliderPtr->AABBtextureHeight)),
 			0.0f);
 
-		// Update using AABB min and max
-		colliderPtr->UpdateBoxBoundries(*tempV1, *tempV2);
+		// Make projectiles very thin so they won't collide with multiple hit boxes simultaneously
+		if (colliderPtr->ownerObject->objType == Friendly_Projectile_Type ||
+			colliderPtr->ownerObject->objType == Enemy_Projectile_Type){
+				MyVector3* minBuffer = new MyVector3{ 5, 0 , 0 };
+				MyVector3* maxBuffer = new MyVector3{ -5, 0, 0 };
 
+				MyVector3 newMin = *minBuffer + *tempV1;
+				MyVector3 newMax = *maxBuffer + *tempV2;
+			
+				colliderPtr->UpdateBoxBoundries(newMin, newMax);
+
+				delete minBuffer;
+				minBuffer = nullptr;
+
+				delete maxBuffer;
+				maxBuffer = nullptr;
+		}
+
+		else {
+			// Update using AABB min and max
+			colliderPtr->UpdateBoxBoundries(*tempV1, *tempV2);
+		}
+		
 		delete tempV1;
 		tempV1 = nullptr;
 

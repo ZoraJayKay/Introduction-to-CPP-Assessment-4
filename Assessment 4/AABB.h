@@ -49,5 +49,7 @@ public:
 	bool Overlaps(GameObject& otherObject);
 
 	void debugBox2D(Color c);
+
+	void debugAlteredBox2D(Color c);
 };
 

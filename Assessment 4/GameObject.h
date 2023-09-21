@@ -110,7 +110,7 @@ public:
 		void AddChild(GameObject& child);
 
 		// A method to remove a child from this object
-		void RemoveChild(GameObject& child);
+		void RemoveChild(GameObject* child);
 
 		// A method to remove all children from this object
 		void RemoveChildren();
@@ -167,4 +167,7 @@ public:
 	//	*** COLLISION DETECTION	***
 		// Update the boundaries of this game object
 		virtual void UpdateColliderBoundaries();
+
+	// *** BASE ***
+		int tileNumber;
 };
