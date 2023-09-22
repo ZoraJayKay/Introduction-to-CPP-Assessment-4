@@ -134,7 +134,7 @@ void GameObject::Update(float deltaTime, Controller& ctrlr) {
 		this->colliderPtr->debugAlteredBox2D(RED);
 	}
 	
-	else if (this->objType == GameObject::Base_Type) {
+	else {
 		this->colliderPtr->debugBox2D(BLUE);
 	}
 

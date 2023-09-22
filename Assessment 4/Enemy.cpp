@@ -51,7 +51,7 @@ void Enemy::OnUpdate(float deltaTime, Controller& ctrlr) {
 		shotTimer++;
 	}
 	
-	// Implement an end to the game if the enemy advances 20 times?
+	// Implement an end to the game if one enemy advances 20 times?
 	if (advanceTracker >= 20) {
 		reachedEarth;
 	}

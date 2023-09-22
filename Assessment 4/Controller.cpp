@@ -110,6 +110,10 @@ void Controller::MoveSideways(GameObject& player, float deltaTime) {
 
 // Shoot the weapon if the spacebar or left mouse button is pressed and the weapon is ready to fire
 void Controller::Shoot(GameObject& player, GameObject::weaponType weaponEquipped) {
+	if (g->isPaused) {
+		return;
+	}
+
 	if (IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(0)) {
 		if (weaponReloaded == true) {
 			InstantiatePlayerAttack(player, weaponEquipped);
@@ -121,6 +125,10 @@ void Controller::Shoot(GameObject& player, GameObject::weaponType weaponEquipped
 
 // A function to let enemies fire at the player (see Enemy class OnUpdate() for what triggers this function)
 void Controller::ShootRandomly(GameObject& enemy, GameObject::weaponType weaponEquipped) {
+	if (g->isPaused) {
+		return;
+	}
+	
 	bool willAttack = false;  
 	int attackChance = GetRandomValue(0, 2);	// Give the enemy a 1 in 3 chance of firing per update
 	

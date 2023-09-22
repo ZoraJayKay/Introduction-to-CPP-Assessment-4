@@ -1,0 +1,118 @@
+﻿'Assessment 4.exe' (Win32): Loaded 'C:\Users\s220780\Desktop\C++\Introduction-to-CPP-Assessment-4\Assessment 4\x64\Debug\Assessment 4.exe'. Symbols loaded.
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\ntdll.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\kernel32.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\KernelBase.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\user32.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\win32u.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\gdi32.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\gdi32full.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\msvcp_win.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\ucrtbase.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\shell32.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\winmm.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\msvcrt.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\msvcp140d.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\vcruntime140_1d.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\vcruntime140d.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\ucrtbased.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\imm32.dll'. 
+The thread 0x5fd8 has exited with code 0 (0x0).
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\dinput8.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\advapi32.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\sechost.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\rpcrt4.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\XInput1_4.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\combase.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\cfgmgr32.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\devobj.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\dwmapi.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\SHCore.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\InputHost.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\oleaut32.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\WinTypes.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\propsys.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\CoreMessaging.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\ws2_32.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\bcryptprimitives.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\CoreUIComponents.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\ntmarta.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\kernel.appcore.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\kernel.appcore.dll'. 
+'Assessment 4.exe' (Win32): Unloaded 'C:\Windows\System32\kernel.appcore.dll'
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\uxtheme.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\msctf.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\hid.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\setupapi.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\bcrypt.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\wintrust.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\crypt32.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\msasn1.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\opengl32.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\glu32.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\clbcatq.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\AppXDeploymentClient.dll'. 
+'Assessment 4.exe' (Win32): Unloaded 'C:\Windows\System32\AppXDeploymentClient.dll'
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\DriverStore\FileRepository\nv_dispig.inf_amd64_7e5fd280efaa5445\nvoglv64.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\ole32.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\wtsapi32.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\version.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\cryptnet.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\drvstore.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\wldp.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\cryptbase.dll'. 
+The thread 0x25e4 has exited with code 0 (0x0).
+The thread 0x550c has exited with code 0 (0x0).
+The thread 0x4150 has exited with code 0 (0x0).
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\windows.storage.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\shlwapi.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\DXCore.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\psapi.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\dbghelp.dll'. 
+'Assessment 4.exe' (Win32): Unloaded 'C:\Windows\System32\psapi.dll'
+'Assessment 4.exe' (Win32): Unloaded 'C:\Windows\System32\dbghelp.dll'
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\psapi.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\dbghelp.dll'. 
+'Assessment 4.exe' (Win32): Unloaded 'C:\Windows\System32\psapi.dll'
+'Assessment 4.exe' (Win32): Unloaded 'C:\Windows\System32\dbghelp.dll'
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\psapi.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\dbghelp.dll'. 
+'Assessment 4.exe' (Win32): Unloaded 'C:\Windows\System32\psapi.dll'
+'Assessment 4.exe' (Win32): Unloaded 'C:\Windows\System32\dbghelp.dll'
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\psapi.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\dbghelp.dll'. 
+'Assessment 4.exe' (Win32): Unloaded 'C:\Windows\System32\psapi.dll'
+'Assessment 4.exe' (Win32): Unloaded 'C:\Windows\System32\dbghelp.dll'
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\powrprof.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\umpdc.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\winsta.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\TextInputFramework.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\oleacc.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\avrt.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\MMDevAPI.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\AudioSes.dll'. 
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\ResourcePolicyClient.dll'. 
+Debug Assertion Failed!
+
+Program: ...n-to-CPP-Assessment-4\Assessment 4\x64\Debug\Assessment 4.exe
+File: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\vector
+Line: 1587
+
+Expression: vector erase iterator outside range
+
+For information on how your program can cause an assertion
+failure, see the Visual C++ documentation on asserts.
+
+(Press Retry to debug the application)
+'Assessment 4.exe' (Win32): Loaded 'C:\Windows\System32\TextShaping.dll'. 
+The thread 0x3a54 has exited with code 3 (0x3).
+The thread 0x6178 has exited with code 3 (0x3).
+The thread 0x2d28 has exited with code 3 (0x3).
+The thread 0x16fc has exited with code 3 (0x3).
+The thread 0xd5c has exited with code 3 (0x3).
+The thread 0x62dc has exited with code 3 (0x3).
+The thread 0x58f8 has exited with code 3 (0x3).
+The thread 0x5cb8 has exited with code 3 (0x3).
+The thread 0x3a5c has exited with code 3 (0x3).
+The thread 0x5980 has exited with code 3 (0x3).
+The thread 0x5064 has exited with code 3 (0x3).
+The program '[23476] Assessment 4.exe' has exited with code 3 (0x3).

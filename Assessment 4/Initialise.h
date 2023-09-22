@@ -66,16 +66,15 @@ public:
 	const char* backgroundFileName;
 
 	Initialise();
-	Initialise(int windowWidth, int windowHeight);
+	Initialise(int windowWidth, int windowHeight, int playerLives, int numEnemies, int numBases);
 
 	// default destructor function
 	~Initialise();
 
-
 	//	***	---	INSTANTIATION FUNCTIONS	---	***
 		// Implement eventually rather than doing it manually 
 			// A function to create a new player
-			void CreatePlayer(int width, int height);
+			void CreatePlayer(int lives, int width, int height);
 
 			// A function to create a new enemy
 			void CreateEnemy(int number, int width, int height);

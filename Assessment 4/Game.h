@@ -23,12 +23,16 @@ protected:
 		vector<GameObject*> rootObjectsToRemove;
 
 	//	*** ---	ENEMY OBJECT HIERARCHY --- ***
-		// A vector of all enemies
-		vector<Enemy*> enemies;
-		// A vector of enemy objects waiting to be added to the vector of enemies between updates
-		vector<Enemy*> enemiesToAdd;
-		// A vector of enemy objects waiting to be removed from the vector of enemies between updates
-		vector<Enemy*> enemiesToRemove;
+		// Simple variable for win/loss criteria
+		int numberOfEnemies;
+	
+	// NOT IN USE
+		//// A vector of all enemies
+		//vector<Enemy*> enemies;
+		//// A vector of enemy objects waiting to be added to the vector of enemies between updates
+		//vector<Enemy*> enemiesToAdd;
+		//// A vector of enemy objects waiting to be removed from the vector of enemies between updates
+		//vector<Enemy*> enemiesToRemove;
 
 	//	*** ---	BASE OBJECT HIERARCHY --- ***
 		// A vector of all bases
@@ -58,6 +62,9 @@ protected:
 public: 
 	// Timer instance
 	class Timer* gameTimer;
+	// For giving the player time to read instructions at the beginning
+
+	bool gameHasStarted = false;
 
 	// Program screen size
 	int windowWidth;
@@ -79,6 +86,15 @@ public:
 			// 0.2.4: Add the vector of AABBs from initialisation
 		// 0.3: Initialise a pointer to a new instance of the Controller class.
 		// 0.4 Permit the controller to make use of a game class pointer so that the controller can access the object hierarchy for instantiating weapon attacks
+		// 0.5 Run the intro before the game starts proper (explain keybindings, objective)
+
+	// A function for explaining the game
+	void RunIntro();
+
+	void InitialiseGame();
+
+	void CreateGame();
+	
 
 	// 9: Destructor
 	~Game();
@@ -100,7 +116,8 @@ public:
 						// 1.2.1.1.1: Update root object additions
 						void UpdateRootObjectAdditions();
 						// 1.2.1.1.2: Update enemy object additions
-						void UpdateEnemyObjectAdditions();
+						// Not currently used
+						// void UpdateEnemyObjectAdditions();
 						// 1.2.1.1.3: Update base object additions
 						void UpdateBaseObjectAdditions();
 						// 1.2.1.1.4: Update AABB object additions
@@ -109,22 +126,25 @@ public:
 				// 1.2.1.2: Remove objects from the hierarchy
 					void UpdateObjectRemovals();
 						// 1.2.1.2.1 Update enemy object removals
-						void UpdateEnemyObjectRemovals();
+						// Not currently used
+						//void UpdateEnemyObjectRemovals();
 						// 1.2.1.2.2 Update base object removals
 						void UpdateBaseObjectRemovals();
 						// 1.2.1.2.3 Update AABB object removals
 						void UpdateAABBObjectRemovals();
 						// 1.2.1.2.4 Update root object removals
 						void UpdateRootObjectRemovals();
+						// 1.2.1.2.5 Update collisions
+						void UpdateCollisions();
 
 				// 1.2.1.1: Add objects created since last update to the list of root objects
 				void AddRootObject(GameObject& obj);
 				// 1.2.1.2: Add objects targeted for removal since last update to a list
 				void RemoveRootObject(GameObject& obj);
 				// 1.2.1.3: Add enemy objects created since last update to the list of enemy objects
-				void AddEnemyObject(Enemy& enemy);
+				//void AddEnemyObject(Enemy& enemy);
 				// 1.2.1.4: Add enemy objects targeted for removal since last update to a list
-				void RemoveEnemyObject(Enemy& enemy);
+				//void RemoveEnemyObject(Enemy& enemy);
 				// 1.2.1.5: Add base objects created since last update to the list of base objects
 				void AddBaseObject(Base& base);
 				// 1.2.1.5: Add base objects targeted for removal since last update to a list
@@ -138,8 +158,22 @@ public:
 				void UpdateCalculations();
 
 			// 1.2.3: Debug if necessary
+				void Debug();
+				//void DebugCheckWeapon();
 
 		// 1.3: Pause and unpause the game
+			// 1.3.1: A function for deciding whether to pause or not
+			void Pause();
+			
+			// 1.3.2: Pause the game
+			void StopGame();
+			
+			// 1.3.3: Pause the game for a duration
+			void StopGame(int duration);
+
+			// 1.3.4: Resume the game
+			void ResumeGame();
+
 
 			// 1.2.4: Draw the scene
 				// 1.2.4.1: Draw all root objects (and thus their children)
@@ -149,11 +183,9 @@ public:
 				// 1.2.4.3 Print the player's lives to the screen
 				void PrintPlayerLives();
 
-	// 2: ENDIF FUNCTION
-	void Shutdown();
-		// 2.1: Detect whether the game has ended
+			
 
-	// Temporary functions for printing analysis to the console
-	void Debug();
-	void DebugCheckWeapon();
+	// 2: ENDIF FUNCTION
+	// void Shutdown();  // Not performed within Game function currently
+		// 2.1: Detect whether the game has ended	
 };
