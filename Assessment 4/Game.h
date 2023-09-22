@@ -61,7 +61,8 @@ protected:
 	// Create a forward declaration of a controller class for the use of the Game
 	class Controller* cntrlr;
 
-	int startingLives = 1;
+	int startingLives = 3;
+	int startingBases = 5;
 
 public: 
 	// Timer instance

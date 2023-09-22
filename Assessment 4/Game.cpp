@@ -44,7 +44,7 @@ void Game::CreateGame() {
 
 	// 0.2 - 0.4: 
 	// Initialise a pointer to a new instance of the Initialise class. The Initialise class instance (init) will in turn set all of the parameters that constitute the starting conditions of the game.	
-	init = new Initialise(windowWidth, windowHeight, startingLives, startingEnemies, 5);
+	init = new Initialise(windowWidth, windowHeight, startingLives, startingEnemies, startingBases);
 	// EXTRA WORK: SET DIFFICULTY LEVELS THROUGH OVERLOADED INIT
 		// Add number of enemies to instantiate
 		// Add number of bases to instantiate
@@ -202,7 +202,7 @@ void Game::Update()
 			
 			DrawText("You win! Press R\nto spawn a bigger wave.", 
 				(windowWidth / 2) - MeasureText("You win! Press R\nto spawn a bigger wave.", 75) / 2,
-				windowHeight / 3, 
+				windowHeight / 4, 
 				75, 
 				GREEN);
 
@@ -223,7 +223,7 @@ void Game::Update()
 		if (init->playerObjectPtr->lives < 1) {
 			DrawText("You've been shot down!\nPress R to start again.",
 				(windowWidth / 2) - MeasureText("You've been shot down!\nPress R to start again", 75) / 2,
-				windowHeight / 3,
+				windowHeight / 4,
 				75,
 				GREEN);
 
@@ -235,9 +235,22 @@ void Game::Update()
 				init->numberOfEnemies = startingEnemies;
 				numberOfEnemies = 0;
 
-				// delete all existing enemies
+				// Delete all existing enemies to refresh them
 				for (GameObject* obj : rootObjects) {
 					if (obj->objType == GameObject::Enemy_Type) {
+						RemoveRootObject(*obj);
+					}
+				}
+
+				// Delete all the bases to refresh them
+				for (GameObject* obj : rootObjects) {
+					if (obj->objType == GameObject::Base_Type) {
+						RemoveRootObject(*obj);
+					}
+				}
+
+				for (GameObject* obj : rootObjects) {
+					if (obj->objType == GameObject::Base_Block_Type) {
 						RemoveRootObject(*obj);
 					}
 				}
@@ -246,9 +259,11 @@ void Game::Update()
 
 				// Create new enemies in the starting configuration
 				init->CreateEnemy(init->numberOfEnemies, windowWidth, windowHeight);
+				init->CreateBase(startingBases, windowWidth, windowHeight);
+
 
 				// Restart the game settings
-				InitialiseGame(true, false);
+				InitialiseGame(true, true);
 				init->playerObjectPtr->lives = startingLives;
 				init->playerObjectPtr->score = 0;
 
