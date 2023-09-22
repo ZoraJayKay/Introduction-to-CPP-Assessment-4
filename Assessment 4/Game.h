@@ -25,6 +25,8 @@ protected:
 	//	*** ---	ENEMY OBJECT HIERARCHY --- ***
 		// Simple variable for win/loss criteria
 		int numberOfEnemies;
+		int startingEnemies = 3;
+		int spawnIncrement = 3;
 	
 	// NOT IN USE
 		//// A vector of all enemies
@@ -59,12 +61,15 @@ protected:
 	// Create a forward declaration of a controller class for the use of the Game
 	class Controller* cntrlr;
 
+	int startingLives = 1;
+
 public: 
 	// Timer instance
 	class Timer* gameTimer;
-	// For giving the player time to read instructions at the beginning
 
+	// For giving the player time to read instructions at the beginning
 	bool gameHasStarted = false;
+	bool isPaused;
 
 	// Program screen size
 	int windowWidth;
@@ -73,28 +78,24 @@ public:
 	// Play area variables
 	int playWidth;
 	int playHeight;
-
-	bool isPaused;
-
+	
 	// 0: Initialise a game session (constructor)
 	Game();
+	void CreateGame();
 		// 0.1: Initialise a game session
 		// 0.2: Add the objects from initialisation to the scene as root, enemy and base objects
 			// 0.2.1: Add the player
+			// 0.2.2 - 0.2.4
+			void InitialiseGame(bool enemies, bool bases);
 			// 0.2.2: Add the vector of enemies from initialisation
 			// 0.2.3: Add the vector of bases from initialisation
 			// 0.2.4: Add the vector of AABBs from initialisation
+		// 0.3 - 0.4: 
+		void InitialiseController();
 		// 0.3: Initialise a pointer to a new instance of the Controller class.
 		// 0.4 Permit the controller to make use of a game class pointer so that the controller can access the object hierarchy for instantiating weapon attacks
 		// 0.5 Run the intro before the game starts proper (explain keybindings, objective)
-
-	// A function for explaining the game
-	void RunIntro();
-
-	void InitialiseGame();
-
-	void CreateGame();
-	
+		void RunIntro();
 
 	// 9: Destructor
 	~Game();

@@ -26,10 +26,6 @@ int main()
     {
         // 2.1: Update the game, its calculations, and draw to the screen
         game->Update();
-
-        /*if (IsKeyPressed(KEY_R)) {
-
-        }*/
     }        
 
     // 3: Shutdown

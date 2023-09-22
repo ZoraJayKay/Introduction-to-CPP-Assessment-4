@@ -45,11 +45,6 @@ public:
 
 	// ENEMIES
 	int numberOfEnemies;
-
-	// Array row and column volumes for enemy waves
-	/*static const int ROWS = 5;
-	static const int COLS = 5;*/
-
 	vector<Enemy*> enemiesToInitialise;
 
 	// BASE

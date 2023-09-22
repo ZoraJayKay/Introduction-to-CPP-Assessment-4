@@ -129,14 +129,12 @@ void GameObject::OnUpdate(float deltaTime) {};
 void GameObject::Update(float deltaTime, Controller& ctrlr) {
 	// Collision detection
 	UpdateColliderBoundaries();
-	// temporary debug
-	if (this->objType == GameObject::Base_Block_Type) {
-		this->colliderPtr->debugAlteredBox2D(RED);
-	}
 	
-	else {
-		this->colliderPtr->debugBox2D(BLUE);
+	// calculate the base's dimensions
+	if (this->objType == GameObject::Base_Block_Type) {
+		this->colliderPtr->debugAlteredBox2D(GREEN);
 	}
+		
 
 	OnUpdate(deltaTime, ctrlr);
 

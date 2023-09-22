@@ -43,73 +43,99 @@ void Game::CreateGame() {
 	InitAudioDevice();
 
 	// 0.2 - 0.4: 
-	InitialiseGame();
-
-	// 0.5 Run the game intro
-	RunIntro();
-};
-
-
-void Game::InitialiseGame() {
 	// Initialise a pointer to a new instance of the Initialise class. The Initialise class instance (init) will in turn set all of the parameters that constitute the starting conditions of the game.	
-	init = new Initialise(windowWidth, windowHeight, 3, 5, 5);
+	init = new Initialise(windowWidth, windowHeight, startingLives, startingEnemies, 5);
 	// EXTRA WORK: SET DIFFICULTY LEVELS THROUGH OVERLOADED INIT
 		// Add number of enemies to instantiate
 		// Add number of bases to instantiate
 		// Set up functions that do the above instead of manually doing each one god damn
 		// Add difficulty level that sets all of the above etc?
 
-// 0.2: Add the objects from initialisation to the scene as root, enemy and base objects
+	// 0.2: Add the objects from initialisation to the scene as root, enemy and base objects
 	// 0.2.1: Add the player object
 	AddRootObject(*(init->playerObjectPtr));
 
-	// 0.2.2: Add the vector of enemies from initialisation
-	for (Enemy* enemy : init->enemiesToInitialise) {
-		// Add enemies as root objects of the scene...	
-		AddRootObject(*enemy);
+	// 0.2.2 - 0.2.4
+	InitialiseGame(true, true);
 
-		numberOfEnemies++;
+	// 0.3 - 0.4: 
+	InitialiseController();
+	
+	SetTargetFPS(60);
 
-		// ... and to their own vector of enemies
-		//AddEnemyObject(*enemy);
-	}
+	// 0.5 Run the game intro
+	RunIntro();
+};
 
-	// 0.2.3: Add the vector of bases from initialisation
-	for (Base* base : init->basesToInitialise) {
-		// ^^ For each base in the initialisation bases vector, get the full list of child GameObjects (the individual blocks that make up the base)
-		for (GameObject* block : (base->GetChildren())) {
-			// ... and make each block a root object
-			AddRootObject(*block);
-			// ... and make the AABB of each block a collider object of the scene.
-			AddAABBObject(*block->colliderPtr);
+// 0.2.2 - 0.2.4
+void Game::InitialiseGame(bool enemies, bool bases) {
+	
+	if (enemies == true) {
+		// 0.2.2: Add the vector of enemies from initialisation
+		for (Enemy* enemy : init->enemiesToInitialise) {
+			// Add enemies as root objects of the scene...	
+			AddRootObject(*enemy);
+
+			numberOfEnemies++;
+
+			init->enemiesToInitialise.clear();
+
+			// ... and to their own vector of enemies
+			//AddEnemyObject(*enemy);
 		}
-		// Add the base object as a root object of the scene...	
-		AddRootObject(*base);
-		// ... and to the vector of bases
-		AddBaseObject(*base);
 	}
+	
+	if (bases == true) {
+		// 0.2.3: Add the vector of bases from initialisation
+		for (Base* base : init->basesToInitialise) {
+			// ^^ For each base in the initialisation bases vector, get the full list of child GameObjects (the individual blocks that make up the base)
+			for (GameObject* block : (base->GetChildren())) {
+				// ... and make each block a root object
+				AddRootObject(*block);
+				// ... and make the AABB of each block a collider object of the scene.
+				AddAABBObject(*block->colliderPtr);
+			}
+			// Add the base object as a root object of the scene...	
+			AddRootObject(*base);
+			// ... and to the vector of bases
+			AddBaseObject(*base);
 
+			init->basesToInitialise.clear();
+		}
+	}
+		
 	// 0.2.4: Add the vector of AABBs from initialisation
 	for (AABB* aabb : init->AABBsToInitialise) {
 		// Add AABBs as collider objects of the scene.
 		AddAABBObject(*aabb);
+		init->AABBsToInitialise.clear();
 	}
+};
 
-
+// 0.3 - 0.4: 
+void Game::InitialiseController() {
 	// 0.3: Initialise a pointer to a new instance of the Controller class.
 	cntrlr = new Controller();
 
 	// 0.4 Permit the controller to make use of a game class pointer so that the controller can access the object hierarchy for instantiating weapon attacks
 	cntrlr->g = this;
-
-	SetTargetFPS(60);
 };
 
 void Game::RunIntro() {
 	Draw();
 
 	DrawText("Welcome!",
-		(windowWidth / 2) - MeasureText("Welcome!", 50) / 2,
+		(windowWidth / 2) - MeasureText("Welcome!", 75) / 2,
+		windowHeight / 3,
+		75,
+		GREEN);
+
+	Draw();
+
+	WaitTime(3);
+
+	DrawText("Move your spaceship\nwith A and D.",
+		(windowWidth / 2) - MeasureText("Move your spaceship\nwith A and D.", 50) / 2,
 		windowHeight / 3,
 		50,
 		GREEN);
@@ -118,30 +144,20 @@ void Game::RunIntro() {
 
 	WaitTime(3);
 
-	DrawText("Move your spaceship with A and D.",
-		(windowWidth / 2) - MeasureText("Move your spaceship with A and D.", 20) / 2,
+	DrawText("Press spacebar or\nleft mouse button to fire.",
+		(windowWidth / 2) - MeasureText("Press spacebar or\nleft mouse button to fire.", 50) / 2,
 		windowHeight / 3,
-		20,
+		50,
 		GREEN);
 
 	Draw();
 
 	WaitTime(3);
 
-	DrawText("Press spacebar or the left mouse button to fire.",
-		(windowWidth / 2) - MeasureText("Press spacebar or the left mouse button to fire.", 20) / 2,
+	DrawText("Destroy the enemies\nbefore they destroy you!",
+		(windowWidth / 2) - MeasureText("Destroy the enemies\nbefore they destroy you!", 50) / 2,
 		windowHeight / 3,
-		20,
-		GREEN);
-
-	Draw();
-
-	WaitTime(3);
-
-	DrawText("Destroy the enemies before they destroy you!",
-		(windowWidth / 2) - MeasureText("Destroy the enemies before they destroy you!", 20) / 2,
-		windowHeight / 3,
-		20,
+		50,
 		GREEN);
 
 	Draw();
@@ -184,15 +200,60 @@ void Game::Update()
 	// 1.4: Monitor end-game conditions
 		if (numberOfEnemies == 0) {
 			
-			DrawText("You win!", 
-				(windowWidth / 2) - MeasureText("You win!", 100) / 2,
+			DrawText("You win! Press R\nto spawn a bigger wave.", 
+				(windowWidth / 2) - MeasureText("You win! Press R\nto spawn a bigger wave.", 75) / 2,
 				windowHeight / 3, 
-				100, 
+				75, 
 				GREEN);
+
 			StopGame();
 
 			if (IsKeyPressed(KEY_R)) {
-				//. 
+				init->numberOfEnemies = startingEnemies + spawnIncrement;				
+				init->CreateEnemy(init->numberOfEnemies, windowWidth, windowHeight);
+				
+				InitialiseGame(true, false);
+
+				spawnIncrement += 3;
+										
+				ResumeGame();
+			}
+		}
+
+		if (init->playerObjectPtr->lives < 1) {
+			DrawText("You've been shot down!\nPress R to start again.",
+				(windowWidth / 2) - MeasureText("You've been shot down!\nPress R to start again", 75) / 2,
+				windowHeight / 3,
+				75,
+				GREEN);
+
+			StopGame();
+
+			if (IsKeyPressed(KEY_R)) {
+				// Reset relevant variables
+				spawnIncrement = startingEnemies;
+				init->numberOfEnemies = startingEnemies;
+				numberOfEnemies = 0;
+
+				// delete all existing enemies
+				for (GameObject* obj : rootObjects) {
+					if (obj->objType == GameObject::Enemy_Type) {
+						RemoveRootObject(*obj);
+					}
+				}
+
+				UpdateRootObjectRemovals();							
+
+				// Create new enemies in the starting configuration
+				init->CreateEnemy(init->numberOfEnemies, windowWidth, windowHeight);
+
+				// Restart the game settings
+				InitialiseGame(true, false);
+				init->playerObjectPtr->lives = startingLives;
+				init->playerObjectPtr->score = 0;
+
+				// Get back into it
+				ResumeGame();
 			}
 		}
 }
@@ -390,6 +451,7 @@ void Game::UpdateCollisions() {
 						RemoveAABBObject(*otherCollider);
 
 						numberOfEnemies--;
+						init->playerObjectPtr->score += 25;
 
 						// 3: Delete the friendly projectile Weaponclass object
 						RemoveRootObject(*collider->ownerObject);
@@ -412,6 +474,8 @@ void Game::UpdateCollisions() {
 						RemoveRootObject(*collider->ownerObject);
 						// 4: Delete the enemy projectile Weapon class object
 						RemoveRootObject(*otherCollider->ownerObject);
+
+						init->playerObjectPtr->score += 25;
 					};
 				}
 
@@ -428,6 +492,8 @@ void Game::UpdateCollisions() {
 						RemoveRootObject(*collider->ownerObject);
 						// 4: Delete the other object
 						RemoveRootObject(*otherCollider->ownerObject);
+
+						init->playerObjectPtr->score += 10;
 					};
 				};
 			}
@@ -445,7 +511,6 @@ void Game::UpdateCollisions() {
 						RemoveAABBObject(*collider);
 						// 3: Delete the enemy projectile Weapon class object
 						RemoveRootObject(*collider->ownerObject);
-						// *** Player destruction is handled in the Game class
 					};
 				}
 
@@ -518,7 +583,7 @@ void Game::Draw()
 {
 	BeginDrawing();
 
-	ClearBackground(RAYWHITE);
+	ClearBackground(GRAY);
 
 	// 1.2.4.1: Draw all root objects (and thus their children)
 	for (GameObject* obj : rootObjects) {
@@ -527,7 +592,7 @@ void Game::Draw()
 	}
 
 	// 1.2.4.2 Print the player score to the screen
-	//PrintPlayerScore();
+	PrintPlayerScore();
 	// 1.2.4.3 Print the player's lives to the screen
 	PrintPlayerLives();
 
@@ -602,14 +667,14 @@ void Game::PrintPlayerScore() {
 	string playerScoreString = to_string(init->playerObjectPtr->score);
 	string scoreString = "Score:	" + playerScoreString;
 	const char* score = scoreString.c_str();
-	DrawText(score, 20, 40, 20, RED);
+	DrawText(score, 20, 40, 20, GREEN);
 };
 
 void Game::PrintPlayerLives() {
 	string playerLivesString = to_string(init->playerObjectPtr->lives);
 	string livesString = "Lives:	" + playerLivesString;
 	const char* lives = livesString.c_str();
-	DrawText(lives, 20, 70, 20, RED);
+	DrawText(lives, 20, 70, 20, GREEN);
 };
 
 // 9: Destructor
@@ -692,7 +757,6 @@ Game::~Game()
 	delete cntrlr;
 	cntrlr = nullptr;
 }
-
 
 
  //Debugging below
